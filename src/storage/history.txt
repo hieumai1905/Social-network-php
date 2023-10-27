@@ -255,3 +255,5 @@
 
 2023-10-27 14:21:39: Logger.php:13 - Get user by id successfully
 
+2023-10-27 14:46:25: Logger.php:13 - Get all users successfully
+
