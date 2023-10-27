@@ -1,0 +1,257 @@
+2023-10-27 01:52:16: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:52:16: Logger.php:13 - Login failed
+
+2023-10-27 01:52:43: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:52:43: Logger.php:13 - Login successfully
+
+2023-10-27 01:53:22: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:53:22: Logger.php:13 - Login failed
+
+2023-10-27 01:53:27: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:53:27: Logger.php:13 - Login failed
+
+2023-10-27 01:53:34: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:53:34: Logger.php:13 - Login failed
+
+2023-10-27 01:53:48: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:53:48: Logger.php:13 - Login failed
+
+2023-10-27 01:53:55: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:53:55: Logger.php:13 - Login successfully
+
+2023-10-27 01:53:59: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:53:59: Logger.php:13 - Login failed
+
+2023-10-27 01:54:04: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:54:04: Logger.php:13 - Login failed
+
+2023-10-27 01:54:10: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:54:10: Logger.php:13 - Login successfully
+
+2023-10-27 01:54:16: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:54:16: Logger.php:13 - Login failed
+
+2023-10-27 01:54:38: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:55:17: Logger.php:13 - Login failed
+
+2023-10-27 01:55:56: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:55:56: Logger.php:13 - Login failed
+
+2023-10-27 01:56:04: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:56:04: Logger.php:13 - Login successfully
+
+2023-10-27 01:56:09: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:56:09: Logger.php:13 - Login failed
+
+2023-10-27 01:56:14: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:56:14: Logger.php:13 - Login failed
+
+2023-10-27 01:56:18: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:56:18: Logger.php:13 - Login failed
+
+2023-10-27 01:56:24: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:56:24: Logger.php:13 - Login successfully
+
+2023-10-27 01:56:28: Logger.php:13 - Get user by email successfully
+
+2023-10-27 01:56:28: Logger.php:13 - Login failed
+
+2023-10-27 02:15:40: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:15:40: Logger.php:13 - Login successfully
+
+2023-10-27 02:15:45: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:15:45: Logger.php:13 - Login failed
+
+2023-10-27 02:18:43: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:18:43: Logger.php:13 - SQLSTATE[42S02]: Base table or view not found: 1146 Table 'socialnetwork.user' doesn't exist
+
+2023-10-27 02:19:36: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:20:46: Logger.php:13 - SQLSTATE[42S22]: Column not found: 1054 Unknown column 'name' in 'field list'
+
+2023-10-27 02:21:05: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:21:05: Logger.php:13 - SQLSTATE[HY000]: General error: 1364 Field 'user_id' doesn't have a default value
+
+2023-10-27 02:23:14: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:23:14: Logger.php:13 - SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1000,full_name, email, password) 
+                                VALUES ('hmit'' at line 1
+
+2023-10-27 02:25:17: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:25:17: Logger.php:13 - SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+2023-10-27 02:25:47: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:25:47: Logger.php:13 - SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+2023-10-27 02:26:20: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:26:20: Logger.php:13 - SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+2023-10-27 02:26:42: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:28:07: Logger.php:13 - SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+
+2023-10-27 02:28:17: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:28:17: Logger.php:13 - SQLSTATE[HY000]: General error: 1364 Field 'status' doesn't have a default value
+
+2023-10-27 02:30:08: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:30:08: Logger.php:13 - SQLSTATE[HY000]: General error: 1364 Field 'register_at' doesn't have a default value
+
+2023-10-27 02:30:45: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:30:47: Logger.php:13 - Create user successfully
+
+2023-10-27 02:44:05: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:44:05: Logger.php:13 - Email already exists
+
+2023-10-27 02:44:32: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:44:32: Logger.php:13 - Create user failed
+
+2023-10-27 02:44:32: Logger.php:13 - Create user successfully
+
+2023-10-27 02:45:15: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:47:42: Logger.php:13 - Create user failed
+
+2023-10-27 02:47:42: Logger.php:13 - Create user successfully
+
+2023-10-27 02:48:39: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:48:39: Logger.php:13 - Email already exists
+
+2023-10-27 02:48:43: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:48:43: Logger.php:13 - Email already exists
+
+2023-10-27 02:49:22: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:49:22: Logger.php:13 - Create user successfully
+
+2023-10-27 02:49:53: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:49:53: Logger.php:13 - Email already exists
+
+2023-10-27 02:50:04: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:50:04: Logger.php:13 - Create user successfully
+
+2023-10-27 02:51:55: Logger.php:13 - Get user by email successfully
+
+2023-10-27 02:51:55: Logger.php:13 - Login successfully User id: 1
+
+2023-10-27 10:23:21: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:24:01: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:24:12: Logger.php:13 - Login failed
+
+2023-10-27 10:24:33: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:31:44: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:32:21: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:32:21: Logger.php:13 - Login successfully User id: 1
+
+2023-10-27 10:32:47: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:32:47: Logger.php:13 - Login successfully User id: 1
+
+2023-10-27 10:33:47: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:33:47: Logger.php:13 - Login successfully User id: 1
+
+2023-10-27 10:38:32: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:38:32: Logger.php:13 - Login failed
+
+2023-10-27 10:38:59: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:38:59: Logger.php:13 - Login failed
+
+2023-10-27 10:39:24: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:39:24: Logger.php:13 - Login failed
+
+2023-10-27 10:39:52: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:39:52: Logger.php:13 - Login failed
+
+2023-10-27 10:41:10: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:41:10: Logger.php:13 - Login failed
+
+2023-10-27 10:41:44: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:41:44: Logger.php:13 - Login failed
+
+2023-10-27 10:42:25: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:42:25: Logger.php:13 - Login failed
+
+2023-10-27 10:42:39: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:42:39: Logger.php:13 - Login failed
+
+2023-10-27 10:43:22: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:43:22: Logger.php:13 - Login failed
+
+2023-10-27 10:43:26: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:43:26: Logger.php:13 - Login failed
+
+2023-10-27 10:44:44: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:44:52: Logger.php:13 - Login failed
+
+2023-10-27 10:45:20: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:45:20: Logger.php:13 - Login successfully User id: 1
+
+2023-10-27 10:51:10: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:51:10: Logger.php:13 - Login successfully User id: 1
+
+2023-10-27 10:54:19: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:54:19: Logger.php:13 - Login successfully User id: 1
+
+2023-10-27 10:54:31: Logger.php:13 - Get user by email successfully
+
+2023-10-27 10:54:31: Logger.php:13 - Login successfully User id: 1
+
+2023-10-27 14:17:58: Logger.php:13 - SQLSTATE[42S02]: Base table or view not found: 1146 Table 'socialnetwork.user' doesn't exist
+
+2023-10-27 14:18:21: Logger.php:13 - SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause'
+
+2023-10-27 14:21:39: Logger.php:13 - Get user by id successfully
+
