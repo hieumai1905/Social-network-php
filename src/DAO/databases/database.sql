@@ -4,6 +4,7 @@
 -- ------------------------------------------------------
 -- Server version	8.0.34
 
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -14,9 +15,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-create database socialnetwork;
-use socialnetwork;
 
 --
 -- Table structure for table `comment_replies`
@@ -309,7 +307,10 @@ CREATE TABLE `posts` (
                          `content` varchar(2000) NOT NULL,
                          `access_modifier` varchar(30) NOT NULL,
                          `post_type` varchar(30) NOT NULL,
-                         PRIMARY KEY (`post_id`)
+                         `user_id` varchar(36) NOT NULL,
+                         PRIMARY KEY (`post_id`),
+                         KEY `fk_posts_user` (`user_id`),
+                         CONSTRAINT `fk_posts_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -319,7 +320,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES ('1','2023-10-20 12:00:00','Ông trời tạo ra địa chấn. Và cái bụng mỡ của em chính là điểm nhấn.','PUBLIC','POST'),('10','2023-10-21 21:00:00',' Em không còn là một cô gái đợi anh nữa. Giờ em là cô gái đợi ăn.','PUBLIC','COVER'),('2','2023-10-20 15:30:00','Thanh xuân như một ly trà. Ăn vài miếng bánh hết bà thanh xuân','PUBLIC','POST'),('3','2023-10-20 16:35:00','Độc thân không phải là ế mà đang tìm người tử tế để yêu.','PRIVATE','POST'),('4','2023-10-20 13:00:00','Một phụ nữ toàn diện là: Sáng diện, trưa diện, chiều diện, tối diện…','PRIVATE','POST'),('5','2023-10-20 14:00:00','Ta về ta tắm ao ta.Dù trong dù đục cũng là cái ao.','PUBLIC','AVATAR'),('6','2023-10-21 17:00:00','Con đường ngắn nhất để đi từ một trái tim đến 1 trái tim là con đường truyền máu.','PUBLIC','AVATAR'),('7','2023-10-21 18:00:00','Xin bạn hãy dành ra vài giây để đọc hết câu này, đọc tới đây thì cũng mất vài giây rồi, cảm ơn bạn.','PUBLIC','AVATAR'),('8','2023-10-21 19:00:00',' Mỗi lần tôi giảm cân mà thèm ăn tôi đều tự nói với bản thân: “Ăn nữa sẽ chết!”Và kết quả chứng minh: Căn bản là tôi không hề sợ chết!','PUBLIC','COVER'),('9','2023-10-21 20:00:00','Con cóc là cậu ông trời.Nếu ai bắt được có nồi cháo ngon.','PUBLIC','COVER');
+INSERT INTO `posts` VALUES ('1','2023-10-20 12:00:00','Ông trời tạo ra địa chấn. Và cái bụng mỡ của em chính là điểm nhấn.','PUBLIC','POST','3'),('10','2023-10-21 21:00:00',' Em không còn là một cô gái đợi anh nữa. Giờ em là cô gái đợi ăn.','PUBLIC','COVER','9'),('2','2023-10-20 15:30:00','Thanh xuân như một ly trà. Ăn vài miếng bánh hết bà thanh xuân','PUBLIC','POST','4'),('3','2023-10-20 16:35:00','Độc thân không phải là ế mà đang tìm người tử tế để yêu.','PRIVATE','POST','2'),('4','2023-10-20 13:00:00','Một phụ nữ toàn diện là: Sáng diện, trưa diện, chiều diện, tối diện…','PRIVATE','POST','3'),('5','2023-10-20 14:00:00','Ta về ta tắm ao ta.Dù trong dù đục cũng là cái ao.','PUBLIC','AVATAR','5'),('6','2023-10-21 17:00:00','Con đường ngắn nhất để đi từ một trái tim đến 1 trái tim là con đường truyền máu.','PUBLIC','AVATAR','6'),('7','2023-10-21 18:00:00','Xin bạn hãy dành ra vài giây để đọc hết câu này, đọc tới đây thì cũng mất vài giây rồi, cảm ơn bạn.','PUBLIC','AVATAR','7'),('8','2023-10-21 19:00:00',' Mỗi lần tôi giảm cân mà thèm ăn tôi đều tự nói với bản thân: “Ăn nữa sẽ chết!”Và kết quả chứng minh: Căn bản là tôi không hề sợ chết!','PUBLIC','COVER','8'),('9','2023-10-21 20:00:00','Con cóc là cậu ông trời.Nếu ai bắt được có nồi cháo ngon.','PUBLIC','COVER','9');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -426,4 +427,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-23 19:54:25
+-- Dump completed on 2023-10-27 21:13:28
