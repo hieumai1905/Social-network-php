@@ -3,6 +3,7 @@
 namespace services\user;
 
 use DAO\user\IUserDAO;
+use services\mail\Mailer;
 use storage\Logger;
 use models\User;
 use storage\Mapper;
@@ -12,6 +13,8 @@ require_once 'IUserService.php';
 require_once 'src/storage/Logger.php';
 require_once 'src/storage/Mapper.php';
 require_once 'src/models/User.php';
+require_once 'src/services/mail/Mailer.php';
+
 
 class UserService implements IUserService
 {
