@@ -66,7 +66,6 @@ class Mailer
 
         try {
             $service->users_messages->send('me', $message);
-            echo "Email sent successfully.";
         } catch (Exception $e) {
             echo "An error occurred: " . $e->getMessage();
         }
