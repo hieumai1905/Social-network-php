@@ -36,6 +36,9 @@ function registerRoute()
     Route::get('/admin/home', function(){
         Return Response::view('views/admin/Home');
     });
+    Route::get('/admin', function(){
+        Return Response::view('views/admin/Home');
+    });
     Route::get('/admin/user', function(){
         Return Response::view('views/admin/User');
     });
@@ -54,18 +57,14 @@ function registerRoute()
     Route::get('/register', 'AccountController@showFormRegister');
     Route::post('/register', 'AccountController@registerAccount');
 
+    Route::get('/logout', 'AccountController@logoutAccount');
+
     Route::get('/account/forgot', 'AccountController@showFormForgot');
     Route::post('/account/forgot', 'AccountController@forgotPassword');
+    Route::post('account/forgot/confirm', 'AccountController@confirmForgotPassword');
 
-    Route::get('/confirm', function(){
-        Return Response::view('views/Confirm-Code');
-    });
-    Route::get('/admin/home', function(){
-        Return Response::view('views/admin/Home');
-    });
-    Route::get('/admin/user', function(){
-        Return Response::view('views/admin/User');
-    });
+    Route::get('/confirm', 'AccountController@showFormConfirm');
+    Route::post('/confirm', 'AccountController@confirmAccount');
     //-------------------------------------------------------------------------------------
 
     Route::registerResource();
