@@ -64,6 +64,18 @@ class RegisterSingleton
                 $container->resolve('\services\user\IUserService')
             );
         });
+
+        //===========================Post=================================================
+        $container->register('\DAO\post\IPostDAO', function () {
+            return new PostDAO();
+        });
+
+        $container->register('\services\post\IPostService', function () use ($container){
+            return new PostService(
+                $container->resolve('\DAO\post\IPostDAO')
+            );
+        });
+        //================================================================================
     }
     public function registerRequest(Request $request): void
     {
