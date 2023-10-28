@@ -5,7 +5,7 @@ namespace DAO\post;
 use PDO;
 use models\Post;
 
-require_once 'src/DAO/database/ConnectDatabase.php';
+require_once 'src/DAO/databases/ConnectDatabase.php';
 require_once 'IPostDAO.php';
 require_once 'src/models/Post.php';
 
@@ -65,11 +65,10 @@ class PostDAO implements IPostDAO
 
     public function updatePost(Post $post)
     {
-       $stmt = $this->connection->prepare("UPDATE post SET content = :content, access_modifier = :accessModifier, post_type = :postType WHERE post_id = :postId");
+       $stmt = $this->connection->prepare("UPDATE post SET content = :content, access_modifier = :accessModifier WHERE post_id = :postId");
        $stmt->bindValue(':postId', $post->getPostId());
        $stmt->bindValue(':content', $post->getContent());
        $stmt->bindValue(':accessModifier', $post->getAccessModifier());
-       $stmt->bindValue(':postType',$post->getPostType());
        $stmt->execute();
     }
 
