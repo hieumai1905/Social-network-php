@@ -7,16 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>O la la - Register</title>
 
-    <link rel="stylesheet" href="public/css/themify-icons.css">
-    <link rel="stylesheet" href="public/css/feather.css">
+    <link rel="stylesheet" href="/public/css/themify-icons.css">
+    <link rel="stylesheet" href="/public/css/feather.css">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="public/images/fav-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/images/fav-icon.png">
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="public/css/style.css">
-    <!--    <script src="~/assets/hm/register.js"></script>-->
-    <!--    <script src="~/assets/hm/user.js"></script>-->
-    <!--    <script src="~/assets/hm/validation.js"></script>-->
-
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script src="/public/assets/js/hm/Register.js"></script>
+    <script src="/public/assets/js/hm/Validation.js"></script>
 </head>
 
 <body class="color-theme-blue">
@@ -29,7 +27,7 @@
         <div class="nav-top w-100">
             <a href="/login">
                 <span>
-                    <img src="public/images/fav-icon.png" alt="" style="width: 35px; height: 35px;"/>
+                    <img src="/public/images/fav-icon.png" alt="" style="width: 35px; height: 35px;"/>
                 </span>
                 &ensp;
                 <span
@@ -70,42 +68,45 @@
 
     <div class="row">
         <div class="col-xl-5 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
-             style="background-image: url(public/images/login-bg-2.jpg);">
+             style="background-image: url(/public/images/login-bg-2.jpg);">
         </div>
         <div class="col-xl-7 vh-100 align-items-center d-flex bg-white rounded-3 overflow-hidden">
             <div class="card shadow-none border-0 ms-auto me-auto login-card"
                  style="min-width: 480px; max-width: 500px">
                 <div class="card-body rounded-0 text-left">
                     <h2 class="fw-700 display1-size display2-md-size mb-4">Create <br>your account</h2>
-                    <form action="/register" method="post">
+                    <form action="/register" method="post" onsubmit="return checkValidation()">
                         <div style="margin-bottom:10px; margin-top: -5px ;">
-                            <?php
-                            if(isset($error)){
-                                echo '<i style="color:red; font-size: 14px;" id="login-invalid">'.$error.'</i>';
-                            }
-                            ?>
+                            <i style="color:red; font-size: 14px;" id="register-error">
+                                <?php
+                                if (isset($error)) {
+                                    echo $error;
+                                }
+                                ?>
+                            </i>
                         </div>
                         <div class="form-group icon-input mb-3">
                             <i class="font-sm ti-user text-grey-500 pe-0"></i>
-                            <input type="text" name="full-name"
+                            <input type="text" name="full-name" id="fullname"
                                    class="style2-input ps-5 form-control text-grey-900 font-xsss fw-600 input-name-register"
                                    placeholder="Your Name">
                         </div>
                         <div class="form-group icon-input mb-3">
                             <i class="font-sm ti-email text-grey-500 pe-0"></i>
-                            <input type="text" name="email"
+                            <input type="text" name="email" id="email"
                                    class="style2-input ps-5 form-control text-grey-900 font-xsss fw-600 input-email-register"
                                    placeholder="Your Email Address">
                         </div>
                         <div class="form-group icon-input mb-3">
                             <input type="Password"
-                                   name="password-input"
+                                   name="password-input" id="password"
                                    class="style2-input ps-5 form-control text-grey-900 font-xss ls-3 input-password-register"
                                    placeholder="Password">
                             <i class="font-sm ti-lock text-grey-500 pe-0"></i>
                         </div>
                         <div class="form-group icon-input mb-1">
                             <input type="Password"
+                                   id="repassword"
                                    name="password-confirm"
                                    class="style2-input ps-5 form-control text-grey-900 font-xss ls-3 input-confirm-password-register"
                                    placeholder="Confirm Password">
@@ -134,8 +135,8 @@
     </div>
 </div>
 
-<script src="public/js/plugin.js"></script>
-<script src="public/js/scripts.js"></script>
+<script src="/public/js/plugin.js"></script>
+<script src="/public/js/scripts.js"></script>
 
 </body>
 

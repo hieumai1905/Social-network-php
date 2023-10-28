@@ -56,7 +56,10 @@ class AccountController
     public function showFormConfirmRegister()
     {
         try {
-            $userRegister = unserialize($_SESSION['user-register']);
+            $userRegister = null;
+            if (isset($_SESSION['user-register'])) {
+                $userRegister = unserialize($_SESSION['user-register']);
+            }
             if ($userRegister) {
                 $email = $userRegister->getEmail();
                 $this->requestService->cleanRequestCode();
@@ -114,6 +117,7 @@ class AccountController
                 }
                 return Response::View('views/Login', ['error' => 'Email or password incorect']);
             }
+            return Response::view('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Error');
         }
@@ -151,6 +155,7 @@ class AccountController
                 }
                 return Response::View('views/Register', ['error' => 'Register failed']);
             }
+            return Response::view('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Register', ['error' => $e->getMessage()]);
         }
@@ -162,7 +167,10 @@ class AccountController
         try {
             if (isset($_POST['confirm-code'])) {
                 $code = $_POST['confirm-code'];
-                $userRegister = unserialize($_SESSION['user-register']);
+                $userRegister = null;
+                if (isset($_SESSION['user-register'])) {
+                    $userRegister = unserialize($_SESSION['user-register']);
+                }
                 if ($userRegister) {
                     $error = 'Code is incorect';
                     $email = $userRegister->getEmail();
@@ -183,6 +191,7 @@ class AccountController
                 }
                 return Response::View('views/Error');
             }
+            return Response::view('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Error');
         }
@@ -220,6 +229,7 @@ class AccountController
                 }
                 return Response::apiResponse(Status::OK);
             }
+            return Response::apiResponse(Status::BAD_REQUEST, 'An error occurred');
         } catch (\Exception $e) {
             return Response::apiResponse(Status::BAD_REQUEST, $e->getMessage());
         }
@@ -239,8 +249,8 @@ class AccountController
                     $_SESSION['email-user-reset-password'] = $email;
                     return Response::View('views/Update-password');
                 }
-
             }
+            return Response::view('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Forgot', ['error' => $e->getMessage()]);
         }
@@ -250,7 +260,7 @@ class AccountController
     public function updatePassword()
     {
         try {
-            if (isset($_SESSION['email-user-reset-password'])) {
+            if (isset($_SESSION['email-user-reset-password']) && isset($_POST['password-reset']) && isset($_POST['password-confirm-reset'])) {
                 $email = $_SESSION['email-user-reset-password'];
                 $password = $_POST['password-reset'];
                 $confirmPassword = $_POST['password-confirm-reset'];
@@ -269,9 +279,8 @@ class AccountController
                 } else {
                     return Response::View('views/Update-password', ['error' => 'Password and confirm password is not match']);
                 }
-            } else {
-                return Response::View('views/404');
             }
+            return Response::View('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Update-password', ['error' => $e->getMessage()]);
         }
@@ -296,6 +305,7 @@ class AccountController
                 $this->requestService->refreshCode($email, $code);
                 return Response::apiResponse(Status::OK);
             }
+            return Response::apiResponse(Status::BAD_REQUEST, 'An error occurred');
         } catch (\Exception $e) {
             return Response::apiResponse(Status::BAD_REQUEST, $e->getMessage());
         }
