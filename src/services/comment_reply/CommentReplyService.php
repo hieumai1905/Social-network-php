@@ -6,6 +6,11 @@ use DAO\comment_reply\ICommentReplyDAO;
 use models\CommentReplie;
 use storage\Logger;
 use storage\Mapper;
+
+require_once 'ICommentReplyService.php';
+require_once 'src/storage/Logger.php';
+require_once 'src/storage/Mapper.php';
+require_once 'src/models/CommentReplie.php';
 class CommentReplyService implements ICommentReplyService
 {
     private $commentReplyDAO;
