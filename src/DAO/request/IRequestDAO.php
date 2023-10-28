@@ -5,15 +5,11 @@ use models\Request;
 require_once 'src/models/Request.php';
 interface IRequestDAO
 {
-    public function getUserById($id);
+    public function getRequestByEmail($email);
+    public function cleanRequestCode();
+    public function addRequest(Request $request);
 
-    public function getAllUsers(): ?array;
+    public function updateRequest(Request $request);
 
-    public function createUser(User $user);
-
-    public function updateUser(User $user);
-
-    public function deleteUser($id);
-
-    public function getUserByEmail($email);
+    public function deleteRequest($id);
 }
