@@ -14,7 +14,7 @@ class PostDAO implements IPostDAO
 
     private $connection;
     public function __construct(){
-        $this->connection =\DAO\Database\ConnectDatabase::GetConnection();
+        $this->connection =\DAO\Databases\ConnectDatabase::getConnection();
     }
     // get all post for uesr's profile
     public function getPostForProfile($userId): ?array
@@ -22,7 +22,7 @@ class PostDAO implements IPostDAO
         $stmt = $this->connection->prepare("SELECT * FROM posts WHERE user_id = :user_id");
         $stmt->bindValue(':user_id',$userId);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
     // get post by id
     public function getPostById($postId)
@@ -47,15 +47,15 @@ class PostDAO implements IPostDAO
             ");
         $stmt->bindValue(':user_id',$userId);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
 
     public function createPost(Post $post)
     {
-        $stmt = $this->connection->prepare("INSERT INTO post (post_id, create_at, content, access_modifier, post_type, user_id)
+        $stmt = $this->connection->prepare("INSERT INTO posts (post_id, create_at, content, access_modifier, post_type, user_id)
             VALUES (:postId, NOW(), :content, :accessModifier, :postType, :userId)");
-        $stmt->bindValue(':postId',$post->getPostId());
+        $stmt->bindValue(':postId',unique());
         $stmt->bindValue(':content',$post->getContent());
         $stmt->bindValue(':accessModifier',$post->getAccessModifier());
         $stmt->bindValue(':postType',$post->getPostType());
@@ -65,7 +65,7 @@ class PostDAO implements IPostDAO
 
     public function updatePost(Post $post)
     {
-       $stmt = $this->connection->prepare("UPDATE post SET content = :content, access_modifier = :accessModifier WHERE post_id = :postId");
+       $stmt = $this->connection->prepare("UPDATE posts SET content = :content, access_modifier = :accessModifier WHERE post_id = :postId");
        $stmt->bindValue(':postId', $post->getPostId());
        $stmt->bindValue(':content', $post->getContent());
        $stmt->bindValue(':accessModifier', $post->getAccessModifier());
@@ -75,5 +75,8 @@ class PostDAO implements IPostDAO
     public function deletePost($postId)
     {
         // TODO: Implement deletePost() method.
+        $stmt = $this->connection->prepare("DELETE FROM posts WHERE post_id = :post_id");
+        $stmt->bindValue(':post_id', $postId);
+        $stmt->execute();
     }
 }
