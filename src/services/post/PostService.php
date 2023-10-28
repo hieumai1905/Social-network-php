@@ -4,9 +4,7 @@ namespace services\post;
 
 use DAO\post\IPostDAO;
 use models\Post;
-use services\request\IRequestService;
 use storage\Logger;
-use models\User;
 use storage\Mapper;
 
 require_once 'IPostService.php';
@@ -49,12 +47,12 @@ class PostService implements IPostService
     function add($object)
     {
         try{
-            $$this->postDAO->createPost($object);
+            $this->postDAO->createPost($object);
             Logger::log('Create new post successfully');
-        } catch (\PDOException $e) {
+        }catch(\PDOException $e){
             Logger::log($e->getMessage());
-            throw new \Exception('An error connect to database');
-        } catch (\Exception $e) {
+            throw new (\Exception('An error connect to database'));
+        }catch (\Exception $e){
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
