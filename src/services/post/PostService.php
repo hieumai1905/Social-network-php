@@ -48,7 +48,16 @@ class PostService implements IPostService
 
     function add($object)
     {
-        // TODO: Implement add() method.
+        try{
+            $$this->postDAO->createPost($object);
+            Logger::log('Create new post successfully');
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
     }
 
     function update($object)
