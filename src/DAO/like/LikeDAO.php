@@ -4,7 +4,7 @@ namespace DAO\like;
 use PDO;
 use models\Like;
 
-require_once 'src/DAO/Databases/ConnectDatabase.php';
+require_once 'src/DAO/databases/ConnectDatabase.php';
 require_once 'ILikeDAO.php';
 require_once 'src/models/Like.php';
 class LikeDAO implements ILikeDAO
