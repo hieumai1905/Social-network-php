@@ -1,0 +1,29 @@
+function checkValidation(){
+    let email = $('#email-login');
+    let password = $('#password-login');
+
+    if(!validateName(email.val())){
+        $('#login-error').text('Email is not empty');
+        email.focus();
+        return false;
+    }
+    if(!validateName(password.val())){
+        $('#login-error').text('Password is not empty');
+        password.focus();
+        return false;
+    }
+    if(!validateEmail(email.val())){
+        $('#login-error').text('Email is not valid');
+        email.val('');
+        password.val('');
+        email.focus();
+        return false;
+    }
+    if(!validatePassword(password.val())){
+        $('#login-error').text('Password must be at least 6 characters long.');
+        password.val('');
+        password.focus();
+        return false;
+    }
+    return true;
+}

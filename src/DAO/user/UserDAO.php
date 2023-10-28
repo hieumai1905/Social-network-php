@@ -48,11 +48,10 @@ class UserDAO implements IUserDAO
         $stmt->execute();
     }
 
-    public
-    function updateUser(User $user)
+    public function updateUser(User $user)
     {
-        $stmt = $this->connection->prepare('UPDATE users SET name = :name, email = :email, password = :password, avatar = :avatar, cover_image = :cover,  
-             dob=:dob, address=:address, gender=:gender, phone=:phone, status=:status, user_role=:role, about_me=:about,  WHERE user_id = :id');
+        $stmt = $this->connection->prepare('UPDATE users SET full_name = :name, email = :email, password = :password, avatar = :avatar, cover_image = :cover,  
+             dob=:dob, address=:address, gender=:gender, phone=:phone, status=:status, user_role=:role, about_me=:about WHERE user_id = :id');
         $stmt->bindValue(':id', $user->getUserId());
         $stmt->bindValue(':name', $user->getFullName());
         $stmt->bindValue(':email', $user->getEmail());

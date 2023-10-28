@@ -4,14 +4,18 @@ namespace registrations;
 
 use controllers\AccountController;
 use controllers\UserController;
+use DAO\request\RequestDAO;
 use DAO\user\UserDAO;
 use https\Request;
+use services\request\RequestService;
 use services\user\UserService;
 
 require_once __DIR__ . '/DIContainer.php';
 require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../services/user/UserService.php';
+require_once __DIR__ . '/../services/request/RequestService.php';
 require_once __DIR__ . '/../DAO/user/UserDAO.php';
+require_once __DIR__ . '/../DAO/request/RequestDAO.php';
 require_once __DIR__ . '/../https/Request.php';
 require_once __DIR__ . '/../controllers/AccountController.php';
 
@@ -47,9 +51,19 @@ class RegisterSingleton
             return new UserDAO();
         });
 
+        $container->register('\DAO\request\IRequestDAO', function () {
+            return new RequestDAO();
+        });
+
         $container->register('\services\user\IUserService', function () use ($container){
             return new UserService(
                 $container->resolve('\DAO\user\IUserDAO')
+            );
+        });
+
+        $container->register('\services\request\IRequestService', function () use ($container){
+            return new RequestService(
+                $container->resolve('\DAO\request\IRequestDAO')
             );
         });
 
@@ -61,7 +75,8 @@ class RegisterSingleton
 
         $container->register('\controllers\AccountController', function () use ($container) {
             return new AccountController(
-                $container->resolve('\services\user\IUserService')
+                $container->resolve('\services\user\IUserService'),
+                $container->resolve('\services\request\IRequestService')
             );
         });
     }

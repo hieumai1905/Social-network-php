@@ -13,6 +13,7 @@ require_once 'src/storage/Logger.php';
 require_once 'src/storage/Mapper.php';
 require_once 'src/models/User.php';
 
+
 class UserService implements IUserService
 {
     private $userDAO;
@@ -27,7 +28,7 @@ class UserService implements IUserService
      */
     function getById($id): ?object
     {
-        try{
+        try {
             $result = $this->userDAO->getUserById($id);
             Logger::log('Get user by id successfully');
             if (!$result) {
@@ -114,8 +115,8 @@ class UserService implements IUserService
     {
         try {
             $data = $this->userDAO->getUserByEmail($email);
-            Logger::log('Get user by email successfully');
             if ($data) {
+                Logger::log('Get user by email successfully');
                 if ($password == $data->password) {
                     Logger::log('Login successfully User id: ' . $data->user_id);
                     return Mapper::mapStdClassToModel($data, User::class);
@@ -147,7 +148,7 @@ class UserService implements IUserService
                 $userRegister->setEmail($email);
                 $userRegister->setPassword($password);
                 $userRegister->setUserRole('USER');
-                $userRegister->setStatus('ACTIVE');
+                $userRegister->setStatus('INACTIVE');
                 $userRegister->setAvatar('avatar.jpg');
                 $userRegister->setCoverImage('cover.jpg');
                 $this->userDAO->createUser($userRegister);
@@ -159,6 +160,25 @@ class UserService implements IUserService
                 return $userRegister;
             }
             throw new \Exception('Email already exists');
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function getUserByEmail($email): ?User
+    {
+        try {
+            $data = $this->userDAO->getUserByEmail($email);
+            if ($data) {
+                Logger::log('Get user by email successfully User id: ' . $data->user_id);
+                return Mapper::mapStdClassToModel($data, User::class);
+            }
+            Logger::log('Get user by email failed');
+            return null;
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception('An error connect to database');

@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Elomoas - Online Course and LMS HTML Template</title>
 
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/feather.css">
+    <link rel="stylesheet" href="/public/css/themify-icons.css">
+    <link rel="stylesheet" href="/public/css/feather.css">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/fav-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/images/fav-icon.png">
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="css/style.css">
-    <script src="~/assets/hm/update-password.js"></script>
-    <script src="~/assets/hm/validation.js"></script>
+    <link rel="stylesheet" href="/public/css/style.css">
+    <!--    <script src="~/assets/hm/update-password.js"></script>-->
+    <!--    <script src="~/assets/hm/validation.js"></script>-->
 
 </head>
 <body class="color-theme-blue">
@@ -27,27 +27,27 @@
         <div class="nav-top w-100">
             <a href="index.html">
                 <span>
-                    <img src="images/fav-icon.png" alt="" style="width: 35px; height: 35px;"/>
+                    <img src="/public/images/fav-icon.png" alt="" style="width: 35px; height: 35px;"/>
                 </span>
                 &ensp;
                 <span
-                    class="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">
+                        class="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">
                     O la la.
                 </span>
             </a>
             <a href="#" class="mob-menu ms-auto me-2 chat-active-btn">
                 <i
-                    class="feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight">
+                        class="feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight">
                 </i>
             </a>
             <a href="default-video.html" class="mob-menu me-2">
                 <i
-                    class="feather-video text-grey-900 font-sm btn-round-md bg-greylight">
+                        class="feather-video text-grey-900 font-sm btn-round-md bg-greylight">
                 </i>
             </a>
             <a href="#" class="me-2 menu-search-icon mob-menu">
                 <i
-                    class="feather-search text-grey-900 font-sm btn-round-md bg-greylight">
+                        class="feather-search text-grey-900 font-sm btn-round-md bg-greylight">
                 </i>
             </a>
             <button class="nav-menu me-0 ms-2"></button>
@@ -65,7 +65,7 @@
 
     <div class="row">
         <div class="col-xl-5 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
-             style="background-image: url(images/login-bg-2.jpg);">
+             style="background-image: url(/public/images/login-bg-2.jpg);">
         </div>
         <div class="col-xl-7 vh-100 align-items-center d-flex bg-white rounded-3 overflow-hidden">
             <div class="card shadow-none border-0 ms-auto me-auto login-card">
@@ -79,11 +79,13 @@
                     <form>
                         <div class="form-group icon-input mb-3">
                             <input type="Password" class="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
+                                   name="password-reset"
                                    placeholder="New Password" id="new-password-reset">
                             <i class="font-sm ti-lock text-grey-500 pe-0"></i>
                         </div>
                         <div class="form-group icon-input mb-1">
                             <input type="Password" class="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
+                                   name="password-confirm-reset"
                                    placeholder="Confirm Password" id="confirm-password-reset">
                             <i class="font-sm ti-lock text-grey-500 pe-0"></i>
                         </div>
@@ -108,8 +110,8 @@
     </div>
 </div>
 
-<script src="public/js/plugin.js"></script>
-<script src="public/js/scripts.js"></script>
+<script src="/public/js/plugin.js"></script>
+<script src="/public/js/scripts.js"></script>
 
 </body>
 </html>
