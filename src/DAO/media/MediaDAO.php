@@ -12,7 +12,7 @@ class MediaDAO implements IMediaDAO
 {
     private $connection;
     public function __construct(){
-        $this->connection = \DAO\databases\ConnectDatabase::getConnection();
+        $this->connection = \DAO\Databases\ConnectDatabase::getConnection();
     }
 
     public function getMediaOfPost($postId): ?array
