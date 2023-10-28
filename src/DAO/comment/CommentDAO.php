@@ -4,7 +4,7 @@ namespace DAO\comment;
 use PDO;
 use models\Comment;
 
-require_once 'src/DAO/Databases/ConnectDatabase.php';
+require_once 'src/DAO/databases/ConnectDatabase.php';
 require_once 'ICommentDAO.php';
 require_once 'src/models/Comment.php';
 class CommentDAO implements ICommentDAO
