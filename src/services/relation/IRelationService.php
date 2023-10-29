@@ -17,4 +17,5 @@ interface IRelationService extends IGeneralService {
     public function unBlockUser($user_id,$user_target_id);
     public function followUser($user_id,$user_target_id);
     public function unFollowUser($user_id,$user_target_id);
+    public function createRelation ($user_id,$user_target_id,$type_relation);
 }

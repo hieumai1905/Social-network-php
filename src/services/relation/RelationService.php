@@ -47,7 +47,16 @@ class RelationService implements IRelationService {
     {
         // TODO: Implement delete() method.
     }
-
+    public function createRelation($user_id, $user_target_id, $type_relation)
+    {
+        $relation = new Relation();
+        $relation->setRelationId(uniqid());
+        $relation->setTypeRelation($type_relation);
+        $relation->setChangeAt(date("Y-m-d"));
+        $relation->setUserId($user_id);
+        $relation->setUserTargetId($user_target_id);
+        return $relation;
+    }
     public function getFriendForUser($user_id)
     {
         try {
@@ -57,7 +66,12 @@ class RelationService implements IRelationService {
                 Logger::log('No friend for user found');
                 return null;
             }
-            return Mapper::mapStdClassToModel($result,Relation::class);
+            $relations = [];
+            foreach ($result as $item) {
+                $relation = Mapper::mapStdClassToModel($item,Relation::class);
+                $relations[] = $relation;
+            }
+            return $relations;
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception('An error connect to database');
@@ -70,27 +84,9 @@ class RelationService implements IRelationService {
     public function sendFriendRequest($user_id, $user_target_id)
     {
         try {
-            $relationWaiting = new Relation();
-            $relationWaiting->setRelationId(uniqid());
-            $relationWaiting->setTypeRelation("WAITING");
-            $relationWaiting->setChangeAt(date("Y-m-d"));
-            $relationWaiting->setUserId($user_target_id);
-            $relationWaiting->setUserTargetId($user_id);
-            $relationRequest = new Relation();
-            $relationRequest->setRelationId(uniqid());
-            $relationRequest->setTypeRelation("REQUEST");
-            $relationRequest->setChangeAt(date("Y-m-d"));
-            $relationRequest->setUserId($user_id);
-            $relationRequest->setUserTargetId($user_target_id);
-            $relationFollow = new Relation();
-            $relationFollow->setRelationId(uniqid());
-            $relationFollow->setTypeRelation("FOLLOW");
-            $relationFollow->setChangeAt(date("Y-m-d"));
-            $relationFollow->setUserId($user_id);
-            $relationFollow->setUserTargetId($user_target_id);
-            $this->relationDAO->addRelation($relationRequest);
-            $this->relationDAO->addRelation($relationWaiting);
-            $this->relationDAO->addRelation($relationFollow);
+            $this->relationDAO->addRelation($this->createRelation($user_id,$user_target_id,'REQUEST'));
+            $this->relationDAO->addRelation($this->createRelation($user_target_id,$user_id,'WAITING'));
+            $this->relationDAO->addRelation($this->createRelation($user_id,$user_target_id,'FOLLOW'));
             Logger::log("Add friend successfully");
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
@@ -123,13 +119,7 @@ class RelationService implements IRelationService {
         try {
             $this->relationDAO->updateTypeRelation($user_id,$user_target_id,'WAITING','FRIEND');
             $this->relationDAO->updateTypeRelation($user_target_id,$user_id,'REQUEST','FRIEND');
-            $relationFollow = new Relation();
-            $relationFollow->setRelationId(uniqid());
-            $relationFollow->setTypeRelation("FOLLOW");
-            $relationFollow->setChangeAt(date("Y-m-d"));
-            $relationFollow->setUserId($user_id);
-            $relationFollow->setUserTargetId($user_target_id);
-            $this->relationDAO->addRelation($relationFollow);
+            $this->relationDAO->addRelation($this->createRelation($user_id,$user_target_id,'FOLLOW'));
             Logger::log("Accept friend request successfully");
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
@@ -163,13 +153,7 @@ class RelationService implements IRelationService {
             if ($getRelation!=null) {
                 $this->relationDAO->deleteAllRelationByUserIdAndUserTargetId($user_id,$user_target_id);
             }
-            $relationBlock = new Relation();
-            $relationBlock->setRelationId(uniqid());
-            $relationBlock->setTypeRelation('BLOCK');
-            $relationBlock->setChangeAt(date('Y-m-d'));
-            $relationBlock->setUserId($user_id);
-            $relationBlock->setUserTargetId($user_target_id);
-            $this->relationDAO->addRelation($relationBlock);
+            $this->relationDAO->addRelation($this->createRelation($user_id,$user_target_id,'BLOCK'));
             Logger::log("Block user successfully");
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
@@ -197,13 +181,7 @@ class RelationService implements IRelationService {
     public function followUser($user_id, $user_target_id)
     {
         try {
-            $relationFollow = new Relation();
-            $relationFollow->setRelationId(uniqid());
-            $relationFollow->setTypeRelation('FOLLOW');
-            $relationFollow->setUserId($user_id);
-            $relationFollow->setUserTargetId($user_target_id);
-            $relationFollow->setChangeAt(date('Y-m-d'));
-            $this->relationDAO->addRelation($relationFollow);
+            $this->relationDAO->addRelation($this->createRelation($user_id,$user_target_id,'Follow'));
             Logger::log("Follow user successfully");
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
