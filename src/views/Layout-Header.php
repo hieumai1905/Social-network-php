@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Sociala - Social Network App HTML Template</title>
-    <link rel="stylesheet" href="public/css/themify-icons.css" />
-    <link rel="stylesheet" href="public/css/feather.css" />
+    <link rel="stylesheet" href="/public/css/themify-icons.css" />
+    <link rel="stylesheet" href="/public/css/feather.css" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="public/images/fav-icon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/images/fav-icon.png" />
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="public/css/style.css" />
-    <link rel="stylesheet" href="public/css/emoji.css" />
-    <link rel="stylesheet" href="public/css/phongcss.css">
-    <link rel="stylesheet" href="public/css/hungtdcss.css" />
-    <link rel="stylesheet" href="public/css/lightbox.css" />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <link rel="stylesheet" href="/public/css/emoji.css" />
+    <link rel="stylesheet" href="/public/css/phongcss.css">
+    <link rel="stylesheet" href="/public/css/hungtdcss.css" />
+    <link rel="stylesheet" href="/public/css/lightbox.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="public/css/hungIndex.css" />
+    <link rel="stylesheet" href="/public/css/hungIndex.css" />
 <!--    <script src="public/js/authentication.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
 
@@ -35,7 +35,7 @@
         <div class="nav-top">
             <a href="Index.php">
                     <span>
-                        <img src="public/images/fav-icon.png" alt="" style="width: 35px; height: 35px;" />
+                        <img src="/public/images/fav-icon.png" alt="" style="width: 35px; height: 35px;" />
                     </span>
                 &ensp;
                 <span class="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">
@@ -98,7 +98,7 @@
              aria-labelledby="dropdownMenu3">
             <h4 class="fw-700 font-xss mb-4">Notification</h4><!--Notification-->
             <div class="card bg-transparent-card w-100 border-0 ps-5 mb-3">
-                <img src="public/images/user-8.png"
+                <img src="/public/images/user-8.png"
                      alt="user"
                      class="w40 position-absolute left-0" /><!--User avatar-->
                 <h5 class="font-xsss text-grey-900 mb-1 mt-0 fw-700 d-block">
@@ -296,7 +296,7 @@
         </div>
 
         <a id="avatarprofile" href="Profile.php" class="p-0 ms-3 menu-icon">
-            <img style="width:30px; height:40px; border-radius:30px;" id="avataruser" src="public/images/profile-4.png" alt="user" class="w40 mt--1" />
+            <img style="width:30px; height:40px; border-radius:30px;" id="avataruser" src="/public/images/profile-4.png" alt="user" class="w40 mt--1" />
         </a>
     </div>
     <!-- navigation top -->
