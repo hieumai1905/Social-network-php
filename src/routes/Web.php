@@ -48,6 +48,8 @@ function registerRoute()
     Route::get('/users', 'UserController@getAllUser');
 
     Route::get('/users/{id}', 'UserController@getUserById');
+
+
     //-------------------------------------------------------------------------------------
 
     //---------------------------Register route for account--------------------------------
@@ -60,14 +62,23 @@ function registerRoute()
     Route::get('/logout', 'AccountController@logoutAccount');
 
     Route::get('/account/forgot', 'AccountController@showFormForgot');
-    Route::post('/account/forgot', 'AccountController@forgotPassword');
+    Route::post('/api/account/forgot', 'AccountController@getCodeForgot');
     Route::post('/account/forgot/confirm', 'AccountController@confirmForgotPassword');
     Route::post('/account/reset-password', 'AccountController@updatePassword');
 
-    Route::post('/refresh-code', 'AccountController@refreshCode');
+    Route::post('/api/refresh-code', 'AccountController@refreshCode');
 
     Route::get('/register/confirm', 'AccountController@showFormConfirmRegister');
     Route::post('/register/confirm', 'AccountController@confirmRegisterAccount');
+
+    Route::get('/error', function () {
+        return Response::view('views/Error');
+    });
+
+    Route::get('/test', function()
+    {
+        return Response::view('views/Update-password');
+    });
     //-------------------------------------------------------------------------------------
 
     Route::registerResource();

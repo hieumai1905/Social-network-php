@@ -175,6 +175,9 @@ class AccountController
                     $error = 'Code is incorect';
                     $email = $userRegister->getEmail();
                     $request = $this->requestService->getRequestByEmail($email);
+                    if(!isset($request)){
+                        return Response::view('views/404');
+                    }
                     if (isset($request) && $request->getRequestCode() == $code && $request->getTypeRequest() == 'REGISTER') {
                         $requestValid = $request->getRequestAt() > date('Y-m-d H:i:s', strtotime('-1 minutes'));
                         if (!$requestValid) {
