@@ -24,20 +24,23 @@ function registerMiddleware()
 function registerRoute()
 {
     //--------------------------------------Home-------------------------------------
-    Route::get('/', function(){
-        Return Response::view('views/index');
+    Route::get('/', function () {
+        return Response::view('views/index');
     });
-    Route::get('/home', function(){
-        Return Response::view('views/index');
+    Route::get('/home', function () {
+        return Response::view('views/index');
     });
     //--------------------------------------------------------------------------------
 
     //--------------------------------------Admin-------------------------------------
-    Route::get('/admin/home', function(){
-        Return Response::view('views/admin/Home');
+    Route::get('/admin/home', function () {
+        return Response::view('views/admin/Home');
     });
-    Route::get('/admin/user', function(){
-        Return Response::view('views/admin/User');
+    Route::get('/admin', function () {
+        return Response::view('views/admin/Home');
+    });
+    Route::get('/admin/user', function () {
+        return Response::view('views/admin/User');
     });
     //---------------------------------------------------------------------------------
 
@@ -54,18 +57,17 @@ function registerRoute()
     Route::get('/register', 'AccountController@showFormRegister');
     Route::post('/register', 'AccountController@registerAccount');
 
+    Route::get('/logout', 'AccountController@logoutAccount');
+
     Route::get('/account/forgot', 'AccountController@showFormForgot');
     Route::post('/account/forgot', 'AccountController@forgotPassword');
+    Route::post('/account/forgot/confirm', 'AccountController@confirmForgotPassword');
+    Route::post('/account/reset-password', 'AccountController@updatePassword');
 
-    Route::get('/confirm', function(){
-        Return Response::view('views/Confirm-Code');
-    });
-    Route::get('/admin/home', function(){
-        Return Response::view('views/admin/Home');
-    });
-    Route::get('/admin/user', function(){
-        Return Response::view('views/admin/User');
-    });
+    Route::post('/refresh-code', 'AccountController@refreshCode');
+
+    Route::get('/register/confirm', 'AccountController@showFormConfirmRegister');
+    Route::post('/register/confirm', 'AccountController@confirmRegisterAccount');
     //-------------------------------------------------------------------------------------
 
     Route::registerResource();

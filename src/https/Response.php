@@ -46,4 +46,18 @@ class Response
         }
         return null;
     }
+
+    public static function apiResponse($status = Status::OK, $message = '', $data = [])
+    {
+        $response = [
+            'status' => $status,
+            'message' => $message,
+            'data' => $data
+        ];
+        http_response_code($response['status']);
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit();
+    }
 }

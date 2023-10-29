@@ -1,5 +1,5 @@
 <?php
-$HOSTNAME = "localhost:3308";
+$HOSTNAME = "localhost";
 $DATABASENAME = "socialnetwork";
 $USERNAME = "root";
-$PASSWORD = "1234";
+$PASSWORD = "19052002";

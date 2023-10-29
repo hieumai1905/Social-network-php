@@ -11,4 +11,6 @@ interface IUserService extends IGeneralService
 {
     function loginAccount($email, $password): ?User;
     function registerAccount($full_name, $email, $password): ?User;
+
+    function getUserByEmail($email): ?User;
 }
