@@ -81,6 +81,16 @@ function registerRoute()
     });
     //-------------------------------------------------------------------------------------
 
+    //---------------------------Register route for relation--------------------------------
+    Route::get('/relation/{user_id}','RelationController@getFriendForUser');
+    Route::post('/relation/{user_id}/sendfriendrequest/{user_target_id}','RelationController@sendfriendrequest');
+    Route::delete('/relation/{user_id}/unfriend/{user_target_id}','RelationController@unFriend');
+    Route::put('/relation/{user_id}/acceptfriendrequest/{user_target_id}','RelationController@acceptFriendRequest');
+    Route::delete('/relation/{user_id}/rejectfriendrequest/{user_target_id}','RelationController@rejectFriendRequest');
+    Route::post('/relation/{user_id}/block/{user_target_id}','RelationController@blockUser');
+    Route::delete('/relation/{user_id}/unblock/{user_target_id}','RelationController@unBlockUser');
+    Route::post('/relation/{user_id}/follow/{user_target_id}','RelationController@followUser');
+    Route::delete('/relation/{user_id}/unfollow/{user_target_id}','RelationController@unFollowUser');
     Route::registerResource();
     Route::dispatch();
 }

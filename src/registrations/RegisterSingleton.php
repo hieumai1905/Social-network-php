@@ -14,11 +14,14 @@ use DAO\post_interact\PostInteractDAO;
 use DAO\media\MediaDAO;
 
 use controllers\AccountController;
+use controllers\RelationController;
 use controllers\UserController;
+use DAO\relation\RelationDAO;
 use controllers\PostController;
 use DAO\request\RequestDAO;
 use DAO\user\UserDAO;
 use https\Request;
+use services\relation\RelationService;
 use services\request\RequestService;
 use services\user\UserService;
 use services\post\PostService;
@@ -46,6 +49,9 @@ require_once __DIR__ . '/../DAO/media/MediaDAO.php';
 
 require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../controllers/AccountController.php';
+require_once __DIR__ . '/../controllers/RelationController.php';
+require_once __DIR__ . '/../DAO/relation/RelationDAO.php';
+require_once __DIR__ . '/../services/relation/RelationService.php';
 require_once __DIR__ . '/../controllers/PostController.php';
 
 require_once __DIR__ . '/../services/user/UserService.php';
@@ -114,6 +120,23 @@ class RegisterSingleton
             return new AccountController(
                 $container->resolve('\services\user\IUserService'),
                 $container->resolve('\services\request\IRequestService')
+            );
+        });
+
+        $container->register('\DAO\relation\IRelationDAO' , function () {
+            return new RelationDAO();
+        });
+
+        $container->register('\services\relation\IRelationService', function () use ($container) {
+            return new RelationService(
+                $container->resolve('\DAO\relation\IRelationDAO')
+            );
+        });
+
+        $container->register('\controllers\RelationController', function () use ($container) {
+            return new RelationController(
+                $container->resolve('\services\relation\IRelationService'),
+                $container->resolve('\services\user\IUserService')
             );
         });
         //-------------------------------------------------------------------------------------
