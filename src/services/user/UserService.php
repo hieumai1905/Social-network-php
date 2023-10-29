@@ -153,6 +153,7 @@ class UserService implements IUserService
                 $userRegister->setCoverImage('cover.jpg');
                 $this->userDAO->createUser($userRegister);
                 $userRegister = $this->userDAO->getUserByEmail($email);
+                $userRegister = Mapper::mapStdClassToModel($userRegister, User::class);
                 if (!$userRegister) {
                     Logger::log('Create user failed');
                 }
