@@ -2,7 +2,7 @@
 
 namespace DAO\comment;
 use models\comment;
-require_once 'src\models\comment.php';
+require_once 'src/models/Comment.php';
 interface ICommentDAO
 {
     public function getCommentOfPost($postId):?array;
