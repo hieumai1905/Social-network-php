@@ -2,13 +2,31 @@
 
 namespace registrations;
 
+
+use https\Request;
+
+use DAO\user\UserDAO;
+use DAO\post\PostDAO;
+use DAO\comment_reply\CommentReplyDAO;
+use DAO\comment\CommentDAO;
+use DAO\like\LikeDAO;
+use DAO\post_interact\PostInteractDAO;
+use DAO\media\MediaDAO;
+
 use controllers\AccountController;
 use controllers\UserController;
+use controllers\PostController;
 use DAO\request\RequestDAO;
 use DAO\user\UserDAO;
 use https\Request;
 use services\request\RequestService;
 use services\user\UserService;
+use services\post\PostService;
+use services\comment\CommentService;
+use services\comment_reply\CommentReplyService;
+use services\like\LikeService;
+use services\post_interact\PostInteractService;
+use services\media\MediaService;
 
 require_once __DIR__ . '/DIContainer.php';
 require_once __DIR__ . '/../controllers/UserController.php';
@@ -17,8 +35,26 @@ require_once __DIR__ . '/../services/request/RequestService.php';
 require_once __DIR__ . '/../DAO/user/UserDAO.php';
 require_once __DIR__ . '/../DAO/request/RequestDAO.php';
 require_once __DIR__ . '/../https/Request.php';
-require_once __DIR__ . '/../controllers/AccountController.php';
 
+require_once __DIR__ . '/../DAO/user/UserDAO.php';
+require_once __DIR__ . '/../DAO/post/PostDAO.php';
+require_once __DIR__ . '/../DAO/comment/CommentDAO.php';
+require_once __DIR__ . '/../DAO/comment_reply/CommentReplyDAO.php';
+require_once __DIR__ . '/../DAO/like/LikeDAO.php';
+require_once __DIR__ . '/../DAO/post_interact/PostInteractDAO.php';
+require_once __DIR__ . '/../DAO/media/MediaDAO.php';
+
+require_once __DIR__ . '/../controllers/UserController.php';
+require_once __DIR__ . '/../controllers/AccountController.php';
+require_once __DIR__ . '/../controllers/PostController.php';
+
+require_once __DIR__ . '/../services/user/UserService.php';
+require_once __DIR__ . '/../services/post/PostService.php';
+require_once __DIR__ . '/../services/comment/CommentService.php';
+require_once __DIR__ . '/../services/comment_reply/CommentReplyService.php';
+require_once __DIR__ . '/../services/like/LikeService.php';
+require_once __DIR__ . '/../services/post_interact/PostInteractService.php';
+require_once __DIR__ . '/../services/media/MediaService.php';
 class RegisterSingleton
 {
     private static $container = null;
@@ -80,8 +116,81 @@ class RegisterSingleton
                 $container->resolve('\services\request\IRequestService')
             );
         });
-        //-------------------------------------------------------------------------------------
 
+        //===========================Post=================================================
+        $container->register('\DAO\post\IPostDAO', function () {
+            return new PostDAO();
+        });
+
+        $container->register('\services\post\IPostService', function () use ($container){
+            return new PostService(
+                $container->resolve('\DAO\post\IPostDAO')
+            );
+        });
+
+        $container->register('\controllers\PostController', function () use ($container) {
+            return new PostController(
+                $container->resolve('\services\post\IPostService')
+            );
+        });
+        //================================================================================
+        //=================================Comment========================================
+        $container->register('\DAO\comment\ICommentDAO', function () {
+            return new CommentDAO();
+        });
+
+        $container->register('\services\comment\ICommentService', function () use ($container){
+            return new CommentService(
+                $container->resolve('\DAO\comment\ICommentDAO')
+            );
+        });
+        //================================================================================
+        //=================================CommentReply===================================
+        $container->register('\DAO\comment_reply\ICommentReplyDAO', function () {
+            return new CommentReplyDAO();
+        });
+
+        $container->register('\services\comment_reply\ICommentReplyService', function () use ($container){
+            return new CommentReplyService(
+                $container->resolve('\DAO\comment_reply\ICommentReplyDAO')
+            );
+        });
+        //================================================================================
+        //=================================Like===========================================
+        $container->register('\DAO\like\ILikeDAO', function () {
+            return new LikeDAO();
+        });
+
+        $container->register('\services\like\ILikeService', function () use ($container){
+            return new LikeService(
+                $container->resolve('\DAO\like\ILikeDAO')
+            );
+        });
+        //================================================================================
+        //=================================PostInteract===================================
+        $container->register('\DAO\post_interact\IPostInteractDAO', function () {
+            return new PostInteractDAO();
+        });
+
+        $container->register('\services\post_interact\IPostInteractService', function () use ($container){
+            return new PostInteractService(
+                $container->resolve('\DAO\post_interact\IPostInteractDAO')
+            );
+        });
+        //================================================================================
+        //=================================Media==========================================
+        $container->register('\DAO\media\IMediaDAO', function () {
+            return new MediaDAO();
+        });
+
+        $container->register('\services\media\IMediaService', function () use ($container){
+            return new MediaService(
+                $container->resolve('\DAO\media\IMediaDAO')
+            );
+        });
+        //================================================================================
+=======
+        //-------------------------------------------------------------------------------------
 
     }
 
