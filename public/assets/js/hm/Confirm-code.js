@@ -32,19 +32,22 @@ function runTimeCode() {
             $("#send-code-register").show();
             return;
         }
+        console.log(time);
         time--;
     }, 1000);
 }
 
 function checkValidation() {
     let code = $('#code-confirm');
+    let error = $("#register-error");
+    $("#error-confirm-code").remove();
     if (!validateName(code.val())) {
-        $('#error-confirm-code').text('Code is not empty');
+        error.text('Code is not empty');
         code.focus();
         return false;
     }
     if(!validateCode(code.val())){
-        $('#error-confirm-code').text('Code is not valid');
+        error.text('Code is not valid');
         code.val('');
         code.focus();
         return false;

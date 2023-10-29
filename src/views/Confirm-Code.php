@@ -95,6 +95,7 @@
                                    placeholder="Enter code">
                         </div>
                         <div class="col-sm-12 p-0 text-left" style="display: block;">
+                            <p style="color:red; font-size:14px ; cursor:pointer;" id="register-error"></p>
                             <?php
                             if (isset($error)) {
                                 echo '<p style="color:red; font-size:14px ; cursor:pointer;" id="error-confirm-code">' . $error . '</p>';

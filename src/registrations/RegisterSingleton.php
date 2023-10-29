@@ -83,7 +83,7 @@ class RegisterSingleton
     public function register(): void
     {
         $container = $this->getContainer();
-        //---------------------------------------User--------------------------------------
+        //---------------------------------------User Account--------------------------------------
         $container->register('\DAO\user\IUserDAO', function () {
             return new UserDAO();
         });
@@ -116,6 +116,8 @@ class RegisterSingleton
                 $container->resolve('\services\request\IRequestService')
             );
         });
+        //-------------------------------------------------------------------------------------
+
 
         //===========================Post=================================================
         $container->register('\DAO\post\IPostDAO', function () {
@@ -189,8 +191,6 @@ class RegisterSingleton
             );
         });
         //================================================================================
-=======
-        //-------------------------------------------------------------------------------------
 
     }
 
