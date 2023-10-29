@@ -44,9 +44,10 @@ class RegisterSingleton
         return self::$container;
     }
 
-    public function register(): void {
+    public function register(): void
+    {
         $container = $this->getContainer();
-
+        //---------------------------------------User Account--------------------------------------
         $container->register('\DAO\user\IUserDAO', function () {
             return new UserDAO();
         });
@@ -55,13 +56,13 @@ class RegisterSingleton
             return new RequestDAO();
         });
 
-        $container->register('\services\user\IUserService', function () use ($container){
+        $container->register('\services\user\IUserService', function () use ($container) {
             return new UserService(
                 $container->resolve('\DAO\user\IUserDAO')
             );
         });
 
-        $container->register('\services\request\IRequestService', function () use ($container){
+        $container->register('\services\request\IRequestService', function () use ($container) {
             return new RequestService(
                 $container->resolve('\DAO\request\IRequestDAO')
             );
@@ -79,7 +80,11 @@ class RegisterSingleton
                 $container->resolve('\services\request\IRequestService')
             );
         });
+        //-------------------------------------------------------------------------------------
+
+
     }
+
     public function registerRequest(Request $request): void
     {
         $container = $this->getContainer();
