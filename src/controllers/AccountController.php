@@ -197,8 +197,8 @@ class AccountController
         }
     }
 
-    // API HTTP:POST('/account/forgot')
-    public function forgotPassword()
+    // API HTTP:POST('/api/account/forgot')
+    public function getCodeForgot()
     {
         try {
             $json = Response::getJson();
@@ -244,13 +244,17 @@ class AccountController
                 $email = $_POST['email-reset'];
                 $request = $this->requestService->getRequestByEmail($email);
                 if ($request && $request->getRequestCode() == $code && $request->getTypeRequest() == 'FORGOT') {
+                    $validCode = $request->getRequestAt() > date('Y-m-d H:i:s', strtotime('-1 minutes'));
+                    if (!$validCode) {
+                        return Response::View('views/Forgot', ['error' => 'Code expire']);
+                    }
                     $request->setTypeRequest('RESET');
                     $this->requestService->update($request);
                     $_SESSION['email-user-reset-password'] = $email;
                     return Response::View('views/Update-password');
                 }
+                return Response::View('views/Forgot', ['error' => 'Code is incorect', 'email_reset' => $email]);
             }
-            return Response::view('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Forgot', ['error' => $e->getMessage()]);
         }
@@ -270,6 +274,7 @@ class AccountController
                     if (!$requestValid) {
                         return Response::View('views/404');
                     }
+                    $this->requestService->delete($request->getRequestId());
                     $user = $this->userService->getUserByEmail($email);
                     if ($user) {
                         $user->setPassword($password);
@@ -286,7 +291,7 @@ class AccountController
         }
     }
 
-    // API HTTP:POST('/refresh-code')
+    // API HTTP:POST('/api/refresh-code')
     public function refreshCode()
     {
         try {
