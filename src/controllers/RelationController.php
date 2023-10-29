@@ -6,16 +6,24 @@ use https\Response;
 use models\Relation;
 use services\relation\IRelationService;
 use services\relation\RelationService;
+use services\user\IUserService;
 
 class RelationController  {
     private $relationService;
+    private $userService;
 
-    public function __construct(IRelationService $relationService)
+    public function __construct(IRelationService $relationService,IUserService $userService)
     {
         $this->relationService = $relationService;
+        $this->userService = $userService;
     }
     public function getFriendForUser ($user_id) {
-        $this->relationService->getFriendForUser($user_id);
+        $result = $this->relationService->getFriendForUser($user_id);
+        $user = [];
+        foreach ($result as $item) {
+            $user[] = $this->userService->getById($item->getUserTargetId());
+        }
+        return Response::view('views/Friend',['friend'=>$user]);
     }
     public function sendFriendRequest($user_id,$user_target_id) {
         $this->relationService->sendFriendRequest($user_id,$user_target_id);
