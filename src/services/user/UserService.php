@@ -188,4 +188,35 @@ class UserService implements IUserService
             throw new \Exception($e->getMessage());
         }
     }
+
+    /**
+     * @throws \Exception
+     */
+    function lockUser($userId): void
+    {
+        try {
+            $message = '';
+            $user = $this->userDAO->getUserById($userId);
+            if ($user) {
+                if ($user->status == 'ACTIVE') {
+                    $user->status = 'INACTIVE';
+                    $message = 'Lock user successfully';
+                } else if ($user->status == 'INACTIVE') {
+                    $user->status = 'ACTIVE';
+                    $message = 'Unlock user successfully';
+                }
+                $user = Mapper::mapStdClassToModel($user, User::class);
+                $this->userDAO->updateUser($user);
+                Logger::log($message . ' - User id: ' . $user->getUserId());
+            } else {
+                Logger::log('Lock user failed');
+            }
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
 }

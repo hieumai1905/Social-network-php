@@ -10,12 +10,12 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../public/static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="/public/static/css/fontawesome.all.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="../public/static/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="../public/static/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/public/static/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/public/static/css/responsive.bootstrap4.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../public/static/css/adminlte.min.css">
+    <link rel="stylesheet" href="/public/static/css/adminlte.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -37,7 +37,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="/starter.html" class="brand-link">
-            <img src="../public/static/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            <img src="/public/static/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">Admin O la la</span>
         </a>
@@ -49,13 +49,13 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <a href="Home.php" class="nav-link">
+                        <a href="/admin/dash-board" class="nav-link">
                             <span class="nav-icon badge">D</span>
                             <p>[Dashboard]</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="User.php" class="nav-link">
+                        <a href="/admin/users" class="nav-link">
                             <span class="nav-icon badge">U</span>
                             <p>[UsersPage]</p>
                         </a>
