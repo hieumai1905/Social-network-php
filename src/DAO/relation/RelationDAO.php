@@ -21,7 +21,7 @@ class RelationDAO implements IRelationDAO {
         $stmt->bindValue('user_id', $user_id);
         $stmt->bindValue('type_relation','FRIEND');
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function addRelation(Relation $relation)
@@ -35,60 +35,6 @@ class RelationDAO implements IRelationDAO {
         $stsm->bindValue('user_target_id',$relation->getUserTargetId());
         $stsm->execute();
     }
-
-//    public function deleteFriendRelation($user_id, $user_target_id)
-//    {
-//        $stmt1 = $this->connection->prepare('DELETE FROM relations
-//       WHERE user_id = :user_id and user_target_id = :user_target_id and type_relation = :type_relation');
-//        $stmt1->bindValue('user_id', $user_id);
-//        $stmt1->bindValue('user_target_id',$user_target_id);
-//        $stmt1->bindValue('type_relation','FRIEND');
-//        $stmt1->execute();
-//    }
-
-//    public function deleteFollowRelation($user_id, $user_target_id)
-//    {
-//        $stmt1 = $this->connection->prepare('DELETE FROM relations
-//       WHERE user_id = :user_id and user_target_id = :user_target_id and type_relation = :type_relation');
-//        $stmt1->bindValue('user_id', $user_id);
-//        $stmt1->bindValue('user_target_id',$user_target_id);
-//        $stmt1->bindValue('type_relation','FOLLOW');
-//        $stmt1->execute();
-//    }
-
-//    public function acceptFriendRequest($user_id, $user_target_id)
-//    {
-//        $stmt1 = $this->connection->prepare('UPDATE relations set type_relation = :type_relation, change_at = :change_at where user_id = :user_id and user_target_id = :user_target_id and type_relation = :type_relation_now');
-//        $stmt2 = $this->connection->prepare('UPDATE relations set type_relation = :type_relation, change_at = :change_at where user_id = :user_id and user_target_id = :user_target_id and type_relation = :type_relation_now');
-//        $stmt1->bindValue('type_relation', 'FRIEND');
-//        $stmt1->bindValue('change_at',date('Y-m-d'));
-//        $stmt1->bindValue('user_id', $user_id);
-//        $stmt1->bindValue('user_target_id',$user_target_id);
-//        $stmt1->bindValue('type_relation_now', 'WAITING');
-//        $stmt2->bindValue('type_relation', 'FRIEND');
-//        $stmt2->bindValue('change_at',date('Y-m-d'));
-//        $stmt2->bindValue('user_id', $user_target_id);
-//        $stmt2->bindValue('user_target_id',$user_id);
-//        $stmt2->bindValue('type_relation_now', 'REQUEST');
-//        $stmt1->execute();
-//        $stmt2->execute();
-//    }
-//
-//    public function rejectFriendRequest($user_id, $user_target_id)
-//    {
-//        $stmt1 = $this->connection->prepare('DELETE FROM relations
-//       WHERE user_id = :user_id and user_target_id = :user_target_id and type_relation = :type_relation');
-//        $stmt2 = $this->connection->prepare('DELETE FROM relations
-//       WHERE user_id = :user_target_id and user_target_id = :user_id and type_relation = :type_relation');
-//        $stmt1->bindValue('user_id', $user_id);
-//        $stmt1->bindValue('user_target_id',$user_target_id);
-//        $stmt1->bindValue('type_relation','WAITING');
-//        $stmt2->bindValue('user_id', $user_id);
-//        $stmt2->bindValue('user_target_id',$user_target_id);
-//        $stmt2->bindValue('type_relation','REQUEST');
-//        $stmt1->execute();
-//        $stmt2->execute();
-//    }
 
     public function deleteAllRelationByUserIdAndUserTargetId($user_id, $user_target_id)
     {
