@@ -56,7 +56,10 @@ class AccountController
     public function showFormConfirmRegister()
     {
         try {
-            $userRegister = unserialize($_SESSION['user-register']);
+            $userRegister = null;
+            if (isset($_SESSION['user-register'])) {
+                $userRegister = unserialize($_SESSION['user-register']);
+            }
             if ($userRegister) {
                 $email = $userRegister->getEmail();
                 $this->requestService->cleanRequestCode();
@@ -114,6 +117,7 @@ class AccountController
                 }
                 return Response::View('views/Login', ['error' => 'Email or password incorect']);
             }
+            return Response::view('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Error');
         }
@@ -151,6 +155,7 @@ class AccountController
                 }
                 return Response::View('views/Register', ['error' => 'Register failed']);
             }
+            return Response::view('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Register', ['error' => $e->getMessage()]);
         }
@@ -162,7 +167,10 @@ class AccountController
         try {
             if (isset($_POST['confirm-code'])) {
                 $code = $_POST['confirm-code'];
-                $userRegister = unserialize($_SESSION['user-register']);
+                $userRegister = null;
+                if (isset($_SESSION['user-register'])) {
+                    $userRegister = unserialize($_SESSION['user-register']);
+                }
                 if ($userRegister) {
                     $error = 'Code is incorect';
                     $email = $userRegister->getEmail();
@@ -183,13 +191,14 @@ class AccountController
                 }
                 return Response::View('views/Error');
             }
+            return Response::view('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Error');
         }
     }
 
-    // API HTTP:POST('/account/forgot')
-    public function forgotPassword()
+    // API HTTP:POST('/api/account/forgot')
+    public function getCodeForgot()
     {
         try {
             $json = Response::getJson();
@@ -220,6 +229,7 @@ class AccountController
                 }
                 return Response::apiResponse(Status::OK);
             }
+            return Response::apiResponse(Status::BAD_REQUEST, 'An error occurred');
         } catch (\Exception $e) {
             return Response::apiResponse(Status::BAD_REQUEST, $e->getMessage());
         }
@@ -234,12 +244,16 @@ class AccountController
                 $email = $_POST['email-reset'];
                 $request = $this->requestService->getRequestByEmail($email);
                 if ($request && $request->getRequestCode() == $code && $request->getTypeRequest() == 'FORGOT') {
+                    $validCode = $request->getRequestAt() > date('Y-m-d H:i:s', strtotime('-1 minutes'));
+                    if (!$validCode) {
+                        return Response::View('views/Forgot', ['error' => 'Code expire']);
+                    }
                     $request->setTypeRequest('RESET');
                     $this->requestService->update($request);
                     $_SESSION['email-user-reset-password'] = $email;
                     return Response::View('views/Update-password');
                 }
-
+                return Response::View('views/Forgot', ['error' => 'Code is incorect', 'email_reset' => $email]);
             }
         } catch (\Exception $e) {
             return Response::View('views/Forgot', ['error' => $e->getMessage()]);
@@ -250,7 +264,7 @@ class AccountController
     public function updatePassword()
     {
         try {
-            if (isset($_SESSION['email-user-reset-password'])) {
+            if (isset($_SESSION['email-user-reset-password']) && isset($_POST['password-reset']) && isset($_POST['password-confirm-reset'])) {
                 $email = $_SESSION['email-user-reset-password'];
                 $password = $_POST['password-reset'];
                 $confirmPassword = $_POST['password-confirm-reset'];
@@ -260,6 +274,7 @@ class AccountController
                     if (!$requestValid) {
                         return Response::View('views/404');
                     }
+                    $this->requestService->delete($request->getRequestId());
                     $user = $this->userService->getUserByEmail($email);
                     if ($user) {
                         $user->setPassword($password);
@@ -269,15 +284,14 @@ class AccountController
                 } else {
                     return Response::View('views/Update-password', ['error' => 'Password and confirm password is not match']);
                 }
-            } else {
-                return Response::View('views/404');
             }
+            return Response::View('views/404');
         } catch (\Exception $e) {
             return Response::View('views/Update-password', ['error' => $e->getMessage()]);
         }
     }
 
-    // API HTTP:POST('/refresh-code')
+    // API HTTP:POST('/api/refresh-code')
     public function refreshCode()
     {
         try {
@@ -296,6 +310,7 @@ class AccountController
                 $this->requestService->refreshCode($email, $code);
                 return Response::apiResponse(Status::OK);
             }
+            return Response::apiResponse(Status::BAD_REQUEST, 'An error occurred');
         } catch (\Exception $e) {
             return Response::apiResponse(Status::BAD_REQUEST, $e->getMessage());
         }

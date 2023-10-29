@@ -12,9 +12,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/public/images/fav-icon.png">
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="/public/css/style.css">
-    <!--    <script src="~/assets/hm/update-password.js"></script>-->
-    <!--    <script src="~/assets/hm/validation.js"></script>-->
-
+    <script src="/public/assets/js/hm/Update-password.js"></script>
+    <script src="/public/assets/js/hm/Validation.js"></script>
 </head>
 <body class="color-theme-blue">
 
@@ -73,10 +72,9 @@
                     <h2 class="fw-700 display1-size display2-md-size mb-4">Update <br>your password</h2>
                     <div class="col-sm-12 p-0 text-left" style="display: block">
                         <p style="color:red; font-size:14px ; cursor:pointer;" id="error-reset-password">
-
                         </p>
                     </div>
-                    <form>
+                    <form action="/account/reset-password" method="post" onsubmit="return checkValidation()">
                         <div class="form-group icon-input mb-3">
                             <input type="Password" class="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
                                    name="password-reset"
@@ -89,20 +87,17 @@
                                    placeholder="Confirm Password" id="confirm-password-reset">
                             <i class="font-sm ti-lock text-grey-500 pe-0"></i>
                         </div>
-                        <div class="form-check text-left mb-3">
-                            <input type="hidden" class="form-check-input mt-2" id="exampleCheck4">
+                        <div class="col-sm-12 p-0 text-left" style="margin-top: 15px">
+                            <div class="form-group mb-1">
+                                <button id="confirm-change-password-forReset"
+                                        class="form-control text-center style2-input text-white fw-600 bg-dark border-0 p-0 ">
+                                    Reset Password
+                                </button>
+                            </div>
+
                         </div>
                     </form>
 
-                    <div class="col-sm-12 p-0 text-left">
-                        <div class="form-group mb-1">
-                            <button id="confirm-change-password-forReset"
-                                    class="form-control text-center style2-input text-white fw-600 bg-dark border-0 p-0 ">
-                                Reset Password
-                            </button>
-                        </div>
-
-                    </div>
 
                 </div>
             </div>

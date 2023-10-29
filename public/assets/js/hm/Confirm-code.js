@@ -8,7 +8,7 @@ function reSendCode() {
     $("#send-code-register").hide();
     let email = $('#email-confirm').text();
     $.ajax({
-        url: "http://localhost:8080/refresh-code",
+        url: "http://localhost:8080/api/refresh-code",
         type: "POST",
         data: JSON.stringify({
             "email-refresh-code": email
