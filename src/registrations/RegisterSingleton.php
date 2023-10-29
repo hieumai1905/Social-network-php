@@ -98,7 +98,8 @@ class RegisterSingleton
 
         $container->register('\controllers\RelationController', function () use ($container) {
             return new RelationController(
-                $container->resolve('\services\relation\IRelationService')
+                $container->resolve('\services\relation\IRelationService'),
+                $container->resolve('\services\user\IUserService')
             );
         });
     }
