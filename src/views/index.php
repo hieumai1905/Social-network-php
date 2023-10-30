@@ -134,134 +134,134 @@ require_once "Layout-Header.php";
                     </div>
                     <!--Friend request-->
                     <div id="friendrequest">
-                        <div
-                                class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0"
-                        >
-                            <figure class="avatar me-3">
-                                <img
-                                        src="public/images/user-7.png"
-                                        alt="image"
-                                        class="shadow-sm rounded-circle w45"
-                                />
-                            </figure>
-                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">
-                                Anthony Daugloi
-                                <span
-                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500"
-                                >12 mutual friends</span
-                                >
-                            </h4>
-                        </div>
-                        <div
-                                class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4"
-                        >
-                            <a
-                                    href="#"
-                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl"
-                            >Confirm</a
-                            >
-                            <a
-                                    href="#"
-                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl"
-                            >Delete</a
-                            >
-                        </div>
-                        <div
-                                class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0"
-                        >
-                            <figure class="avatar me-3">
-                                <img
-                                        src="public/images/user-7.png"
-                                        alt="image"
-                                        class="shadow-sm rounded-circle w45"
-                                />
-                            </figure>
-                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">
-                                Anthony Daugloi
-                                <span
-                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500"
-                                >12 mutual friends</span
-                                >
-                            </h4>
-                        </div>
-                        <div
-                                class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4"
-                        >
-                            <a
-                                    href="#"
-                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl"
-                            >Confirm</a
-                            >
-                            <a
-                                    href="#"
-                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl"
-                            >Delete</a
-                            >
-                        </div>
-                        <div
-                                class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0"
-                        >
-                            <figure class="avatar me-3">
-                                <img
-                                        src="public/images/user-7.png"
-                                        alt="image"
-                                        class="shadow-sm rounded-circle w45"
-                                />
-                            </figure>
-                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">
-                                Anthony Daugloi
-                                <span
-                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500"
-                                >12 mutual friends</span
-                                >
-                            </h4>
-                        </div>
-                        <div
-                                class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4"
-                        >
-                            <a
-                                    href="#"
-                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl"
-                            >Confirm</a
-                            >
-                            <a
-                                    href="#"
-                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl"
-                            >Delete</a
-                            >
-                        </div>
-                        <div
-                                class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0"
-                        >
-                            <figure class="avatar me-3">
-                                <img
-                                        src="public/images/user-7.png"
-                                        alt="image"
-                                        class="shadow-sm rounded-circle w45"
-                                />
-                            </figure>
-                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">
-                                Anthony Daugloi
-                                <span
-                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500"
-                                >12 mutual friends</span
-                                >
-                            </h4>
-                        </div>
-                        <div
-                                class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4"
-                        >
-                            <a
-                                    href="#"
-                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl"
-                            >Confirm</a
-                            >
-                            <a
-                                    href="#"
-                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl"
-                            >Delete</a
-                            >
-                        </div>
+<!--                        <div-->
+<!--                                class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0"-->
+<!--                        >-->
+<!--                            <figure class="avatar me-3">-->
+<!--                                <img-->
+<!--                                        src="public/images/user-7.png"-->
+<!--                                        alt="image"-->
+<!--                                        class="shadow-sm rounded-circle w45"-->
+<!--                                />-->
+<!--                            </figure>-->
+<!--                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">-->
+<!--                                Anthony Daugloi-->
+<!--                                <span-->
+<!--                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500"-->
+<!--                                >12 mutual friends</span-->
+<!--                                >-->
+<!--                            </h4>-->
+<!--                        </div>-->
+<!--                        <div-->
+<!--                                class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4"-->
+<!--                        >-->
+<!--                            <a-->
+<!--                                    href="#"-->
+<!--                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl"-->
+<!--                            >Confirm</a-->
+<!--                            >-->
+<!--                            <a-->
+<!--                                    href="#"-->
+<!--                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl"-->
+<!--                            >Delete</a-->
+<!--                            >-->
+<!--                        </div>-->
+<!--                        <div-->
+<!--                                class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0"-->
+<!--                        >-->
+<!--                            <figure class="avatar me-3">-->
+<!--                                <img-->
+<!--                                        src="public/images/user-7.png"-->
+<!--                                        alt="image"-->
+<!--                                        class="shadow-sm rounded-circle w45"-->
+<!--                                />-->
+<!--                            </figure>-->
+<!--                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">-->
+<!--                                Anthony Daugloi-->
+<!--                                <span-->
+<!--                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500"-->
+<!--                                >12 mutual friends</span-->
+<!--                                >-->
+<!--                            </h4>-->
+<!--                        </div>-->
+<!--                        <div-->
+<!--                                class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4"-->
+<!--                        >-->
+<!--                            <a-->
+<!--                                    href="#"-->
+<!--                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl"-->
+<!--                            >Confirm</a-->
+<!--                            >-->
+<!--                            <a-->
+<!--                                    href="#"-->
+<!--                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl"-->
+<!--                            >Delete</a-->
+<!--                            >-->
+<!--                        </div>-->
+<!--                        <div-->
+<!--                                class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0"-->
+<!--                        >-->
+<!--                            <figure class="avatar me-3">-->
+<!--                                <img-->
+<!--                                        src="public/images/user-7.png"-->
+<!--                                        alt="image"-->
+<!--                                        class="shadow-sm rounded-circle w45"-->
+<!--                                />-->
+<!--                            </figure>-->
+<!--                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">-->
+<!--                                Anthony Daugloi-->
+<!--                                <span-->
+<!--                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500"-->
+<!--                                >12 mutual friends</span-->
+<!--                                >-->
+<!--                            </h4>-->
+<!--                        </div>-->
+<!--                        <div-->
+<!--                                class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4"-->
+<!--                        >-->
+<!--                            <a-->
+<!--                                    href="#"-->
+<!--                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl"-->
+<!--                            >Confirm</a-->
+<!--                            >-->
+<!--                            <a-->
+<!--                                    href="#"-->
+<!--                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl"-->
+<!--                            >Delete</a-->
+<!--                            >-->
+<!--                        </div>-->
+<!--                        <div-->
+<!--                                class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0"-->
+<!--                        >-->
+<!--                            <figure class="avatar me-3">-->
+<!--                                <img-->
+<!--                                        src="public/images/user-7.png"-->
+<!--                                        alt="image"-->
+<!--                                        class="shadow-sm rounded-circle w45"-->
+<!--                                />-->
+<!--                            </figure>-->
+<!--                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">-->
+<!--                                Anthony Daugloi-->
+<!--                                <span-->
+<!--                                        class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500"-->
+<!--                                >12 mutual friends</span-->
+<!--                                >-->
+<!--                            </h4>-->
+<!--                        </div>-->
+<!--                        <div-->
+<!--                                class="card-body d-flex align-items-center pt-0 ps-4 pe-4 pb-4"-->
+<!--                        >-->
+<!--                            <a-->
+<!--                                    href="#"-->
+<!--                                    class="p-2 lh-20 w100 bg-primary-gradiant me-2 text-white text-center font-xssss fw-600 ls-1 rounded-xl"-->
+<!--                            >Confirm</a-->
+<!--                            >-->
+<!--                            <a-->
+<!--                                    href="#"-->
+<!--                                    class="p-2 lh-20 w100 bg-grey text-grey-800 text-center font-xssss fw-600 ls-1 rounded-xl"-->
+<!--                            >Delete</a-->
+<!--                            >-->
+<!--                        </div>-->
                     </div>
 
                 </div>
@@ -282,7 +282,7 @@ require_once "Layout-Header.php";
 include "Layout-Footer.php";
 ?>
 <!-- main content -->
-<!--<script src="~/assets/phong/phongIndex.js"></script>-->
+<script src="/public/assets/phong/phongIndex.js"></script>
 <!--<script src="~/assets/htd/hungIndex.js"></script>-->
 <!--<script src="~/assets/htd/index.js"></script>-->
 <script src="public/js/plugin.js"></script>
