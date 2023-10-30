@@ -19,4 +19,6 @@ interface IRelationService extends IGeneralService {
     public function unFollowUser($user_id,$user_target_id);
     public function createRelation ($user_id,$user_target_id,$type_relation);
     public function getFriendRequest($user_id);
+    public function getRelationForUser ($user_id,$type_relation);
+    public function cancelFriendRequest($user_id,$user_target_id);
 }
