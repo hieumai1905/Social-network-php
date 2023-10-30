@@ -53,6 +53,10 @@ function registerRoute()
 
     Route::get('/users/{id}', 'UserController@getUserById');
 
+    Route::get('/api/users/{id}','UserController@getUser');
+
+    Route::get('/users/{$content}/findusers','UserController@findUserByContent');
+
 
     //-------------------------------------------------------------------------------------
 
@@ -86,16 +90,22 @@ function registerRoute()
     //-------------------------------------------------------------------------------------
 
     //---------------------------Register route for relation--------------------------------
-    Route::get('/relation/{user_id}','RelationController@getFriendForUser');
-    Route::post('/relation/{user_id}/sendfriendrequest/{user_target_id}','RelationController@sendfriendrequest');
-    Route::delete('/relation/{user_id}/unfriend/{user_target_id}','RelationController@unFriend');
-    Route::put('/relation/{user_id}/acceptfriendrequest/{user_target_id}','RelationController@acceptFriendRequest');
-    Route::delete('/relation/{user_id}/rejectfriendrequest/{user_target_id}','RelationController@rejectFriendRequest');
-    Route::post('/relation/{user_id}/block/{user_target_id}','RelationController@blockUser');
-    Route::delete('/relation/{user_id}/unblock/{user_target_id}','RelationController@unBlockUser');
-    Route::post('/relation/{user_id}/follow/{user_target_id}','RelationController@followUser');
-    Route::delete('/relation/{user_id}/unfollow/{user_target_id}','RelationController@unFollowUser');
-    Route::get('/relation/{user_id}/friendrequest','RelationController@getFriendRequest');
+    Route::get('/relation/{user_id}/friendlist','RelationController@getFriendOfUser');
+    Route::post('/api/relation/sendfriendrequest/{user_target_id}','RelationController@sendfriendrequest');
+    Route::delete('/api/relation/unfriend/{user_target_id}','RelationController@unFriend');
+    Route::put('/api/relation/acceptfriendrequest/{user_target_id}','RelationController@acceptFriendRequest');
+    Route::delete('/api/relation/rejectfriendrequest/{user_target_id}','RelationController@rejectFriendRequest');
+    Route::post('/api/relation/block/{user_target_id}','RelationController@blockUser');
+    Route::delete('/api/relation/unblock/{user_target_id}','RelationController@unBlockUser');
+    Route::post('/api/relation/follow/{user_target_id}','RelationController@followUser');
+    Route::delete('/api/relation/unfollow/{user_target_id}','RelationController@unFollowUser');
+    Route::get('/api/relation/friendrequest','RelationController@getFriendRequestOfUser');
+    Route::get('/api/relation/friendlist','RelationController@getAllFriendOfUser');
+    Route::get('/api/relation/followlist','RelationController@getFollowOfUser');
+    Route::get('/api/relation/blocklist','RelationController@getBlockOfUser');
+    Route::get('/api/relation/requestlist','RelationController@getRequestOfUser');
+    Route::delete('/api/relation/cancelfriendrequest/{user_target_id}','RelationController@cancelFriendRequest');
+    Route::get('/relation/block','RelationController@getBlockUser');
 
     Route::registerResource();
     Route::dispatch();
