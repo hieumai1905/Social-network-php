@@ -199,7 +199,7 @@ class UserService implements IUserService
             $user = $this->userDAO->getUserById($userId);
             if ($user) {
                 if ($user->status == 'ACTIVE') {
-                    $user->status = 'INACTIVE';
+                    $user->status = 'LOCK';
                     $message = 'Lock user successfully';
                 } else if ($user->status == 'INACTIVE') {
                     $user->status = 'ACTIVE';

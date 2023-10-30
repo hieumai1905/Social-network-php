@@ -61,7 +61,7 @@ class UserController
 
     //---------------------------HTTP POST--------------------------------
 
-    // API HTTP POST("/change-email/code")
+    // API HTTP POST("/api/change-email/code")
     public function getCodeChangeEmail()
     {
         try {
@@ -127,7 +127,7 @@ class UserController
         }
     }
 
-    // API HTTP POST("/change-password")
+    // HTTP POST("/change-password")
     public function changePassword()
     {
         try {

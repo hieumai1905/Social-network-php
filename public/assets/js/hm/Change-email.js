@@ -1,9 +1,6 @@
 window.onload = function () {
     const btnGetCodeChangeEmail = document.getElementById('btn-get-code-change-email');
     btnGetCodeChangeEmail.addEventListener('click', getCodeChangeEmail);
-    btnSaveChangeEmail.addEventListener('click', ChangeEmail)
-    clearInput();
-
     let error = $("#notification2-change-email");
     if(error.text() !== ''){
         $("#dis-none").remove();
@@ -16,22 +13,25 @@ function getCodeChangeEmail() {
     let email = emailReset.val();
     if (email === '') {
         showError('Email is required');
+        emailReset.val('');
         emailReset.focus();
         return;
     }
     if (!validateEmail(email)) {
         showError('Email is not valid');
+        emailReset.val('');
         emailReset.focus();
         return;
     }
     $.ajax({
-        url: "http://localhost:8080/change-email/code",
+        url: "http://localhost:8080/api/change-email/code",
         type: "POST",
         data: JSON.stringify({
             "new-email": email
         }),
         success: function (data) {
             $(".remove-after").remove();
+            $("#notification2-change-email").remove();
             $(".show-after").show();
             $("#code-change-email").focus()
         },

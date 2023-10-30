@@ -55,7 +55,7 @@ function registerRoute()
 
     Route::get('/change-email', 'UserController@showFormChangeEmail');
     Route::post('/change-email', 'UserController@changeEmail');
-    Route::post('/change-email/code', 'UserController@getCodeChangeEmail');
+    Route::post('/api/change-email/code', 'UserController@getCodeChangeEmail');
 
     Route::get('/change-password', 'UserController@showFormChangePassword');
     Route::post('/change-password', 'UserController@changePassword');
