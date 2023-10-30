@@ -139,9 +139,19 @@
 
                                     <div class="col-lg-12">
                                         <button id="btnSave" class="bg-current text-center text-white font-xsss fw-600 p-3 w175 rounded-3 d-inline-block">Save</button>
+                                        <h5 id="error"  style="color:blue"></h5>
                                     </div>
                                 </div>
-
+                                <div>
+                                    <p id="uuserId"></p>
+                                    <p id="uAvatar"></p>
+                                    <p id="uUserInfoId"></p>
+                                    <p id="uPassword"></p>
+                                    <p id="uStatus"></p>
+                                    <p id="uUserRole"></p>
+                                    <p id="uCoverImage"></p>
+                                    <p></p>
+                                </div>
 
                             </form>
                         </div>
