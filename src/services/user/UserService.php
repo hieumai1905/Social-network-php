@@ -219,4 +219,27 @@ class UserService implements IUserService
             throw new \Exception($e->getMessage());
         }
     }
+
+    function findUserByContent($content)
+    {
+        try {
+            $data = $this->userDAO->getUserByNameOrEmailOrPhone(urldecode($content));
+            if (!$data) {
+                Logger::log('Get user by email failed');
+                return null;
+            }
+            $users = [];
+            foreach ($data as $item) {
+                $user = Mapper::mapStdClassToModel($item,User::class);
+                $users[] = $user;
+            }
+            return $users;
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
 }

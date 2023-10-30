@@ -84,4 +84,12 @@ class UserDAO implements IUserDAO
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+
+    public function getUserByNameOrEmailOrPhone($content)
+    {
+        $stmt = $this->connection->prepare('SELECT * FROM users WHERE full_name like :content or email like :content or phone like :content');
+        $stmt->bindValue(':content', '%'.$content.'%');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }
