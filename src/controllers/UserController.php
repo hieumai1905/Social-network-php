@@ -28,7 +28,8 @@ class UserController
 
     public function getUserById($id)
     {
-        $this->userService->getById($id);
+        $user = $this->userService->getById($id);
+        return Response::view('views/Profile',['user'=>$user]);
     }
 
     //---------------------------------------------------------------------

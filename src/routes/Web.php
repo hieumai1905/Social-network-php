@@ -91,6 +91,8 @@ function registerRoute()
     Route::delete('/relation/{user_id}/unblock/{user_target_id}','RelationController@unBlockUser');
     Route::post('/relation/{user_id}/follow/{user_target_id}','RelationController@followUser');
     Route::delete('/relation/{user_id}/unfollow/{user_target_id}','RelationController@unFollowUser');
+    Route::get('/relation/{user_id}/friendrequest','RelationController@getFriendRequest');
+
     Route::registerResource();
     Route::dispatch();
 }

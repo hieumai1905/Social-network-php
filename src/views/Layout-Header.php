@@ -295,9 +295,13 @@
             </div>
         </div>
 
-        <a id="avatarprofile" href="Profile.php" class="p-0 ms-3 menu-icon">
-            <img style="width:30px; height:40px; border-radius:30px;" id="avataruser" src="/public/images/profile-4.png" alt="user" class="w40 mt--1" />
-        </a>
+        <?php
+            $user = unserialize($_SESSION['user-login']);
+            $urlProfile = 'http://localhost:8080/users/'.$user->getUserId();
+            echo "<a id='avatarprofile' href='${urlProfile}' class='p-0 ms-3 menu-icon'>
+            <img style='width:30px; height:40px; border-radius:30px;' id='avataruser' src='/public/images/profile-4.png' alt='user' class='w40 mt--1' />
+        </a>"
+        ?>
     </div>
     <!-- navigation top -->
     <!-- navigation left -->

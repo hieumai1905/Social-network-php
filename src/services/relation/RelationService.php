@@ -60,7 +60,7 @@ class RelationService implements IRelationService {
     public function getFriendForUser($user_id)
     {
         try {
-            $result = $this->relationDAO->getAllFriendByUserId($user_id);
+            $result = $this->relationDAO->getRelationForUser($user_id,'FRIEND');
             Logger::log("Get friend successfully");
             if (!$result) {
                 Logger::log('No friend for user found');
@@ -197,6 +197,30 @@ class RelationService implements IRelationService {
         try {
             $this->relationDAO->deleteRelation($user_id,$user_target_id,'FOLLOW');
             Logger::log("Unfollow user successfully");
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        }catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function getFriendRequest($user_id)
+    {
+        try {
+            $result = $this->relationDAO->getRelationForUser($user_id,'WAITING');
+            Logger::log("Get friend request successfully");
+            if (!$result) {
+                Logger::log('No friend for user found');
+                return null;
+            }
+            $relations = [];
+            foreach ($result as $item) {
+                $relation = Mapper::mapStdClassToModel($item,Relation::class);
+                $relations[] = $relation;
+            }
+            return $relations;
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception('An error connect to database');

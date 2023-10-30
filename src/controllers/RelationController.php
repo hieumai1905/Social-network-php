@@ -7,6 +7,7 @@ use models\Relation;
 use services\relation\IRelationService;
 use services\relation\RelationService;
 use services\user\IUserService;
+use storage\Mapper;
 
 class RelationController  {
     private $relationService;
@@ -48,5 +49,13 @@ class RelationController  {
     }
     public function unFollowUser($user_id,$user_target_id) {
         $this->relationService->unFollowUser($user_id,$user_target_id);
+    }
+    public function getFriendRequest($user_id) {
+        $friendRequests = $this->relationService->getFriendRequest($user_id);
+        $data = [];
+        foreach ($friendRequests as $item) {
+            $data[] = $item;
+        }
+        return $data;
     }
 }

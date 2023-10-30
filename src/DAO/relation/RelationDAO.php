@@ -15,15 +15,14 @@ class RelationDAO implements IRelationDAO {
         $this->connection = ConnectDatabase::getConnection();
     }
 
-    public function getAllFriendByUserId($user_id)
+    public function getRelationForUser($user_id, $type_relation)
     {
         $stmt = $this->connection->prepare('SELECT * FROM relations WHERE user_id = :user_id and type_relation = :type_relation');
         $stmt->bindValue('user_id', $user_id);
-        $stmt->bindValue('type_relation','FRIEND');
+        $stmt->bindValue('type_relation',$type_relation);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-
     public function addRelation(Relation $relation)
     {
         $stsm = $this->connection->prepare('INSERT INTO relations (relation_id, change_at, type_relation, user_id, user_target_id)
