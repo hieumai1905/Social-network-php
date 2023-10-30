@@ -13,13 +13,14 @@ use DAO\comment\CommentDAO;
 use DAO\like\LikeDAO;
 use DAO\post_interact\PostInteractDAO;
 use DAO\media\MediaDAO;
+use DAO\relation\RelationDAO;
+use DAO\request\RequestDAO;
 
 use controllers\AccountController;
 use controllers\RelationController;
 use controllers\UserController;
-use DAO\relation\RelationDAO;
 use controllers\PostController;
-use DAO\request\RequestDAO;
+use controllers\CommentController;
 
 use services\relation\RelationService;
 use services\request\RequestService;
@@ -32,13 +33,9 @@ use services\post_interact\PostInteractService;
 use services\media\MediaService;
 
 require_once __DIR__ . '/DIContainer.php';
-require_once __DIR__ . '/../controllers/UserController.php';
-require_once __DIR__ . '/../services/user/UserService.php';
-require_once __DIR__ . '/../services/request/RequestService.php';
-require_once __DIR__ . '/../DAO/user/UserDAO.php';
-require_once __DIR__ . '/../DAO/request/RequestDAO.php';
 require_once __DIR__ . '/../https/Request.php';
 
+require_once __DIR__ . '/../DAO/request/RequestDAO.php';
 require_once __DIR__ . '/../DAO/user/UserDAO.php';
 require_once __DIR__ . '/../DAO/post/PostDAO.php';
 require_once __DIR__ . '/../DAO/comment/CommentDAO.php';
@@ -46,15 +43,17 @@ require_once __DIR__ . '/../DAO/comment_reply/CommentReplyDAO.php';
 require_once __DIR__ . '/../DAO/like/LikeDAO.php';
 require_once __DIR__ . '/../DAO/post_interact/PostInteractDAO.php';
 require_once __DIR__ . '/../DAO/media/MediaDAO.php';
+require_once __DIR__ . '/../DAO/relation/RelationDAO.php';
 
 require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../controllers/AccountController.php';
 require_once __DIR__ . '/../controllers/AdminController.php';
 require_once __DIR__ . '/../controllers/RelationController.php';
-require_once __DIR__ . '/../DAO/relation/RelationDAO.php';
-require_once __DIR__ . '/../services/relation/RelationService.php';
 require_once __DIR__ . '/../controllers/PostController.php';
+require_once __DIR__ . '/../controllers/CommentController.php';
 
+require_once __DIR__ . '/../services/relation/RelationService.php';
+require_once __DIR__ . '/../services/request/RequestService.php';
 require_once __DIR__ . '/../services/user/UserService.php';
 require_once __DIR__ . '/../services/post/PostService.php';
 require_once __DIR__ . '/../services/comment/CommentService.php';
@@ -169,6 +168,11 @@ class RegisterSingleton
         $container->register('\services\comment\ICommentService', function () use ($container){
             return new CommentService(
                 $container->resolve('\DAO\comment\ICommentDAO')
+            );
+        });
+        $container->register('\controllers\CommentController', function () use ($container){
+            return new CommentController(
+                $container->resolve('\services\comment\ICommentService')
             );
         });
         //================================================================================
