@@ -33,15 +33,19 @@ function registerRoute()
     //--------------------------------------------------------------------------------
 
     //--------------------------------------Admin-------------------------------------
-    Route::get('/admin/home', function () {
+    Route::get('/admin/dash-board', function () {
         return Response::view('views/admin/Home');
     });
     Route::get('/admin', function () {
         return Response::view('views/admin/Home');
     });
     Route::get('/admin/user', function () {
-        return Response::view('views/admin/User');
+        return Response::view('views/admin/Users');
     });
+
+    Route::get('/admin/users-all', 'AdminController@getUsers');
+
+    Route::put('/admin/lock-user', 'AdminController@lockUser');
     //---------------------------------------------------------------------------------
 
     //---------------------------------------User--------------------------------------

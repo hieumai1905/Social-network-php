@@ -2,6 +2,8 @@
 
 namespace https;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class Response
 {
     public static function view($view, $data = [])
@@ -47,7 +49,7 @@ class Response
         return null;
     }
 
-    public static function apiResponse($status = Status::OK, $message = '', $data = [])
+    #[NoReturn] public static function apiResponse($status = Status::OK, $message = '', $data = []): void
     {
         $response = [
             'status' => $status,
@@ -57,7 +59,7 @@ class Response
         http_response_code($response['status']);
 
         header('Content-Type: application/json');
-        echo json_encode($response);
+        echo json_encode($response, JSON_UNESCAPED_SLASHES);
         exit();
     }
 }

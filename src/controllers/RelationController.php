@@ -3,6 +3,7 @@
 namespace controllers;
 
 use https\Response;
+use https\Status;
 use models\Relation;
 use services\relation\IRelationService;
 use services\relation\RelationService;
@@ -54,8 +55,8 @@ class RelationController  {
         $friendRequests = $this->relationService->getFriendRequest($user_id);
         $data = [];
         foreach ($friendRequests as $item) {
-            $data[] = $item;
+            $data[] = Mapper::mapModelToJson($item);
         }
-        return $data;
+        return Response::apiResponse(Status::OK,'success',$data);
     }
 }
