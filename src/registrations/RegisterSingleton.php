@@ -113,7 +113,8 @@ class RegisterSingleton
 
         $container->register('\controllers\UserController', function () use ($container) {
             return new UserController(
-                $container->resolve('\services\user\IUserService')
+                $container->resolve('\services\user\IUserService'),
+                $container->resolve('\services\request\IRequestService')
             );
         });
 

@@ -39,13 +39,13 @@ function registerRoute()
     Route::get('/admin', function () {
         return Response::view('views/admin/Home');
     });
-    Route::get('/admin/user', function () {
-        return Response::view('views/admin/Users');
+    Route::get('/admin/users', function () {
+        return Response::view('views/admin/User');
     });
 
-    Route::get('/admin/users-all', 'AdminController@getUsers');
+    Route::get('/api/admin/users-all', 'AdminController@getUsers');
 
-    Route::put('/admin/lock-user', 'AdminController@lockUser');
+    Route::put('/api/admin/lock-user', 'AdminController@lockUser');
     //---------------------------------------------------------------------------------
 
     //---------------------------------------User--------------------------------------
@@ -53,7 +53,15 @@ function registerRoute()
 
     Route::get('/users/{id}', 'UserController@getUserById');
 
+    Route::get('/change-email', 'UserController@showFormChangeEmail');
+    Route::post('/change-email', 'UserController@changeEmail');
+    Route::post('/change-email/code', 'UserController@getCodeChangeEmail');
 
+    Route::get('/change-password', 'UserController@showFormChangePassword');
+    Route::post('/change-password', 'UserController@changePassword');
+
+
+    Route::get('/settings', 'UserController@showFormSetting');
     //-------------------------------------------------------------------------------------
 
     //---------------------------Register route for account--------------------------------
