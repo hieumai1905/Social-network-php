@@ -128,9 +128,14 @@ require_once "Layout-Header.php";
                             echo "<h4 id='nameuser' class='fw-700 font-sm mt-2 mb-lg-5 mb-4 pl-15'>${fullName}<span id='usermail' class='fw-500 font-xssss text-grey-500 mt-1 mb-3 d-block'>${email}</span></h4>";
                             ?>
                             <div class="d-flex align-items-center justify-content-center position-absolute-md right-15 top-0 me-2">
-                                <a style="cursor:pointer;background-color:green; margin-right:10px" id="block" class="p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Block</a>
-                                <a style="cursor:pointer;background-color:green; margin-right:10px" id="follow" class="p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Follow</a>
-                                <a style="cursor:pointer;background-color:green" id="addfriend" class="p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Add Friend</a>
+                                <?php
+                                    $user = unserialize($_SESSION['user-login']);
+                                    if ($user->getUserId() != $data['user']->getUserId()) {
+                                        echo "<a style='cursor:pointer;background-color:green; margin-right:10px' id='block' class='p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3'>Block</a>
+                                              <a style='cursor:pointer;background-color:green; margin-right:10px' id='follow' class='p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3'>Follow</a>
+                                              <a style='cursor:pointer;background-color:green' id='addfriend' class='p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3'>Add Friend</a>";
+                                    }
+                                ?>
                                 <a id="message" href="#" class="bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700">
                                     <i class="feather-mail font-md"></i>
                                 </a>
@@ -165,7 +170,7 @@ require_once "Layout-Header.php";
                                 </li>
                                 <li class="list-inline-item me-5">
                                     <?php
-                                    $urlFriend = 'http://localhost:8080/relation/'.$data['user']->getUserId();
+                                    $urlFriend = 'http://localhost:8080/relation/'.$data['user']->getUserId().'/friendlist';
                                     echo "<a href='${urlFriend}' class='fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block'>Membership</a>"
                                     ?>
                                 </li>
@@ -281,13 +286,15 @@ require_once "Layout-Header.php";
 </div>
 </div>
 
-
 <!-- main content -->
 <?php
 require "Layout-Footer.php";
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<!--<script src="assets/phong/phongProfile.js"></script>-->
+<script src="/public/assets/phong/phongProfile.js"></script>
+<script>
+    var a = 'avc';
+</script>
 <!--<script src="/assets/htd/profile.js"></script>-->
 <script src="/public/js/plugin.js"></script>
 <script src="/public/js/lightbox.js"></script>
