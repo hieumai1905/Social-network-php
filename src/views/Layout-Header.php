@@ -346,3 +346,4 @@
         </div>
     </nav>
     <!-- navigation left -->
+    <script src="/public/assets/phong/phongLayout.js"></script>
