@@ -1,95 +1,126 @@
-// const userId = localStorage.getItem('userId');
-// if (userId === null) {
-//     window.location.href = 'https://localhost:7261/404';
-//     console.log(userId)
-// } else {
-//     const userRole = localStorage.getItem('userRole');
-//     if (userRole !== "ADMIN_ROLE") {
-//         window.location.href = 'https://localhost:7261/403';
-//     }
-// }
-window.onload = function () {
+let usersData; // Biến để lưu trữ dữ liệu người dùng
+let currentPage = 1; // Số trang hiện tại
+const recordsPerPage = 9; // Số bản ghi trên mỗi trang
+
+$(document).ready(function () {
     loadUsers();
-    // var viewdetailuser = document.getElementsByClassName('viewdetail');
-    // for (let i = 0; i < viewdetailuser.length; i++) {
-    //     viewdetailuser[i].addEventListener("click", function () {
-    //         localStorage.setItem("userTargetId", viewdetailuser[i].getAttribute('name'));
-    //     });
-    // }
-    // var lockorunlock = document.getElementsByClassName('lockorunlock');
-    // for (let i = 0; i < lockorunlock.length; i++) {
-    //     lockorunlock[i].addEventListener("click", function () {
-    //         if (lockorunlock[i].innerHTML === "Lock") {
-    //             LockUser(lockorunlock[i].getAttribute('name'));
-    //             loadUsers();
-    //         }
-    //         else {
-    //             UnLockUser(lockorunlock[i].getAttribute('name'));
-    //             loadUsers();
-    //         }
-    //     });
-    // }
-}
 
-function loadUsers() {
-    $.ajax({
-        url: 'http://localhost:8080/admin/users-all',
-        type: 'GET',
-        contentType: "application/json",
-        success: function (data) {
-            let html = '';
-            let str = '';
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].userId === localStorage.getItem("userId"))
-                    continue;
-                if (data[i].userInfo.status === "ACTIVE") {
-                    html += `<tr className="odd">
-                        <td className="dtr-control sorting_1" tabIndex="0">${data[i].userId}</td>
-                        <td>${data[i].fullName}</td>
-                        <td>${data[i].userInfo.email}</td>
-                        <td>${data[i].userInfo.status}</td>
-                        <td style="text-align: center;">
+    $(document).on('click', '.lock-user', function () {
+        let id = $(this).closest('tr').find('td:first').text();
+        lockUser(id);
+        if ($(this).text() === "LOCK") {
+            $(this).text("UNLOCK");
+            $(this).css("background-color", "red");
 
-                            <a style="cursor:pointer" class="lockorunlock" name="${data[i].userId}">Lock</a> |
-                            <a class="viewdetail" href="https://localhost:7261/profile" name="${data[i].userId}">View Detail</a>
-                        </td>
-                    </tr>`
-                } else {
-                    html += `<tr className="even">
-                        <td className="dtr-control sorting_1" tabIndex="0">${data[i].userId}</td>
-                        <td>${data[i].fullName}</td>
-                        <td>${data[i].userInfo.email}</td>
-                        <td>${data[i].userInfo.status}</td>
-                        <td style="text-align: center;">
-
-                            <a style="cursor:pointer;color:red" class="lockorunlock" name="${data[i].userId}">UnLock</a> |
-                            <a class="viewdetail" href="https://localhost:7261/profile" name="${data[i].userId}">View Detail</a>
-                        </td>
-                    </tr>`
-                }
-                $("#show-user-body").html(html);
-            }
-
-        }, error: function (error) {
-            if (error.status === 401) {
-                window.location.href = 'https://localhost:7261/login';
-                return;
-            } else if (error.status === 403) {
-                window.location.href = 'https://localhost:7261/403';
-            }
-            window.location.href = 'https://localhost:7261/404';
+        } else {
+            $(this).text("LOCK");
+            $(this).css("background-color", "green");
         }
     });
-}
-function LockUser(id) {
+});
+
+function lockUser(id) {
     $.ajax({
-        url: 'https://localhost:7131/v1/api/admin/lock/'+id,
+        url: 'http://localhost:8080/api/admin/lock-user',
         method: 'PUT',
-        contentType: 'json',
+        data: JSON.stringify({
+            "user_id": id
+        }),
+        contentType: 'application/json',
         error: function (reponse) {
         },
         success: function (reponse) {
             console.log(reponse);
+        }
+    });
+}
+function loadUsers() {
+    $.ajax({
+        url: 'http://localhost:8080/api/admin/users-all',
+        type: 'GET',
+        contentType: "application/json",
+        success: function (response) {
+            if (response.status === 200) {
+                usersData = response.data; // Lưu trữ dữ liệu người dùng từ API
+                const totalRecords = usersData.length; // Tổng số bản ghi
+                const totalPages = Math.ceil(totalRecords / recordsPerPage); // Tổng số trang
+
+                let html = '';
+                let startIndex = (currentPage - 1) * recordsPerPage; // Chỉ số bắt đầu của bản ghi trên trang hiện tại
+                let endIndex = startIndex + recordsPerPage; // Chỉ số kết thúc của bản ghi trên trang hiện tại
+
+                if (endIndex > totalRecords) {
+                    endIndex = totalRecords;
+                }
+
+                if (totalRecords === 0) {
+                    html += '<tr><td colspan="5">No users found.</td></tr>';
+                } else {
+                    for (let i = startIndex; i < endIndex; i++) {
+                        let user = usersData[i];
+
+                        html += '<tr>';
+                        html += '<td style="text-align: center;">' + user.userId + '</td>';
+                        html += '<td>' + user.fullName + '</td>';
+                        html += '<td>' + user.email + '</td>';
+                        html += '<td style="text-align: center;">' + user.phone + '</td>';
+                        html += '<td style="text-align: center;">';
+                        if (user.status === "LOCK") {
+                            status = "UNLOCK";
+                            html += '<button style="width: 80px; height: 28px; background-color: red; border: none; color: white;" class="lock-user">' + status + '</button> ';
+                        } else {
+                            status = "LOCK";
+                            html += '<button style="width: 80px; height: 28px; background-color: green; border: none; color: white;" class="lock-user">' + status + '</button> ';
+                        }
+                        html += '</td>';
+                        html += '</tr>';
+                    }
+                }
+                $("#body-content").html(html);
+
+                // Hiển thị phân trang
+                let paginationHtml = '';
+                paginationHtml += '<li class="paginate_button page-item previous ' + (currentPage === 1 ? 'disabled' : '') + '"><a href="#" aria-controls="products" data-dt-idx="prev" tabindex="0" class="page-link">Previous</a></li>';
+
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHtml += '<li class="paginate_button page-item ' + (currentPage === i ? 'active' : '') + '"><a href="#" aria-controls="products" data-dt-idx="' + i + '" tabindex="0" class="page-link">' + i + '</a></li>';
+                }
+
+                paginationHtml += '<li class="paginate_button page-item next ' + (currentPage === totalPages ? 'disabled' : '') + '"><a href="#" aria-controls="products" data-dt-idx="next" tabindex="0" class="page-link">Next</a></li>';
+
+                $("#products_paginate ul.pagination").html(paginationHtml);
+
+                // Sự kiện click cho các trang phân trang
+                $(".paginate_button.page-item a").on("click", function () {
+                    const index = $(this).data("dt-idx");
+
+                    if (index === "prev") {
+                        if (currentPage > 1) {
+                            currentPage--;
+                            loadUsers();
+                        }
+                    } else if (index === "next") {
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            loadUsers();
+                        }
+                    } else {
+                        currentPage = index;
+                        loadUsers();
+                    }
+                });
+            } else {
+                console.log(response.message);
+            }
+        },
+        error: function (error) {
+            if (error.status === 401) {
+                window.location.href = 'http://localhost:8080/login';
+                return;
+            } else if (error.status === 403) {
+                window.location.href = 'http://localhost:8080/403';
+            }
+            window.location.href = 'http://localhost:8080/error';
         }
     });
 }

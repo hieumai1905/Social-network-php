@@ -25,7 +25,7 @@ require_once "Layout-Header.php";
                             }
                             if (isset($success)) {
                                 echo '<i style="color: red; font-size: 14px;"
-                                   id="notification2-change-email">' . $success . '</i>';
+                                   id="notification3-change-email">' . $success . '</i>';
                             }
                             ?>
                         </div>

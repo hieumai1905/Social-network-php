@@ -22,7 +22,7 @@ class AdminController
 
     //---------------------------HTTP GET---------------------------------
 
-    // HTTP GET("/admin/users-all")
+    // HTTP GET("/api/admin/users-all")
     public function getUsers()
     {
         try {
@@ -55,15 +55,19 @@ class AdminController
                 throw new Exception('ID is null');
             }
             $userId = $json['user_id'];
-//            if(is_numeric($userId)){
-//                return Response::apiResponse(Status::BAD_REQUEST, 'ID is not valid', null);
-//            }
             $user = $this->userService->getById($userId);
             if (!$user) {
                 return Response::apiResponse(Status::NOT_FOUND, 'user is null', null);
             }
-            $this->userService->lockUser($userId);
-            return Response::apiResponse(Status::OK, 'success', null);
+            $status = $user->getStatus();
+
+            if ($status == "LOCK") {
+                $this->userService->lockUser($userId);
+                return Response::apiResponse(Status::OK, 'Un lock success', null);
+            } else {
+                $this->userService->lockUser($userId);
+                return Response::apiResponse(Status::OK, 'Lock success', null);
+            }
         } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
