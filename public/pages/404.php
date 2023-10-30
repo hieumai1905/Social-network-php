@@ -16,8 +16,9 @@
     .four_zero_four_bg{
 
         background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-        height: 400px;
+        height: 500px;
         background-position: center;
+        background-repeat: repeat;
     }
 
 
@@ -35,7 +36,14 @@
         background: #39ac31;
         margin: 20px 0;
         display: inline-block;}
-    .contant_box_404{ margin-top:-50px;}
+    .contant_box_404{
+        margin-top:-50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
 </style>
 <body>
 <section class="page_404">
@@ -44,7 +52,7 @@
             <div class="col-sm-12 ">
                 <div class="col-sm-10 col-sm-offset-1  text-center">
                     <div class="four_zero_four_bg">
-                        <h1 class="text-center ">404</h1>
+                        <h1 class="text-center " style="display: flex;justify-content: center;">404</h1>
 
 
                     </div>
@@ -53,9 +61,7 @@
                         <h3 class="h2">
                             Look like you're lost
                         </h3>
-
-                        <p>the page you are looking for not avaible!</p>
-
+                        <p>The page you are looking for not avaible!</p>
                         <a href="" class="link_404">Go to Home</a>
                     </div>
                 </div>
