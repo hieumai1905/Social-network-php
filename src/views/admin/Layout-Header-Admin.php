@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/public/static/css/responsive.bootstrap4.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/public/static/css/adminlte.min.css">
+    <script src="/public/assets/js/hm/Admin-User-page.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
