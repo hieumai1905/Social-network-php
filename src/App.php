@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 
 use https\Request;
 use registrations\RegisterSingleton;

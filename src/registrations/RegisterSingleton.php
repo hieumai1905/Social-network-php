@@ -3,6 +3,7 @@
 namespace registrations;
 
 
+use controllers\AdminController;
 use https\Request;
 
 use DAO\user\UserDAO;
@@ -48,6 +49,7 @@ require_once __DIR__ . '/../DAO/media/MediaDAO.php';
 
 require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../controllers/AccountController.php';
+require_once __DIR__ . '/../controllers/AdminController.php';
 require_once __DIR__ . '/../controllers/RelationController.php';
 require_once __DIR__ . '/../DAO/relation/RelationDAO.php';
 require_once __DIR__ . '/../services/relation/RelationService.php';
@@ -213,6 +215,17 @@ class RegisterSingleton
             );
         });
         //================================================================================
+
+
+        //------------------------------------------ADMIN-----------------------------------------
+
+        $container->register('\controllers\AdminController', function () use ($container) {
+            return new AdminController(
+                $container->resolve('\services\user\IUserService')
+            );
+        });
+
+        //----------------------------------------------------------------------------------------
 
     }
 

@@ -61,16 +61,16 @@
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
-<script src="../public/static/js/jquery.min.js"></script>
+<script src="/public/static/js/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../public/static/js/bootstrap.bundle.min.js"></script>
+<script src="/public/static/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../public/static/js/adminlte.min.js"></script>
+<script src="/public/static/js/adminlte.min.js"></script>
 <!-- DataTables  & Plugins -->
-<script src="../public/static/js/jquery.dataTables.min.js"></script>
-<script src="../public/static/js/dataTables.bootstrap4.min.js"></script>
-<script src="../public/static/js/dataTables.responsive.min.js"></script>
-<script src="../public/static/js/responsive.bootstrap4.min.js"></script>
+<script src="/public/static/js/jquery.dataTables.min.js"></script>
+<script src="/public/static/js/dataTables.bootstrap4.min.js"></script>
+<script src="/public/static/js/dataTables.responsive.min.js"></script>
+<script src="/public/static/js/responsive.bootstrap4.min.js"></script>
 <script>
     $("#products").DataTable({
         "paging": true,
