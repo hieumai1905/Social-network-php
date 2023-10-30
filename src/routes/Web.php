@@ -57,6 +57,10 @@ function registerRoute()
 
     Route::get('/users/{$content}/findusers','UserController@findUserByContent');
 
+    Route::get('/editinformation','UserController@getUserToEditProfile');
+
+    Route::put('/api/updateuser','UserController@updateUser');
+
 
     //-------------------------------------------------------------------------------------
 
