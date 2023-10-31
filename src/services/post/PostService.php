@@ -21,8 +21,42 @@ class PostService implements IPostService
 
     function getAll(): ?array
     {
-        // TODO: Implement getAll() method.
-        return null;
+        try{
+            $result = $this->postDAO->getAllPost();
+            Logger::log('Get all post successfully');
+            $posts = [];
+            foreach ($result as $item){
+                $post = Mapper::mapStdClassToModel($item, Post::class);
+                $posts[] = $post;
+            }
+            return $posts;
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function getMonthPost(): ?array
+    {
+        try{
+            $result = $this->postDAO->getMonthPost();
+            Logger::log('Get all post in month successfully');
+            $posts = [];
+            foreach ($result as $item){
+                $post = Mapper::mapStdClassToModel($item, Post::class);
+                $posts[] = $post;
+            }
+            return $posts;
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
     }
 
     function getById($id): ?object

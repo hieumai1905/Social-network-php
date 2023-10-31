@@ -39,8 +39,8 @@ class PostDAO implements IPostDAO
             (SELECT p.post_id, create_at, content, access_modifier, post_type, p.user_id 
             FROM posts p INNER JOIN relations r on p.user_id = r.user_target_id 
             WHERE r.user_id = :user_id
-            AND   r.type_relation = 'FRIEND' 
-            OR    r.type_relation = 'FOLLOW'
+            AND  ( r.type_relation = 'FRIEND' 
+            OR    r.type_relation = 'FOLLOW')
             AND access_modifier = 'PUBLIC')
             UNION
             (SELECT * FROM posts WHERE user_id = :user_id)
@@ -50,10 +50,23 @@ class PostDAO implements IPostDAO
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function getAllPost(): ?array
+    {
+        // TODO: Implement getAllPost() method.
+        $stmt = $this->connection->prepare("SELECT * FROM posts");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+     public function getMonthPost(): ?array
+     {
+         // TODO: Implement getMonthPost() method.
+         $stmt = $this->connection->prepare("SELECT * FROM posts WHERE MONTH(create_at) = MONTH(NOW()) AND YEAR(create_at) = YEAR(NOW())");
+         $stmt->execute();
+         return $stmt->fetchAll(PDO::FETCH_OBJ);
+     }
 
     public function createPost(Post $post)
     {
-        $heheh = uniqid();
         $stmt = $this->connection->prepare("INSERT INTO posts (post_id, create_at, content, access_modifier, post_type, user_id)
             VALUES (:postId, NOW(), :content, :accessModifier, :postType, :userId)");
         $stmt->bindValue(':postId',uniqid());
@@ -80,4 +93,6 @@ class PostDAO implements IPostDAO
         $stmt->bindValue(':post_id', $postId);
         $stmt->execute();
     }
+
+
 }

@@ -11,4 +11,6 @@ interface IPostDAO
     public function createPost(post $post);
     public function updatePost(post $post);
     public function deletePost($postId);
+    public function getAllPost(): ?array;
+    public function getMonthPost(): ?array;
 }

@@ -123,6 +123,8 @@ function registerRoute()
     Route::get('/api/post/home/{user_id}', 'PostController@getPostForHome');
     Route::get('/api/post/profile/{user_id}', 'PostController@getPostForProfile');
     Route::get('/api/post/{post_id}', 'PostController@getPostById');
+    Route::get('/api/admin/post', 'PostController@getAllPost');
+    Route::get('/api/admin/post/month', 'PostController@getMonthPost');
     Route::post('/api/post', 'PostController@createPost');
     Route::put('/api/post', 'PostController@updatePost');
     Route::delete('/api/post/{post_id}', 'PostController@deletePost');
