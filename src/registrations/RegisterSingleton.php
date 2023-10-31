@@ -21,6 +21,7 @@ use controllers\RelationController;
 use controllers\UserController;
 use controllers\PostController;
 use controllers\CommentController;
+use controllers\CommentReplyController;
 
 use services\relation\RelationService;
 use services\request\RequestService;
@@ -51,6 +52,7 @@ require_once __DIR__ . '/../controllers/AdminController.php';
 require_once __DIR__ . '/../controllers/RelationController.php';
 require_once __DIR__ . '/../controllers/PostController.php';
 require_once __DIR__ . '/../controllers/CommentController.php';
+require_once __DIR__ . '/../controllers/CommentReplyController.php';
 
 require_once __DIR__ . '/../services/relation/RelationService.php';
 require_once __DIR__ . '/../services/request/RequestService.php';
@@ -184,6 +186,11 @@ class RegisterSingleton
         $container->register('\services\comment_reply\ICommentReplyService', function () use ($container){
             return new CommentReplyService(
                 $container->resolve('\DAO\comment_reply\ICommentReplyDAO')
+            );
+        });
+        $container->register('\controllers\CommentReplyController', function () use ($container){
+            return new CommentReplyController(
+                $container->resolve('\services\comment_reply\ICommentReplyService')
             );
         });
         //================================================================================
