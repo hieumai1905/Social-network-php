@@ -117,7 +117,11 @@ function registerRoute()
     Route::post('/api/comment','CommentController@createComment');
     Route::put('/api/comment', 'CommentController@updateComment');
     Route::delete('/api/comment/{comment_id}', 'CommentController@deleteComment');
-
+    //-----------------------------Register route for comment reply------------------------------------------------
+    Route::get('/api/comment/reply/{comment_id}', 'CommentReplyController@getCommentReply');
+    Route::post('/api/comment/reply', 'CommentReplyController@createCommentReply');
+    Route::put('/api/comment/reply', 'CommentReplyController@updateCommentReply');
+    Route::delete('/api/comment/reply/{comment_id}', 'CommentReplyController@deleteCommentReply');
 
     Route::registerResource();
     Route::dispatch();
