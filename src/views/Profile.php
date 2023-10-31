@@ -292,9 +292,6 @@ require "Layout-Footer.php";
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="/public/assets/phong/phongProfile.js"></script>
-<script>
-    var a = 'avc';
-</script>
 <!--<script src="/assets/htd/profile.js"></script>-->
 <script src="/public/js/plugin.js"></script>
 <script src="/public/js/lightbox.js"></script>
