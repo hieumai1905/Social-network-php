@@ -122,7 +122,12 @@ function registerRoute()
     Route::post('/api/comment/reply', 'CommentReplyController@createCommentReply');
     Route::put('/api/comment/reply', 'CommentReplyController@updateCommentReply');
     Route::delete('/api/comment/reply/{comment_id}', 'CommentReplyController@deleteCommentReply');
-
+//-----------------------------Register route for post interact------------------------------------------------
+    Route::get('/api/favorite/{userId}', 'PostInteractController@getFavoritePost');
+    Route::post('/api/favorite/{postId}/{userId}', 'PostInteractController@addFavorite');
+    Route::post('/api/hidden/{postId}/{userId}', 'PostInteractController@addHidden');
+    Route::post('/api/report', 'PostInteractController@addReport');
+    Route::delete('/api/favorite/{postId}/{userId}', 'PostInteractController@deleteFavorite');
     Route::registerResource();
     Route::dispatch();
 }
