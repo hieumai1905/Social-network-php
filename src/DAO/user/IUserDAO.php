@@ -18,4 +18,6 @@ interface IUserDAO
     public function getUserByEmail($email);
 
     public function getUserByNameOrEmailOrPhone($content);
+
+    public function getNewUserInMonth();
 }

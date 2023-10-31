@@ -41,13 +41,13 @@ function loadUsers() {
         contentType: "application/json",
         success: function (response) {
             if (response.status === 200) {
-                usersData = response.data; // Lưu trữ dữ liệu người dùng từ API
-                const totalRecords = usersData.length; // Tổng số bản ghi
-                const totalPages = Math.ceil(totalRecords / recordsPerPage); // Tổng số trang
+                usersData = response.data;
+                const totalRecords = usersData.length;
+                const totalPages = Math.ceil(totalRecords / recordsPerPage);
 
                 let html = '';
-                let startIndex = (currentPage - 1) * recordsPerPage; // Chỉ số bắt đầu của bản ghi trên trang hiện tại
-                let endIndex = startIndex + recordsPerPage; // Chỉ số kết thúc của bản ghi trên trang hiện tại
+                let startIndex = (currentPage - 1) * recordsPerPage;
+                let endIndex = startIndex + recordsPerPage;
 
                 if (endIndex > totalRecords) {
                     endIndex = totalRecords;

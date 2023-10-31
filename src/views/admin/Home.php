@@ -13,17 +13,27 @@
                                 <h5 class="m-0">All Users</h5>
                             </div>
                             <div class="card-body">
-                                <h6 class="card-title"id="count-users">10</h6>
+                                <h6 class="card-title"id="count-users">Loading...</h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="m-0">All Posts</h5>
+                                <h5 class="m-0">All Users</h5>
                             </div>
                             <div class="card-body">
-                                <h6 class="card-title" id="count-posts">190</h6>
+                                <h6 class="card-title"id="count-new-users">Loading...</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="m-0">Users new in month</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title" id="count-posts">Loading...</h6>
                             </div>
                         </div>
                     </div>
@@ -33,7 +43,7 @@
                                 <h5 class="m-0">Posts exported in month</h5>
                             </div>
                             <div class="card-body">
-                                <h6 id="count-posts-per-month" class="card-title">190</h6>
+                                <h6 id="count-posts-per-month" class="card-title">Loading...</h6>
                             </div>
                         </div>
                     </div>
@@ -60,6 +70,7 @@
 <script src="/public/static/js/dataTables.bootstrap4.min.js"></script>
 <script src="/public/static/js/dataTables.responsive.min.js"></script>
 <script src="/public/static/js/responsive.bootstrap4.min.js"></script>
+<script src="/public/assets/js/hm/Admin-dash-board.js"></script>
 <script>
     $("#products").DataTable({
         "paging": true,
