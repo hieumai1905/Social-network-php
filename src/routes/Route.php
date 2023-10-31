@@ -2,12 +2,14 @@
 
 namespace routes;
 
+use https\Response;
 use middlewares\MiddlewareRegister;
 use registrations\DIContainer;
 
 require_once 'src/controllers/UserController.php';
 require_once 'src/registrations/DIContainer.php';
 require_once 'src/middlewares/MiddlewareRegister.php';
+
 class Route
 {
     private static $routes = [];
@@ -83,7 +85,16 @@ class Route
         }
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
+        $checkRole = self::checkAuth($uri);
+        if ($checkRole == 401) {
+            return Response::view('views/Login');
+        }
+        if ($checkRole == 403) {
+            return Response::view('views/403');
+        }
+        if ($checkRole == 404) {
+            return Response::view('views/404');
+        }
         foreach (self::$routes as $route) {
             $routeCurrent = strval($uri);
             if (MiddlewareRegister::hasMiddleware($route['route']) and $routeCurrent == $route['route']) {
@@ -127,6 +138,7 @@ class Route
         http_response_code(404);
         include_once 'public/pages/404.php';
     }
+
     public static function registerResource()
     {
         self::registerResourcesInDirectory('public');
@@ -170,6 +182,32 @@ class Route
         } else {
             http_response_code(404);
             echo 'File not found';
+        }
+    }
+
+    private static function checkAuth($route)
+    {
+        $isResource = str_starts_with($route, '/public');
+        if ($isResource) {
+            return 200;
+        }
+        if ($route == '/login' || $route == '/register' || $route == '/account/forgot' || $route == '/api/forgot/confirm' || $route == '/account/forgot/confirm'
+            || $route == '/account/reset-password' || $route == '/api/refresh-code' || $route == '/register/confirm' || $route == '/error' || $route == '/update-password' || $route=='/logout') {
+            return 200;
+        } else {
+            if (isset($_SESSION['user-login'])) {
+                $user = unserialize($_SESSION['user-login']);
+                if ($route == '/admin/dash-board' || $route == '/admin' || $route == '/admin/users' || $route == '/api/admin/users-all' || $route == '/api/admin/lock-user') {
+                    if ($user->getUserRole() == "ADMIN") {
+                        return 200;
+                    } else {
+                        return 403;
+                    }
+                }
+                return 200;
+            } else {
+                return 401;
+            }
         }
     }
 

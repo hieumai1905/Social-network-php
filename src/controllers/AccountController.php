@@ -111,7 +111,7 @@ class AccountController
                     }
                     $_SESSION['user-login'] = serialize($userLogin);
                     if ($userLogin->getUserRole() == "ADMIN") {
-                        return Response::redirect('/admin');
+                        return Response::redirect('/admin/dash-board');
                     }
                     return Response::redirect('/home');
                 }

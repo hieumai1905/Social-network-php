@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>O la la - 403</title>
 
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/feather.css">
+    <link rel="stylesheet" href="/public/css/themify-icons.css">
+    <link rel="stylesheet" href="/public/css/feather.css">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/fav-icon.png">
     <style>
