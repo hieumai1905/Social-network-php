@@ -33,7 +33,10 @@
                                     <div class="col-lg-12 mb-3">
                                         <div class="form-group">
                                             <label class="mont-font fw-600 font-xsss">Full Name</label>
-                                            <input id="uFullName" style="font-size: 23px" data-maxlength="30" class="form-control mb-0 p-3  bg-ghostwhite lh-16" rows="1" placeholder="Type your first name..." spellcheck="false">
+                                            <?php
+                                                $fullName = $data['user']->getFullName();
+                                                echo "<input id='uFullName' style='font-size: 23px' data-maxlength='30' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your first name...' spellcheck='false' value='$fullName'>";
+                                            ?>
                                         </div>
                                     </div>
 
@@ -43,14 +46,26 @@
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="mont-font fw-600 font-xsss">Email</label>
-                                            <input id="uEmail" style="font-size: 23px; " class="form-control mb-0 p-3  bg-ghostwhite lh-16" rows="1" placeholder="Type your Email..." spellcheck="false" disabled>
+                                            <?php
+                                                $email = $data['user']->getEmail();
+                                                echo "<input id='uEmail' style='font-size: 23px; ' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your Email...' spellcheck='false' disabled value='$email'>";
+
+                                            ?>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="mont-font fw-600 font-xsss">Phone</label>
-                                            <input id="uPhone" type="number" style="font-size: 23px" pattern="[0-9]" data-maxlength="10" oninput="this.value=this.value.slice(0,this.dataset.maxlength)" class="form-control mb-0 p-3  bg-ghostwhite lh-16" rows="1" placeholder="Type your phone number..." spellcheck="false">
+                                            <?php
+                                                $phone = $data['user']->getPhone();
+                                                if ($phone == null) {
+                                                    echo "<input id='uPhone' type='number' style='font-size: 23px' pattern='[0-9]' data-maxlength='10' oninput='this.value=this.value.slice(0,this.dataset.maxlength)' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your phone number...' spellcheck='false'>";
+                                                }
+                                                else {
+                                                    echo "<input id='uPhone' type='number' style='font-size: 23px' pattern='[0-9]' data-maxlength='10' oninput='this.value=this.value.slice(0,this.dataset.maxlength)' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your phone number...' spellcheck='false' value='$phone'>";
+                                                }
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +76,15 @@
                                     <div class="col-lg-12 mb-3">
                                         <div class="form-group">
                                             <label class="mont-font fw-600 font-xsss">Address</label>
-                                            <input id="uAddress" style="font-size: 23px" class="form-control mb-0 p-3  bg-ghostwhite lh-16" rows="1" placeholder="Write your Address..." spellcheck="false">
+                                            <?php
+                                                $address = $data['user']->getAddress();
+                                                if ($address == null) {
+                                                    echo "<input id='uAddress' style='font-size: 23px' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Write your Address...' spellcheck='false'>";
+                                                }
+                                                else {
+                                                    echo "<input id='uAddress' style='font-size: 23px' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Write your Address...' spellcheck='false' value='$address'>";
+                                                }
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -71,11 +94,20 @@
                                         <div class="form-group">
                                             <div>
                                                 <label class="mont-font fw-600 font-xsss">Gender</label><br>
-                                                <select id="uGender" class="select-css">
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
+                                                <?php
+                                                $gender = $data['user']->getGender(); // Giả sử giá trị a là "female"
+                                                $options = array("Nam", "Nữ", "Khác"); // Mảng chứa các tùy chọn
+
+                                                echo '<select id="uGender" class="select-css">';
+                                                foreach ($options as $option) {
+                                                    echo '<option value="' . $option . '"';
+                                                    if ($gender == $option) {
+                                                        echo ' selected';
+                                                    }
+                                                    echo '>' . $option . '</option>';
+                                                }
+                                                echo '</select>';
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
@@ -83,19 +115,30 @@
                                     <div class="col-lg-9 mb-3">
                                         <div class="form-group">
                                             <label class="mont-font fw-600 font-xsss">Birthday</label><br>
-                                            <input id="uDob" style="font-size: 23px" class="form-control mb-0 p-3  bg-ghostwhite lh-16" type="date"  name="bday" min="1940-01-01"><br><br>
+                                            <?php
+                                                $dob = $data['user']->getDob();
+                                                echo "<input id='uDob' style='font-size: 23px' class='form-control mb-0 p-3  bg-ghostwhite lh-16' type='date'  name='bday' min='1940-01-01' value='$dob'><br><br>";
+                                            ?>
                                         </div>
                                     </div>
 
 
                                     <div class="col-lg-12 mb-3">
                                         <label class="mont-font fw-600 font-xsss">About Me</label>
-                                        <input id="uAboutMe"style="font-size: 23px" class="form-control mb-0 p-3 h100 bg-greylight lh-16" rows="5" placeholder="Write your message..." spellcheck="false">
+                                        <?php
+                                            $aboutMe = $data['user']->getAboutMe();
+                                            if ($aboutMe == null) {
+                                                echo "<input id='uAboutMe'style='font-size: 23px' class='form-control mb-0 p-3 h100 bg-greylight lh-16' rows='5' placeholder='Write your message...' spellcheck='false'>";
+                                            }
+                                            else {
+                                                echo "<input id='uAboutMe'style='font-size: 23px' class='form-control mb-0 p-3 h100 bg-greylight lh-16' rows='5' placeholder='Write your message...' spellcheck='false' value='$aboutMe'>";
+                                            }
+                                        ?>
                                     </div>
 
 
                                     <div class="col-lg-12">
-                                        <button id="btnSave" @*onclick="UpdateUserInfor()"*@ class="bg-current text-center text-white font-xsss fw-600 p-3 w175 rounded-3 d-inline-block">Save</button> <br /> <br />
+                                        <button id="btnSave" class="bg-current text-center text-white font-xsss fw-600 p-3 w175 rounded-3 d-inline-block">Save</button>
                                         <h5 id="error"  style="color:blue"></h5>
                                     </div>
                                 </div>
@@ -109,7 +152,6 @@
                                     <p id="uCoverImage"></p>
                                     <p></p>
                                 </div>
-
 
                             </form>
                         </div>
@@ -137,6 +179,7 @@
 <script src="public/js/plugin.js"></script>
 <script src="public/js/lightbox.js"></script>
 <script src="public/js/scripts.js"></script>
+<script src="/public/assets/phong/phongEditInformation.js"></script>
 <!--<script src="~/assets/htd/contact.js"></script>-->
 </body>
 

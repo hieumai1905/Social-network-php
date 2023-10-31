@@ -16,4 +16,6 @@ interface IUserDAO
     public function deleteUser($id);
 
     public function getUserByEmail($email);
+
+    public function getUserByNameOrEmailOrPhone($content);
 }

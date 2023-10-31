@@ -17,6 +17,7 @@
                                 foreach ($data['friend'] as $item) {
                                     $fullName = $item->getFullName();
                                     $email = $item->getEmail();
+                                    $urlFriendProfile = 'http://localhost:8080/users/'.$item->getUserId();
                                     echo "<div class='col-md-3 col-sm-4 pe-2 ps-2'>
                                             <div class='card d-block border-0 shadow-xss rounded-3 overflow-hidden mb-3 mt-0'>
                                                 <div class='card-body d-block w-100 ps-3 pe-3 pb-4 text-center'>
@@ -24,7 +25,7 @@
                                                     <div class='clearfix'></div>
                                                     <h4 class='fw-700 font-xsss mt-3 mb-1'>${fullName}</h4>
                                                     <p class='fw-500 font-xsssss text-grey-500 mt-0 mb-3'>${email}</p>
-                                                    <a href='#' class='profile mt-0 btn pt-2 pb-2 ps-3 pe-3 lh-24 ms-1 ls-3 d-inline-block rounded-xl bg-success font-xsssss fw-700 ls-lg text-white'>Profile</a>
+                                                    <a href='${urlFriendProfile}' class='profile mt-0 btn pt-2 pb-2 ps-3 pe-3 lh-24 ms-1 ls-3 d-inline-block rounded-xl bg-success font-xsssss fw-700 ls-lg text-white'>Profile</a>
                                                 </div>
                                             </div>
                                         </div>";
