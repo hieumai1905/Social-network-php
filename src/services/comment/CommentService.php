@@ -69,7 +69,7 @@ class CommentService implements ICommentService
     {
         // TODO: Implement update() method.
         try {
-            $this->commentDAO->update($object);
+            $this->commentDAO->updateComment($object);
             Logger::log('Update post successfully');
         } catch (\PDOException $e){
             Logger::log($e->getMessage());

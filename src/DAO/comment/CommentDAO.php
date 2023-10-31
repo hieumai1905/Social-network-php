@@ -27,9 +27,8 @@ class CommentDAO implements ICommentDAO
     public function createCommentForPost(Comment $comment)
     {
         // TODO: Implement createCommentForPost() method.
-        $stmt = $this->connection->prepare("INSERT INTO comments (comment_id, comment_at,content, post_id, comment, user_id)
-            VALUES (:comment_id, NOW(), :content, :post_id,, :user_id)");
-        $stmt->bindValue(':post_id',$comment->getPostId());
+        $stmt = $this->connection->prepare("INSERT INTO comments (comment_at,content, post_id, user_id)
+            VALUES (NOW(), :content, :post_id, :user_id)");
         $stmt->bindValue(':content',$comment->getContent());
         $stmt->bindValue(':post_id',$comment->getPostId());
         $stmt->bindValue(':user_id',$comment->getUserId());
@@ -40,7 +39,8 @@ class CommentDAO implements ICommentDAO
     {
         // TODO: Implement updateComment() method.
         $stmt = $this->connection->prepare("UPDATE comments SET content = :content WHERE comment_id = :comment_id ");
-        $stmt->bindValue(':contnent',$comment->getContent());
+        $stmt->bindValue(':content',$comment->getContent());
+        $stmt->bindValue(':comment_id',$comment->getCommentId());
         $stmt->execute();
     }
 

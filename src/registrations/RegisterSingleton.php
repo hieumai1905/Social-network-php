@@ -13,13 +13,19 @@ use DAO\comment\CommentDAO;
 use DAO\like\LikeDAO;
 use DAO\post_interact\PostInteractDAO;
 use DAO\media\MediaDAO;
+use DAO\relation\RelationDAO;
+use DAO\request\RequestDAO;
 
 use controllers\AccountController;
 use controllers\RelationController;
 use controllers\UserController;
-use DAO\relation\RelationDAO;
 use controllers\PostController;
-use DAO\request\RequestDAO;
+use controllers\CommentController;
+use controllers\CommentReplyController;
+use controllers\PostInteractController;
+use controllers\LikeController;
+use controllers\MediaController;
+
 use services\relation\RelationService;
 use services\request\RequestService;
 use services\user\UserService;
@@ -31,13 +37,9 @@ use services\post_interact\PostInteractService;
 use services\media\MediaService;
 
 require_once __DIR__ . '/DIContainer.php';
-require_once __DIR__ . '/../controllers/UserController.php';
-require_once __DIR__ . '/../services/user/UserService.php';
-require_once __DIR__ . '/../services/request/RequestService.php';
-require_once __DIR__ . '/../DAO/user/UserDAO.php';
-require_once __DIR__ . '/../DAO/request/RequestDAO.php';
 require_once __DIR__ . '/../https/Request.php';
 
+require_once __DIR__ . '/../DAO/request/RequestDAO.php';
 require_once __DIR__ . '/../DAO/user/UserDAO.php';
 require_once __DIR__ . '/../DAO/post/PostDAO.php';
 require_once __DIR__ . '/../DAO/comment/CommentDAO.php';
@@ -45,15 +47,21 @@ require_once __DIR__ . '/../DAO/comment_reply/CommentReplyDAO.php';
 require_once __DIR__ . '/../DAO/like/LikeDAO.php';
 require_once __DIR__ . '/../DAO/post_interact/PostInteractDAO.php';
 require_once __DIR__ . '/../DAO/media/MediaDAO.php';
+require_once __DIR__ . '/../DAO/relation/RelationDAO.php';
 
 require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../controllers/AccountController.php';
 require_once __DIR__ . '/../controllers/AdminController.php';
 require_once __DIR__ . '/../controllers/RelationController.php';
-require_once __DIR__ . '/../DAO/relation/RelationDAO.php';
-require_once __DIR__ . '/../services/relation/RelationService.php';
 require_once __DIR__ . '/../controllers/PostController.php';
+require_once __DIR__ . '/../controllers/CommentController.php';
+require_once __DIR__ . '/../controllers/CommentReplyController.php';
+require_once __DIR__ . '/../controllers/PostInteractController.php';
+require_once __DIR__ . '/../controllers/LikeController.php';
+require_once __DIR__ . '/../controllers/MediaController.php';
 
+require_once __DIR__ . '/../services/relation/RelationService.php';
+require_once __DIR__ . '/../services/request/RequestService.php';
 require_once __DIR__ . '/../services/user/UserService.php';
 require_once __DIR__ . '/../services/post/PostService.php';
 require_once __DIR__ . '/../services/comment/CommentService.php';
@@ -170,6 +178,11 @@ class RegisterSingleton
                 $container->resolve('\DAO\comment\ICommentDAO')
             );
         });
+        $container->register('\controllers\CommentController', function () use ($container){
+            return new CommentController(
+                $container->resolve('\services\comment\ICommentService')
+            );
+        });
         //================================================================================
         //=================================CommentReply===================================
         $container->register('\DAO\comment_reply\ICommentReplyDAO', function () {
@@ -179,6 +192,11 @@ class RegisterSingleton
         $container->register('\services\comment_reply\ICommentReplyService', function () use ($container){
             return new CommentReplyService(
                 $container->resolve('\DAO\comment_reply\ICommentReplyDAO')
+            );
+        });
+        $container->register('\controllers\CommentReplyController', function () use ($container){
+            return new CommentReplyController(
+                $container->resolve('\services\comment_reply\ICommentReplyService')
             );
         });
         //================================================================================
@@ -192,6 +210,11 @@ class RegisterSingleton
                 $container->resolve('\DAO\like\ILikeDAO')
             );
         });
+        $container->register('\controllers\LikeController', function () use ($container) {
+            return new LikeController(
+                $container->resolve('\services\like\ILikeService')
+            );
+        });
         //================================================================================
         //=================================PostInteract===================================
         $container->register('\DAO\post_interact\IPostInteractDAO', function () {
@@ -203,6 +226,11 @@ class RegisterSingleton
                 $container->resolve('\DAO\post_interact\IPostInteractDAO')
             );
         });
+        $container->register('\controllers\PostInteractController', function () use ($container){
+            return new PostInteractController(
+                $container->resolve('\services\post_interact\IPostInteractService')
+            );
+        });
         //================================================================================
         //=================================Media==========================================
         $container->register('\DAO\media\IMediaDAO', function () {
@@ -212,6 +240,11 @@ class RegisterSingleton
         $container->register('\services\media\IMediaService', function () use ($container){
             return new MediaService(
                 $container->resolve('\DAO\media\IMediaDAO')
+            );
+        });
+        $container->register('\controllers\MediaController', function () use ($container) {
+            return new MediaController(
+                $container->resolve('\services\media\IMediaService')
             );
         });
         //================================================================================

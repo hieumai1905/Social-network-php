@@ -81,16 +81,46 @@ class LikeService implements ILikeService
     function getLikeCountOfPost($postId)
     {
         // TODO: Implement getLikeCountOfPost() method.
+        try {
+            $this->likeDAO->getLikeCountOfPost($postId);
+            Logger::log('Get like count of post successfully');
+        }catch (\PDOException $e){
+            Logger::log($e->getMessage());
+            throw new \Exception("An error connect to database");
+        }catch (\Exception $e){
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
     }
 
     function getLikeCountOfComment($commentId)
     {
         // TODO: Implement getLikeCountOfComment() method.
+        try {
+            $this->likeDAO->getLikeCountOfComment($commentId);
+            Logger::log("Get like count of comment successfully");
+        }catch (\PDOException $e){
+            Logger::log($e->getMessage());
+            throw new \Exception("An error connect to database");
+        }catch (\Exception $e){
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
     }
 
     function getLikeCountOfCommentReply($commentReplyId)
     {
         // TODO: Implement getLikeCountOfCommentReply() method.
+        try {
+            $this->likeDAO->deleteLikeCommentReply($commentReplyId);
+            Logger::log('Get like count of comment reply');
+        }catch (\PDOException $e){
+            Logger::log($e->getMessage());
+            throw new \Exception("An error connect to database");
+        }catch (\Exception $e){
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
     }
 
     function addLikePost($postId, $userId)

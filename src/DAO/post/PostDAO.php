@@ -53,9 +53,10 @@ class PostDAO implements IPostDAO
 
     public function createPost(Post $post)
     {
+        $heheh = uniqid();
         $stmt = $this->connection->prepare("INSERT INTO posts (post_id, create_at, content, access_modifier, post_type, user_id)
             VALUES (:postId, NOW(), :content, :accessModifier, :postType, :userId)");
-        $stmt->bindValue(':postId',unique());
+        $stmt->bindValue(':postId',uniqid());
         $stmt->bindValue(':content',$post->getContent());
         $stmt->bindValue(':accessModifier',$post->getAccessModifier());
         $stmt->bindValue(':postType',$post->getPostType());

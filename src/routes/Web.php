@@ -103,6 +103,55 @@ function registerRoute()
     Route::delete('/relation/{user_id}/unblock/{user_target_id}','RelationController@unBlockUser');
     Route::post('/relation/{user_id}/follow/{user_target_id}','RelationController@followUser');
     Route::delete('/relation/{user_id}/unfollow/{user_target_id}','RelationController@unFollowUser');
+    //------------------------------------------------------------------------------------
+    //---------------------------Register route for post-------------------------------------
+    Route::get('/api/post/home/{user_id}', 'PostController@getPostForHome' );
+    Route::get('/api/post/profile/{user_id}', 'PostController@getPostForProfile' );
+    Route::get('/api/post/{post_id}', 'PostController@getPostById');
+    Route::post('/api/post', 'PostController@createPost');
+    Route::put('/api/post','PostController@updatePost');
+    Route::delete('/api/post/{post_id}', 'PostController@deletePost');
+    //------------------------------------------------------------------------------------------------
+    //-----------------------------Register route for comment------------------------------------------------
+    Route::get('/api/comment/{post_id}', 'CommentController@getCommentByPostId');
+    Route::post('/api/comment','CommentController@createComment');
+    Route::put('/api/comment', 'CommentController@updateComment');
+    Route::delete('/api/comment/{comment_id}', 'CommentController@deleteComment');
+    //------------------------------------------------------------------------------------------------
+    //-----------------------------Register route for comment reply------------------------------------------------
+    Route::get('/api/comment/reply/{comment_id}', 'CommentReplyController@getCommentReply');
+    Route::post('/api/comment/reply', 'CommentReplyController@createCommentReply');
+    Route::put('/api/comment/reply', 'CommentReplyController@updateCommentReply');
+    Route::delete('/api/comment/reply/{comment_id}', 'CommentReplyController@deleteCommentReply');
+    //------------------------------------------------------------------------------------------------
+    //-----------------------------Register route for post interact------------------------------------------------
+    Route::get('/api/favorite/{userId}', 'PostInteractController@getFavoritePost');
+    Route::post('/api/favorite/{postId}/{userId}', 'PostInteractController@addFavorite');
+    Route::post('/api/hidden/{postId}/{userId}', 'PostInteractController@addHidden');
+    Route::post('/api/report', 'PostInteractController@addReport');
+    Route::delete('/api/favorite/{postId}/{userId}', 'PostInteractController@deleteFavorite');
+    //------------------------------------------------------------------------------------------------
+    //------------------------------Register route for like-------------------------------------------
+    Route::get('/api/like/post/{postId}/{userId}', 'LikeController@getLikeOfPostByUser');
+    Route::get('/api/like/comment/{commentId}/{userId}', 'LikeController@getLikeOfCommentByUser');
+    Route::get('/api/like/comment/reply/{commentReplyId}/{userId}', 'LikeController@getLikeOfCommentReplyByUser');
+    Route::get('/api/like/count/post/{postId}', 'LikeController@getCountLikePost');
+    Route::get('/api/like/count/comment/{commentId}', 'LikeController@getCountLikeComment');
+    Route::get('/api/like/count/comment/reply/{commentReplyId}', 'LikeController@getCountLikeCommentReply');
+    Route::post('/api/like/post/{postId}/{userId}', 'LikeController@likePost');
+    Route::post('/api/like/comment/{commentId}/{userId}', 'LikeController@likeComment');
+    Route::post('/api/like/comment/reply/{commentReplyId}/{userId}', 'LikeController@likeCommentReply');
+    Route::delete('/api/like/post/{postId}/{userId}', 'LikeController@unlikePost');
+    Route::delete('/api/like/comment/{commentId}/{userId}', 'LikeController@unlikeComment');
+    Route::delete('/api/like/comment/reply/{commentReplyId}/{userId}', 'LikeController@unlikeCommentReply');
+    //------------------------------------------------------------------------------------------------
+    //------------------------------Register route for media-------------------------------------------
+    Route::get('/api/media/post/{postId}', 'MediaController@getMediaOfPost');
+    Route::get('/api/media/user/{userId}', 'MediaController@getMediaOfUser');
+    Route::post('/api/media/post', 'MediaController@addMediaForPost');
+    Route::delete('/api/media/post/{postId}', 'MediaController@deleteMediaOfPost');
+    //------------------------------------------------------------------------------------------------
+
     Route::registerResource();
     Route::dispatch();
 }
