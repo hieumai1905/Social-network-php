@@ -22,6 +22,7 @@ use controllers\UserController;
 use controllers\PostController;
 use controllers\CommentController;
 use controllers\CommentReplyController;
+use controllers\PostInteractController;
 
 use services\relation\RelationService;
 use services\request\RequestService;
@@ -53,6 +54,7 @@ require_once __DIR__ . '/../controllers/RelationController.php';
 require_once __DIR__ . '/../controllers/PostController.php';
 require_once __DIR__ . '/../controllers/CommentController.php';
 require_once __DIR__ . '/../controllers/CommentReplyController.php';
+require_once __DIR__ . '/../controllers/PostInteractController.php';
 
 require_once __DIR__ . '/../services/relation/RelationService.php';
 require_once __DIR__ . '/../services/request/RequestService.php';
@@ -213,6 +215,11 @@ class RegisterSingleton
         $container->register('\services\post_interact\IPostInteractService', function () use ($container){
             return new PostInteractService(
                 $container->resolve('\DAO\post_interact\IPostInteractDAO')
+            );
+        });
+        $container->register('\controllers\PostInteractController', function () use ($container){
+            return new PostInteractController(
+                $container->resolve('\services\post_interact\IPostInteractService')
             );
         });
         //================================================================================
