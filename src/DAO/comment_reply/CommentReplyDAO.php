@@ -37,15 +37,16 @@ class CommentReplyDAO implements ICommentReplyDAO
     public function updateCommentReply(CommentReplie $commentReply)
     {
         // TODO: Implement updateCommentReply() method.
-        $stmt = $this->connection->prepare("UPDATE comments SET content = :content WHERE comment_reply_id = :comment_reply_id");
+        $stmt = $this->connection->prepare("UPDATE comment_replies SET content = :content WHERE comment_reply_id = :comment_reply_id");
         $stmt->bindValue(':content', $commentReply->getContent());
+        $stmt->bindValue(':comment_reply_id', $commentReply->getCommentReplyId());
         $stmt->execute();
     }
 
     public function deleteCommentReply($commentReplyId)
     {
         // TODO: Implement deleteCommentReply() method.
-        $stmt = $this->connection->prepare("DELETE FROM posts WHERE comment_reply_id = :comment_reply_id");
+        $stmt = $this->connection->prepare("DELETE FROM comment_replies WHERE comment_reply_id = :comment_reply_id");
         $stmt->bindValue(':comment_reply_id', $commentReplyId);
         $stmt->execute();
     }
