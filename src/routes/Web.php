@@ -168,7 +168,9 @@ function registerRoute()
     Route::post('/api/media/post', 'MediaController@addMediaForPost');
     Route::delete('/api/media/post/{postId}', 'MediaController@deleteMediaOfPost');
     //------------------------------------------------------------------------------------------------
-
+    //------------------------------Register route for media-------------------------------------------
+    Route::get('/notification','NotificationController@getNotificationOfUser');
+    //------------------------------------------------------------------------------------------------
     Route::registerResource();
     Route::dispatch();
 }
