@@ -24,6 +24,7 @@ use controllers\CommentController;
 use controllers\CommentReplyController;
 use controllers\PostInteractController;
 use controllers\LikeController;
+use controllers\MediaController;
 
 use services\relation\RelationService;
 use services\request\RequestService;
@@ -57,6 +58,7 @@ require_once __DIR__ . '/../controllers/CommentController.php';
 require_once __DIR__ . '/../controllers/CommentReplyController.php';
 require_once __DIR__ . '/../controllers/PostInteractController.php';
 require_once __DIR__ . '/../controllers/LikeController.php';
+require_once __DIR__ . '/../controllers/MediaController.php';
 
 require_once __DIR__ . '/../services/relation/RelationService.php';
 require_once __DIR__ . '/../services/request/RequestService.php';
@@ -238,6 +240,11 @@ class RegisterSingleton
         $container->register('\services\media\IMediaService', function () use ($container){
             return new MediaService(
                 $container->resolve('\DAO\media\IMediaDAO')
+            );
+        });
+        $container->register('\controllers\MediaController', function () use ($container) {
+            return new MediaController(
+                $container->resolve('\services\media\IMediaService')
             );
         });
         //================================================================================
