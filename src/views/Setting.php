@@ -19,28 +19,18 @@
                                                 <i class="btn-round-md bg-primary-gradiant text-white feather-home font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Acount Information</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
                                             </a>
                                         </li>
-                                        <li class="list-inline-item d-block border-bottom me-0">
-                                            <a href="contact-information.html" class="pt-2 pb-2 d-flex align-items-center">
-                                                <i class="btn-round-md bg-gold-gradiant text-white feather-map-pin font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Saved Address</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item d-block me-0">
-                                            <a href="social.html" class="pt-2 pb-2 d-flex align-items-center">
-                                                <i class="btn-round-md bg-red-gradiant text-white feather-twitter font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Social Acount</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
-                                            </a>
-                                        </li>
                                     </ul>
 
                                     <div class="nav-caption fw-600 font-xsss text-grey-500 mb-2">Acount</div>
                                     <ul class="list-inline mb-4">
                                         <li class="list-inline-item d-block border-bottom me-0">
-                                            <a href="payment.html" class="pt-2 pb-2 d-flex align-items-center">
-                                                <i class="btn-round-md bg-mini-gradiant text-white feather-credit-card font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">My Cards</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
+                                            <a href="/change-email" class="pt-2 pb-2 d-flex align-items-center">
+                                                <i class="btn-round-md bg-mini-gradiant text-white feather-mail font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Change Email</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
                                             </a>
                                         </li>
                                         <li class="list-inline-item d-block  me-0">
-                                            <a href="change-password" class="pt-2 pb-2 d-flex align-items-center">
-                                                <i class="btn-round-md bg-blue-gradiant text-white feather-inbox font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Password</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
+                                            <a href="/change-password" class="pt-2 pb-2 d-flex align-items-center">
+                                                <i class="btn-round-md bg-blue-gradiant text-white feather-inbox font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Change Password</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
                                             </a>
                                         </li>
 
@@ -64,7 +54,7 @@
                                             </a>
                                         </li>
                                         <li class="list-inline-item d-block me-0" id="btn-logout">
-                                            <a href="#" class="pt-2 pb-2 d-flex align-items-center">
+                                            <a href="/logout" class="pt-2 pb-2 d-flex align-items-center">
                                                 <i class="btn-round-md bg-red-gradiant text-white feather-log-out font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Logout</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
                                             </a>
                                         </li>

@@ -61,7 +61,7 @@ class PostService implements IPostService
     function update($object)
     {
         try{
-            $this->postDAO->update($object);
+            $this->postDAO->updatePost($object);
             Logger::log('Update post successfully');
         }catch(\PDOException $e){
             Logger::log($e->getMessage());

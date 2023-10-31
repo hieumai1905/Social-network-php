@@ -52,4 +52,41 @@ class MediaService implements IMediaService
             throw new \Exception($e->getMessage());
         }
     }
+
+    function getMediaOfUser($userId): ?array
+    {
+        // TODO: Implement getMediaOfUser() method.
+        try{
+            $result = $this->mediaDAO->getMediaOfUser($userId);
+            Logger::log('Get media of user successfully');
+            $medias = [];
+            foreach ($result as $item){
+                $media = Mapper::mapStdClassToModel($item, Media::class);
+                $medias[] = $media;
+            }
+            return $medias;
+        }catch (\PDOException $e){
+            Logger::log($e->getMessage());
+            throw new \Exception("An error connect to database");
+        }catch (\Exception $e){
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function addMeida(Media $Media)
+    {
+        // TODO: Implement addMeida() method.
+        try {
+            $this->mediaDAO->addMedia($Media);
+            Logger::log('add media successfully');
+        }catch (\PDOException $e){
+            Logger::log($e->getMessage());
+            throw new \Exception("An error connect to database");
+        }catch (\Exception $e){
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace DAO\relation;
 use models\Relation;
-require_once 'src\models\Relation.php';
+require_once 'src/models/Relation.php';
 interface IRelationDAO {
     public function getRelationForUser ($user_id,$type_relation);
     public function addRelation(Relation $relation);

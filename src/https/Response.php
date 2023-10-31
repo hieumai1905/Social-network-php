@@ -31,8 +31,8 @@ class Response
 
     public static function jsonToModel($json, $modelClass)
     {
-        $data = json_decode($json, true);
-
+//        $data = json_decode($json, true);
+        $data = $json;
         if ($data !== null) {
             $model = new $modelClass();
 

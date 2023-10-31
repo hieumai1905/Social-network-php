@@ -16,9 +16,9 @@ class LikeDAO implements ILikeDAO
     public function getLikeOfPostByUserId($postId, $userId)
     {
         // TODO: Implement getLikeOfPostByUserId() method.
-        $stmt = $this->connection->prepare("SELECT * FROM likes WHERE user_id = :user_id AND post_id = :post_id");
-        $stmt->bindValue(':user_id', $userId);
-        $stmt->bindValue(':post_id', $postId);
+        $stmt = $this->connection->prepare("SELECT * FROM likes WHERE user_id = $userId AND post_id = $postId");
+//        $stmt->bindValue(':user_id', $userId);
+//        $stmt->bindValue(':post_id', $postId);
         $stmt->execute();
     }
 
@@ -66,9 +66,8 @@ class LikeDAO implements ILikeDAO
     public function addLikePost($postId, $userId)
     {
         // TODO: Implement addLikePost() method.
-        $stmt = $this->connection->prepare("INSERT INTO likes (like_id, user_id, post_id, comment_id, comment_reply_id) 
-            VALUES (:like_id, :post_id, :user_id, :post_id,:comment_id,:comment_reply_id)");
-        $stmt->bindValue('like_id', uniqid());
+        $stmt = $this->connection->prepare("INSERT INTO likes (user_id, post_id, comment_id, comment_reply_id) 
+            VALUES (:post_id, :user_id, :post_id,:comment_id,:comment_reply_id)");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postId);
         $stmt->bindValue(':comment_id', '');
@@ -79,9 +78,8 @@ class LikeDAO implements ILikeDAO
     public function addLikeComment($commentId, $userId)
     {
         // TODO: Implement addLikeComment() method.
-        $stmt = $this->connection->prepare("INSERT INTO likes (like_id, user_id, post_id, comment_id, comment_reply_id) 
-            VALUES (:like_id, :post_id, :user_id, :post_id,:comment_id,:comment_reply_id)");
-        $stmt->bindValue('like_id', uniqid());
+        $stmt = $this->connection->prepare("INSERT INTO likes (user_id, post_id, comment_id, comment_reply_id) 
+            VALUES (:post_id, :user_id, :post_id,:comment_id,:comment_reply_id)");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', '');
         $stmt->bindValue(':comment_id', $commentId);
@@ -92,9 +90,8 @@ class LikeDAO implements ILikeDAO
     public function addLikeCommentReply($commentReplyId, $userId)
     {
         // TODO: Implement addLikeCommentReply() method.
-        $stmt = $this->connection->prepare("INSERT INTO likes (like_id, user_id, post_id, comment_id, comment_reply_id) 
-            VALUES (:like_id, :post_id, :user_id, :post_id,:comment_id,:comment_reply_id)");
-        $stmt->bindValue('like_id', uniqid());
+        $stmt = $this->connection->prepare("INSERT INTO likes (user_id, post_id, comment_id, comment_reply_id) 
+            VALUES (:post_id, :user_id, :post_id,:comment_id,:comment_reply_id)");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', '');
         $stmt->bindValue(':comment_id', '');

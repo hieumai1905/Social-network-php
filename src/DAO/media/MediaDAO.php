@@ -58,4 +58,21 @@ class MediaDAO implements IMediaDAO
 //        return $stmt->fetch(PDO::FETCH_OBJ);
 //    }
 
+    public function getMediaOfUser($userId): ?array
+    {
+        $stmt = $this->connection->prepare("SELECT media_id, url, type, m.post_id FROM medias m INNER JOIN posts p ON m.post_id = p.post_id WHERE user_id = :user_id");
+        $stmt->bindValue(':user_id', $userId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function addMedia(Media $media)
+    {
+        $stmt = $this->connection->prepare("INSERT INTO medias (media_id, url, type, post_id) VALUES (:media_id, :url, :type, :post_id) ");
+        $stmt->bindValue(':media_id', uniqid());
+        $stmt->bindValue(':url', $media->getUrl());
+        $stmt->bindValue(':type', $media->getType());
+        $stmt->bindValue(':post_id', $media->getPostId());
+        $stmt->execute();
+    }
 }

@@ -118,7 +118,7 @@
             </i>
         </a>
         <div class="p-2 text-center ms-3 position-relative dropdown-menu-icon menu-icon cursor-pointer">
-            <a href="Settings.php">
+            <a href="/settings">
                 <i class="feather-settings animation-spin d-inline-block font-xl text-current">
                 </i></a>
             <div style="display:none" class="dropdown-menu-settings switchcolor-wrap">
