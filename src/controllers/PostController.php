@@ -61,6 +61,32 @@ class PostController
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
     }
+    //HTTP GET (/admin/post)
+    public function getAllPost() {
+        try {
+            $posts = $this->postService->getAll();
+            $data =[];
+            foreach($posts as $post){
+                $data[] = Mapper::mapModelToJson($post);
+            }
+            return Response::apiResponse(Status::OK, 'success',$data);
+        }catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
+    //HTTP GET (/admin/post/month)
+    public function getMonthPost(){
+        try {
+            $posts = $this->postService->getMonthPost();
+            $data =[];
+            foreach($posts as $post){
+                $data[] = Mapper::mapModelToJson($post);
+            }
+            return Response::apiResponse(Status::OK, 'success',$data);
+        }catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
 
     //-------------------------HTTP POST-----------------------------------
     //HTTP POST (/post)

@@ -50,6 +50,20 @@ class PostDAO implements IPostDAO
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function getAllPost(): ?array
+    {
+        // TODO: Implement getAllPost() method.
+        $stmt = $this->connection->prepare("SELECT * FROM posts");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+     public function getMonthPost(): ?array
+     {
+         // TODO: Implement getMonthPost() method.
+         $stmt = $this->connection->prepare("SELECT * FROM posts WHERE MONTH(create_at) = MONTH(NOW()) AND YEAR(create_at) = YEAR(NOW())");
+         $stmt->execute();
+         return $stmt->fetchAll(PDO::FETCH_OBJ);
+     }
 
     public function createPost(Post $post)
     {
@@ -79,4 +93,6 @@ class PostDAO implements IPostDAO
         $stmt->bindValue(':post_id', $postId);
         $stmt->execute();
     }
+
+
 }
