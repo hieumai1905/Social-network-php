@@ -86,11 +86,14 @@ class Route
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $checkRole = self::checkAuth($uri);
+        if($checkRole==-1){
+            return Response::View('views/Login');
+        }
         if ($checkRole == 401) {
-            return Response::view('views/Login');
+            return Response::View('views/Login');
         }
         if ($checkRole == 403) {
-            return Response::view('views/403');
+            return Response::View('views/403');
         }
         if ($checkRole == 404) {
             return Response::view('views/404');
@@ -196,6 +199,13 @@ class Route
             return 200;
         } else {
             if (isset($_SESSION['user-login'])) {
+                $loginAt = $_SESSION['login-at'];
+                $timeCurrent = time();
+                if ($timeCurrent - $loginAt > 600) {
+                    unset($_SESSION['user-login']);
+                    unset($_SESSION['login-at']);
+                    return 401;
+                }
                 $user = unserialize($_SESSION['user-login']);
                 if ($route == '/admin/dash-board' || $route == '/admin' || $route == '/admin/users' || $route == '/api/admin/users-all' || $route == '/api/admin/lock-user' || $route=='/api/admin/users-all/month') {
                     if ($user->getUserRole() == "ADMIN") {
