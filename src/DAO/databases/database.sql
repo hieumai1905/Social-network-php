@@ -4,7 +4,6 @@
 -- ------------------------------------------------------
 -- Server version	8.0.34
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -24,7 +23,7 @@ DROP TABLE IF EXISTS `comment_replies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comment_replies` (
-                                   `comment_reply_id` bigint NOT NULL,
+                                   `comment_reply_id` bigint NOT NULL AUTO_INCREMENT,
                                    `reply_at` datetime NOT NULL,
                                    `content` varchar(2000) NOT NULL,
                                    `user_id` varchar(36) NOT NULL,
@@ -34,7 +33,7 @@ CREATE TABLE `comment_replies` (
                                    KEY `fk_comment_replies_comments_idx` (`comment_id`),
                                    CONSTRAINT `fk_comment_replies_comments` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`comment_id`),
                                    CONSTRAINT `fk_comment_replies_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,7 +54,7 @@ DROP TABLE IF EXISTS `comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comments` (
-                            `comment_id` bigint NOT NULL,
+                            `comment_id` bigint NOT NULL AUTO_INCREMENT,
                             `comment_at` datetime NOT NULL,
                             `content` varchar(5000) NOT NULL,
                             `post_id` varchar(36) NOT NULL,
@@ -65,7 +64,7 @@ CREATE TABLE `comments` (
                             KEY `fk_comments_users_idx` (`user_id`),
                             CONSTRAINT `fk_comments_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`),
                             CONSTRAINT `fk_comments_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,21 +114,21 @@ DROP TABLE IF EXISTS `likes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `likes` (
-                         `like_id` bigint NOT NULL,
+                         `like_id` bigint NOT NULL AUTO_INCREMENT,
                          `user_id` varchar(36) NOT NULL,
                          `post_id` varchar(36) DEFAULT NULL,
                          `comment_id` bigint DEFAULT NULL,
                          `comment_reply_id` bigint DEFAULT NULL,
                          PRIMARY KEY (`like_id`),
-                         KEY `fk_likes_users_idx` (`user_id`),
-                         KEY `fk_likes_posts_idx` (`post_id`),
                          KEY `fk_likes_comments_idx` (`comment_id`),
                          KEY `fk_likes_comments_replies_idx` (`comment_reply_id`),
+                         KEY `fk_likes_posts_idx` (`post_id`),
+                         KEY `fk_likes_users_idx` (`user_id`),
                          CONSTRAINT `fk_likes_comments` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`comment_id`),
                          CONSTRAINT `fk_likes_comments_replies` FOREIGN KEY (`comment_reply_id`) REFERENCES `comment_replies` (`comment_reply_id`),
                          CONSTRAINT `fk_likes_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`),
                          CONSTRAINT `fk_likes_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -427,4 +426,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-27 21:13:28
+-- Dump completed on 2023-10-31  8:54:51
