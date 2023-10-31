@@ -14,4 +14,5 @@ interface IUserService extends IGeneralService
     function lockUser($userId): void;
     function getUserByEmail($email): ?User;
     function findUserByContent($content);
+    function getNewUserInMonth();
 }

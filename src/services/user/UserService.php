@@ -242,4 +242,28 @@ class UserService implements IUserService
             throw new \Exception($e->getMessage());
         }
     }
+
+    function getNewUserInMonth()
+    {
+        try{
+            $result = $this->userDAO->getNewUserInMonth();
+            Logger::log('Get all users successfully');
+            if (count($result) == 0) {
+                Logger::log('No user found');
+                return null;
+            }
+            $users = [];
+            foreach ($result as $item) {
+                $user = Mapper::mapStdClassToModel($item, User::class);
+                $users[] = $user;
+            }
+            return $users;
+        }catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
 }

@@ -22,11 +22,29 @@ class AdminController
 
     //---------------------------HTTP GET---------------------------------
 
-    // HTTP GET("/api/admin/users-all")
+    // API HTTP GET("/api/admin/users-all")
     public function getUsers()
     {
         try {
             $users = $this->userService->getAll();
+            if (!$users) {
+                return Response::apiResponse(Status::NOT_FOUND, 'user is null', null);
+            } else {
+                $data = [];
+                foreach ($users as $user) {
+                    $data[] = Mapper::mapModelToJson($user);
+                }
+                return Response::apiResponse(Status::OK, 'success', $data);
+            }
+        } catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
+
+    // API HTTP GET('/api/admin/users-all/month')
+    public function getNewUserInMonth(){
+        try {
+            $users = $this->userService->getNewUserInMonth();
             if (!$users) {
                 return Response::apiResponse(Status::NOT_FOUND, 'user is null', null);
             } else {
@@ -46,7 +64,7 @@ class AdminController
 
     //---------------------------HTTP PUT--------------------------------
 
-    // HTTP PUT("/admin/lock-user")
+    // API HTTP PUT("/admin/lock-user")
     public function lockUser()
     {
         try {
@@ -71,18 +89,6 @@ class AdminController
         } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
-    }
-
-    //---------------------------------------------------------------------
-
-
-    //--------------------------HTTP DELETE--------------------------------
-
-
-    // HTTP DELETE("/users/{id}")
-    public function deleteUser()
-    {
-
     }
 
     //---------------------------------------------------------------------

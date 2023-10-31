@@ -50,7 +50,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <a href="/admin/dash-board" class="nav-link">
+                        <a href="/admin/dash-board" class="nav-link active">
                             <span class="nav-icon badge">D</span>
                             <p>[Dashboard]</p>
                         </a>
@@ -59,6 +59,12 @@
                         <a href="/admin/users" class="nav-link">
                             <span class="nav-icon badge">U</span>
                             <p>[UsersPage]</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link">
+                            <span class="nav-icon badge">L</span>
+                            <p>[Logout]</p>
                         </a>
                     </li>
                 </ul>

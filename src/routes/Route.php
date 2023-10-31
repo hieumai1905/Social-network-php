@@ -197,7 +197,7 @@ class Route
         } else {
             if (isset($_SESSION['user-login'])) {
                 $user = unserialize($_SESSION['user-login']);
-                if ($route == '/admin/dash-board' || $route == '/admin' || $route == '/admin/users' || $route == '/api/admin/users-all' || $route == '/api/admin/lock-user') {
+                if ($route == '/admin/dash-board' || $route == '/admin' || $route == '/admin/users' || $route == '/api/admin/users-all' || $route == '/api/admin/lock-user' || $route=='/api/admin/users-all/month') {
                     if ($user->getUserRole() == "ADMIN") {
                         return 200;
                     } else {

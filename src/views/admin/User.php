@@ -26,7 +26,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="/starter.html" class="nav-link"><b>Home</b></a>
+                <a href="/admin/dash-board" class="nav-link"><b>Home</b></a>
             </li>
         </ul>
     </nav>
@@ -57,6 +57,12 @@
                         <a href="/admin/users" class="nav-link active">
                             <span class="nav-icon badge">U</span>
                             <p>[UsersPage]</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link">
+                            <span class="nav-icon badge">L</span>
+                            <p>[Logout]</p>
                         </a>
                     </li>
                 </ul>

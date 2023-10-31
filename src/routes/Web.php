@@ -45,6 +45,8 @@ function registerRoute()
 
     Route::get('/api/admin/users-all', 'AdminController@getUsers');
 
+    Route::get('/api/admin/users-all/month', 'AdminController@getNewUserInMonth');
+
     Route::put('/api/admin/lock-user', 'AdminController@lockUser');
     //---------------------------------------------------------------------------------
 
