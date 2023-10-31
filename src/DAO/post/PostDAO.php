@@ -39,8 +39,8 @@ class PostDAO implements IPostDAO
             (SELECT p.post_id, create_at, content, access_modifier, post_type, p.user_id 
             FROM posts p INNER JOIN relations r on p.user_id = r.user_target_id 
             WHERE r.user_id = :user_id
-            AND   r.type_relation = 'FRIEND' 
-            OR    r.type_relation = 'FOLLOW'
+            AND  ( r.type_relation = 'FRIEND' 
+            OR    r.type_relation = 'FOLLOW')
             AND access_modifier = 'PUBLIC')
             UNION
             (SELECT * FROM posts WHERE user_id = :user_id)
@@ -53,7 +53,6 @@ class PostDAO implements IPostDAO
 
     public function createPost(Post $post)
     {
-        $heheh = uniqid();
         $stmt = $this->connection->prepare("INSERT INTO posts (post_id, create_at, content, access_modifier, post_type, user_id)
             VALUES (:postId, NOW(), :content, :accessModifier, :postType, :userId)");
         $stmt->bindValue(':postId',uniqid());
