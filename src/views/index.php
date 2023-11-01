@@ -282,13 +282,13 @@ require_once "Layout-Header.php";
 include "Layout-Footer.php";
 ?>
 <!-- main content -->
-<script src="/public/assets/phong/phongIndex.js"></script>
-<!--<script src="~/assets/htd/hungIndex.js"></script>-->
-<!--<script src="~/assets/htd/index.js"></script>-->
+<script src="public/assets/phong/phongIndex.js"></script>
+<script src="/public/assets/js/htd/hungIndex.js"></script>
+<script src="/public/assets/js/htd/index.js"></script>
 <script src="public/js/plugin.js"></script>
 <script src="public/js/lightbox.js"></script>
 <script src="public/js/scripts.js"></script>
-<!--<script src="~/assets/htd/contact.js"></script>-->
+<script src="/public/assets/js/htd/contact.js"></script>
 </body>
 
 <!--</html>-->
