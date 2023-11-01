@@ -16,7 +16,7 @@ class CommentReplyDAO implements ICommentReplyDAO
     public function getCommentReplyOfComment($commentId): ?array
     {
         // TODO: Implement getCommentReplyOfComment() method.
-        $stmt = $this->connection->prepare("SELECT * FROM comment_replies WHERE comment_id = :comment_id");
+        $stmt = $this->connection->prepare("SELECT * FROM comment_replies WHERE comment_id = :comment_id ORDER BY reply_at ASC");
         $stmt->bindValue(':comment_id', $commentId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -25,10 +25,11 @@ class CommentReplyDAO implements ICommentReplyDAO
     public function createCommentReply(CommentReplie $commentReply)
     {
         // TODO: Implement createCommentReply() method.
+        $userId = unserialize($_SESSION['user-login']);
         $stmt = $this->connection->prepare("INSERT INTO comment_replies (reply_at, content, user_id, comment_id)
             VALUES (NOW(), :content, :user_id, :comment_id)");
         $stmt->bindValue(':content', $commentReply->getContent());
-        $stmt->bindValue(':user_id', $commentReply->getUserId());
+        $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':comment_id', $commentReply->getCommentId());
         $stmt->execute();
     }
