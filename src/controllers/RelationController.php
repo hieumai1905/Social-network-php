@@ -184,6 +184,15 @@ class RelationController  {
     public function acceptFriendRequest ($user_target_id) {
         try {
             $user = unserialize($_SESSION['user-login']);
+            $notification = new Notification();
+            $notification->setNotificationId(uniqid());
+            $notification->setNotificationAt(date('Y-m-d'));
+            $notification->setContent($user->getFullName() . ' đã chấp nhận lời mời kết bạn');
+            $notification->setStatus('UNSEEN');
+            $notification->setUserId($user->getUserId());
+            $notification->setUrlTarget('http://localhost:8080/users/'.$user->getUserId());
+            $notification->setUserRecipient($user_target_id);
+            $this->notificationService->addNotificationWhenSendFriendRequest($notification);
             $this->relationService->acceptFriendRequest($user->getUserId(),$user_target_id);
             return Response::apiResponse(Status::OK,'success',null);
         }catch (Exception $e) {
