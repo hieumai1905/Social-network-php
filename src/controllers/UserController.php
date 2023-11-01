@@ -212,7 +212,7 @@ class UserController
             $user->setDob($json['dob']);
             $user->setAddress($json['address']);
             $user->setGender($json['gender']);
-            $user->setPhone($userLogin->getPhone());
+            $user->setPhone($json['phone']);
             $user->setStatus($userLogin->getStatus());
             $user->setUserRole($userLogin->getUserRole());
             $user->setAboutMe($json['about_me']);
