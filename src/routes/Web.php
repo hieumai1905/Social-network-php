@@ -160,6 +160,9 @@ function registerRoute()
     Route::delete('/api/like/post/{postId}/{userId}', 'LikeController@unlikePost');
     Route::delete('/api/like/comment/{commentId}/{userId}', 'LikeController@unlikeComment');
     Route::delete('/api/like/comment/reply/{commentReplyId}/{userId}', 'LikeController@unlikeCommentReply');
+    Route::delete('/api/like/all/post/{postId}', 'LikeController@deleteAllLikePost');
+    Route::delete('/api/like/all/comment/{commentId}', 'LikeController@deleteAllLikeComment');
+    Route::delete('/api/like/all/comment/reply/{commentReplyId}', 'LikeController@deleteAllLikeCommentReply');
     //------------------------------------------------------------------------------------------------
     //------------------------------Register route for media-------------------------------------------
     Route::get('/api/media/post/{postId}', 'MediaController@getMediaOfPost');

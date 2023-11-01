@@ -82,8 +82,14 @@ class LikeService implements ILikeService
     {
         // TODO: Implement getLikeCountOfPost() method.
         try {
-            $this->likeDAO->getLikeCountOfPost($postId);
+          $result =  $this->likeDAO->getLikeCountOfPost($postId);
             Logger::log('Get like count of post successfully');
+            $likes = [];
+            foreach ($result as $item){
+                $post = Mapper::mapStdClassToModel($item, Like::class);
+                $likes[] = $post;
+            }
+            return $likes;
         }catch (\PDOException $e){
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
@@ -97,8 +103,14 @@ class LikeService implements ILikeService
     {
         // TODO: Implement getLikeCountOfComment() method.
         try {
-            $this->likeDAO->getLikeCountOfComment($commentId);
+            $result = $this->likeDAO->getLikeCountOfComment($commentId);
             Logger::log("Get like count of comment successfully");
+            $likes = [];
+            foreach ($result as $item){
+                $post = Mapper::mapStdClassToModel($item, Like::class);
+                $likes[] = $post;
+            }
+            return $likes;
         }catch (\PDOException $e){
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
@@ -112,8 +124,14 @@ class LikeService implements ILikeService
     {
         // TODO: Implement getLikeCountOfCommentReply() method.
         try {
-            $this->likeDAO->deleteLikeCommentReply($commentReplyId);
+            $result = $this->likeDAO->getLikeCountOfCommentReply($commentReplyId);
             Logger::log('Get like count of comment reply');
+            $likes = [];
+            foreach ($result as $item){
+                $like = Mapper::mapStdClassToModel($item, Like::class);
+                $likes[] = $like;
+            }
+            return $likes;
         }catch (\PDOException $e){
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
@@ -204,6 +222,48 @@ class LikeService implements ILikeService
         try {
             $this->likeDAO->deleteLikeCommentReply($commentReplyId, $userId);
             Logger::log('Delete like from comment reply: ' . $commentReplyId.' by user: ' . $userId);
+        }catch (\PDOException $e){
+            Logger::log($e->getMessage());
+            throw new \Exception("An error connect to database");
+        }catch (\Exception $e){
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function deleteAllLikePost($postId)
+    {
+        try {
+            $this->likeDAO->deleteAllLikePost($postId);
+            Logger::log('Delete all like from post');
+        }catch (\PDOException $e){
+            Logger::log($e->getMessage());
+            throw new \Exception("An error connect to database");
+        }catch (\Exception $e){
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function deleteAllLikeComment($commentId)
+    {
+        try {
+            $this->likeDAO->deleteAllLikeComment($commentId);
+            Logger::log('Delete all like from comment');
+        }catch (\PDOException $e){
+            Logger::log($e->getMessage());
+            throw new \Exception("An error connect to database");
+        }catch (\Exception $e){
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function deleteAllLikeCommentReply($commentReplyId)
+    {
+        try {
+            $this->likeDAO->deleteAllLikeCommentReply($commentReplyId);
+            Logger::log('Delete all like from post');
         }catch (\PDOException $e){
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");

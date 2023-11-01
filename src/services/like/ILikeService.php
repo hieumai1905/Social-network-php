@@ -19,4 +19,7 @@ interface ILikeService
     function deleteLikePost($postId, $userId);
     function deleteLikeComment($commentId, $userId);
     function deleteLikeCommentReply($commentReplyId, $userId);
+    function deleteAllLikePost($postId);
+    function deleteAllLikeComment($commentId);
+    function deleteAllLikeCommentReply($commentReplyId);
 }

@@ -50,8 +50,12 @@ class LikeController
     //HTTP GET (/like/count/post/$postId)
     public function getCountLikePost($postId){
         try{
-            $count = $this->likeService->getLikeCountOfPost($postId);
-            return Response::apiResponse(Status::OK, 'count like post successfully', $count);
+            $likes = $this->likeService->getLikeCountOfPost($postId);
+            $data =[];
+            foreach($likes as $like){
+                $data[] = Mapper::mapModelToJson($like);
+            }
+            return Response::apiResponse(Status::OK, 'count like post successfully', $data);
         }catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
@@ -59,8 +63,12 @@ class LikeController
     //HTTP GET (/like/count/comment/$commentId)
     public function getCountLikeComment($commentId){
         try{
-            $count = $this->likeService->getLikeCountOfComment($commentId);
-            return Response::apiResponse(Status::OK, 'count like comment successfully', $count);
+            $likes = $this->likeService->getLikeCountOfComment($commentId);
+            $data =[];
+            foreach($likes as $like){
+                $data[] = Mapper::mapModelToJson($like);
+            }
+            return Response::apiResponse(Status::OK, 'count like comment successfully', $data);
         }catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
@@ -68,8 +76,12 @@ class LikeController
     //HTTP GET (/like/count/comment/reply/$commentReplyId)
     public function getCountLikeCommentReply($commentReplyId){
         try{
-            $count = $this->likeService->getLikeCountOfCommentReply($commentReplyId);
-            return Response::apiResponse(Status::OK, 'count like comment reply successfully', $count);
+            $likes = $this->likeService->getLikeCountOfCommentReply($commentReplyId);
+            $data =[];
+            foreach($likes as $like){
+                $data[] = Mapper::mapModelToJson($like);
+            }
+            return Response::apiResponse(Status::OK, 'count like comment reply successfully', $data);
         }catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
@@ -127,6 +139,33 @@ class LikeController
     function deleteCommentReply($commentReplyId, $userId){
         try{
             $this->likeService->deleteLikeCommentReply($commentReplyId, $userId);
+            return Response::apiResponse(Status::OK, 'unlike commentReply successfully', null);
+        }catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
+    //HTTP DELETE (/like/all/post/$postId)
+    function deleteAllLikePost($postId){
+        try {
+            $this->likeService->deleteAllLikePost($postId);
+            return Response::apiResponse(Status::OK, 'delete successfully', null);
+        }catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
+    //HTTP DELETE (/like/all/comment/$commentId)
+    function deleteAllLikeComment($commentId){
+        try {
+            $this->likeService->deleteAllLikeComment($commentId);
+            return Response::apiResponse(Status::OK, 'unlike commentReply successfully', null);
+        }catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
+    //HTTP DELETE (/like/all/comment/reply/$commentReplyId)
+    function deleteAllLikeCommentReply($commentReplyId){
+        try {
+            $this->likeService->deleteAllLikeCommentReply($commentReplyId);
             return Response::apiResponse(Status::OK, 'unlike commentReply successfully', null);
         }catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);

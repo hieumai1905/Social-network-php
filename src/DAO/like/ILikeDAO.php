@@ -17,5 +17,7 @@ interface ILikeDAO
     public function deleteLikePost($postId, $userId);
     public function deleteLikeComment($commentId, $userId);
     public function deleteLikeCommentReply($commentReplyId, $userId);
-
+    public function deleteAllLikePost($postId);
+    public function deleteAllLikeComment($commentId);
+    public function deleteAllLikeCommentReply($commentReplyId);
 }
