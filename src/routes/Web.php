@@ -120,7 +120,7 @@ function registerRoute()
     Route::get('/relation/block', 'RelationController@getBlockUser');
     //------------------------------------------------------------------------------------
     //---------------------------Register route for post-------------------------------------
-    Route::get('/api/post/home/{user_id}', 'PostController@getPostForHome');
+    Route::get('/api/post/home', 'PostController@getPostForHome');
     Route::get('/api/post/profile/{user_id}', 'PostController@getPostForProfile');
     Route::get('/api/post/{post_id}', 'PostController@getPostById');
     Route::get('/api/admin/post', 'PostController@getAllPost');
