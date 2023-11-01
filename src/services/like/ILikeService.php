@@ -7,18 +7,18 @@ use services\IGeneralService;
 require_once 'src/services/IGeneralService.php';
 interface ILikeService
 {
-    function getLikeOfPostByUserId($postId, $userId);
-    function getLikeOfCommentByUserId($commentId, $userId);
-    function getLikeOfCommentReplyByUserId($commentReplyId, $userId);
+    function getLikeOfPostByUserId($postId);
+    function getLikeOfCommentByUserId($commentId);
+    function getLikeOfCommentReplyByUserId($commentReplyId);
     function getLikeCountOfPost($postId);
     function getLikeCountOfComment($commentId);
     function getLikeCountOfCommentReply($commentReplyId);
-    function addLikePost($postId, $userId);
-    function addLikeComment($commentId, $userId);
-    function addLikeCommentReply($commentReplyId, $userId);
-    function deleteLikePost($postId, $userId);
-    function deleteLikeComment($commentId, $userId);
-    function deleteLikeCommentReply($commentReplyId, $userId);
+    function addLikePost($postId);
+    function addLikeComment($commentId);
+    function addLikeCommentReply($commentReplyId);
+    function deleteLikePost($postId);
+    function deleteLikeComment($commentId);
+    function deleteLikeCommentReply($commentReplyId);
     function deleteAllLikePost($postId);
     function deleteAllLikeComment($commentId);
     function deleteAllLikeCommentReply($commentReplyId);
