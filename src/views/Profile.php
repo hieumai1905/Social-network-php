@@ -119,7 +119,9 @@ require_once "Layout-Header.php";
                         <div class="card-body p-0 position-relative">
                             <a href="#" class="hover">
                                 <figure class="avatar position-absolute w100 z-index-1" style="top:-40px; left: 30px;">
-                                    <img style="width:75px; height:100px; border-radius:50px;" id="avatar" src="/public/images/female-profile.png" alt="image" class="float-right p-1 bg-white rounded-circle w-100" onclick="OpenAvtText()">
+                                    <?php
+                                        $avatar ='/public/images/'. $data['user']->getAvatar();
+                                    ?>
                                 </figure>
                             </a>
                             <?php
