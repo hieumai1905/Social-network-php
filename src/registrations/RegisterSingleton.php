@@ -4,6 +4,8 @@ namespace registrations;
 
 
 use controllers\AdminController;
+use controllers\NotificationController;
+use DAO\notification\NotificationDAO;
 use https\Request;
 
 use DAO\user\UserDAO;
@@ -26,6 +28,7 @@ use controllers\PostInteractController;
 use controllers\LikeController;
 use controllers\MediaController;
 
+use services\notification\NotificationService;
 use services\relation\RelationService;
 use services\request\RequestService;
 use services\user\UserService;
@@ -48,6 +51,7 @@ require_once __DIR__ . '/../DAO/like/LikeDAO.php';
 require_once __DIR__ . '/../DAO/post_interact/PostInteractDAO.php';
 require_once __DIR__ . '/../DAO/media/MediaDAO.php';
 require_once __DIR__ . '/../DAO/relation/RelationDAO.php';
+require_once __DIR__ . '/../DAO/notification/NotificationDAO.php';
 
 require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../controllers/AccountController.php';
@@ -59,6 +63,7 @@ require_once __DIR__ . '/../controllers/CommentReplyController.php';
 require_once __DIR__ . '/../controllers/PostInteractController.php';
 require_once __DIR__ . '/../controllers/LikeController.php';
 require_once __DIR__ . '/../controllers/MediaController.php';
+require_once __DIR__ . '/../controllers/NotificationController.php';
 
 require_once __DIR__ . '/../services/relation/RelationService.php';
 require_once __DIR__ . '/../services/request/RequestService.php';
@@ -69,6 +74,7 @@ require_once __DIR__ . '/../services/comment_reply/CommentReplyService.php';
 require_once __DIR__ . '/../services/like/LikeService.php';
 require_once __DIR__ . '/../services/post_interact/PostInteractService.php';
 require_once __DIR__ . '/../services/media/MediaService.php';
+require_once __DIR__ . '/../services/notification/NotificationService.php';
 class RegisterSingleton
 {
     private static $container = null;
@@ -121,7 +127,8 @@ class RegisterSingleton
         $container->register('\controllers\UserController', function () use ($container) {
             return new UserController(
                 $container->resolve('\services\user\IUserService'),
-                $container->resolve('\services\request\IRequestService')
+                $container->resolve('\services\request\IRequestService'),
+                $container->resolve('\services\relation\IRelationService')
             );
         });
 
@@ -131,7 +138,7 @@ class RegisterSingleton
                 $container->resolve('\services\request\IRequestService')
             );
         });
-
+        //---------------------------------------Relation--------------------------------------
         $container->register('\DAO\relation\IRelationDAO' , function () {
             return new RelationDAO();
         });
@@ -145,7 +152,8 @@ class RegisterSingleton
         $container->register('\controllers\RelationController', function () use ($container) {
             return new RelationController(
                 $container->resolve('\services\relation\IRelationService'),
-                $container->resolve('\services\user\IUserService')
+                $container->resolve('\services\user\IUserService'),
+                $container->resolve('\services\notification\INotificationService')
             );
         });
         //-------------------------------------------------------------------------------------
@@ -259,6 +267,24 @@ class RegisterSingleton
         });
 
         //----------------------------------------------------------------------------------------
+
+        //---------------------------------------Notification--------------------------------------
+        $container->register('\DAO\notification\INotificationDAO' , function () {
+            return new NotificationDAO();
+        });
+
+        $container->register('\services\notification\INotificationService', function () use ($container) {
+            return new NotificationService(
+                $container->resolve('\DAO\notification\INotificationDAO')
+            );
+        });
+
+        $container->register('\controllers\NotificationController', function () use ($container) {
+            return new NotificationController(
+                $container->resolve('\services\notification\INotificationService')
+            );
+        });
+        //-------------------------------------------------------------------------------------
 
     }
 

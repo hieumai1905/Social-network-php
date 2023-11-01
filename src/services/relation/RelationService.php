@@ -269,4 +269,30 @@ class RelationService implements IRelationService {
             throw new \Exception($e->getMessage());
         }
     }
+
+    public function getRelationBetweenUserAndUserTargetExceptFollow($user_id, $user_target_id)
+    {
+        try {
+            $result = $this->relationDAO->getRelation($user_id,$user_target_id);
+            Logger::log("Get relation successfully");
+            if (!$result) {
+                Logger::log('No relation found');
+                return null;
+            }
+            foreach ($result as $item) {
+                $relation = Mapper::mapStdClassToModel($item,Relation::class);
+                if ($relation->getTypeRelation() == "FOLLOW") {
+                    continue;
+                }
+                $relations = $relation;
+            }
+            return $relations;
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        }catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
 }

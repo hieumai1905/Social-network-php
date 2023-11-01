@@ -15,8 +15,8 @@
                                     <div class="nav-caption fw-600 font-xssss text-grey-500 mb-2">Genaral</div>
                                     <ul class="list-inline mb-4">
                                         <li class="list-inline-item d-block border-bottom me-0">
-                                            <a href="Edit-Information.php" class="pt-2 pb-2 d-flex align-items-center">
-                                                <i class="btn-round-md bg-primary-gradiant text-white feather-home font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Acount Information</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
+                                            <a href="http://localhost:8080/editinformation" class="pt-2 pb-2 d-flex align-items-center">
+                                                <i class="btn-round-md bg-primary-gradiant text-white feather-home font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Account Information</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
                                             </a>
                                         </li>
                                     </ul>
@@ -39,7 +39,7 @@
                                     <div class="nav-caption fw-600 font-xsss text-grey-500 mb-2">Other</div>
                                     <ul class="list-inline">
                                         <li class="list-inline-item d-block border-bottom me-0">
-                                            <a href="default-notification.html" class="pt-2 pb-2 d-flex align-items-center">
+                                            <a href="http://localhost:8080/notification" class="pt-2 pb-2 d-flex align-items-center">
                                                 <i class="btn-round-md bg-gold-gradiant text-white feather-bell font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Notification</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
                                             </a>
                                         </li>
@@ -49,7 +49,7 @@
                                             </a>
                                         </li>
                                         <li class="list-inline-item d-block me-0" id="btn-userblock">
-                                            <a href="Block.php" class="pt-2 pb-2 d-flex align-items-center">
+                                            <a href="http://localhost:8080/relation/block" class="pt-2 pb-2 d-flex align-items-center">
                                                 <i class="btn-round-md bg-red-gradiant text-white feather-lock font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">User Block</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i>
                                             </a>
                                         </li>

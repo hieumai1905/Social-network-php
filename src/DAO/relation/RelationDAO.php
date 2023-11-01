@@ -50,7 +50,7 @@ class RelationDAO implements IRelationDAO {
         $stmt->bindValue('user_id', $user_id);
         $stmt->bindValue('user_target_id',$user_target_id);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function deleteRelation($user_id, $user_target_id,$type_relation)
