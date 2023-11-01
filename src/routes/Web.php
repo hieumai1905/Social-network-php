@@ -170,6 +170,7 @@ function registerRoute()
     //------------------------------------------------------------------------------------------------
     //------------------------------Register route for media-------------------------------------------
     Route::get('/notification','NotificationController@getNotificationOfUser');
+    Route::get('/api/notification/countnotificationunseen','NotificationController@countNotificationUnSeen');
     //------------------------------------------------------------------------------------------------
     Route::registerResource();
     Route::dispatch();
