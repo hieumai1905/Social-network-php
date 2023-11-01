@@ -17,11 +17,11 @@ class PostInteractService implements IPostInteractService
     function __construct(IPostInteractDAO $postInteractDAO){
         $this->postInteractDAO = $postInteractDAO;
     }
-    function getFavoritePost($userId): ?array
+    function getFavoritePost(): ?array
     {
         // TODO: Implement getFavoritePost() method.
         try {
-            $result = $this->postInteractDAO->getFavoritePost($userId);
+            $result = $this->postInteractDAO->getFavoritePost();
             Logger::log('Get all favorite posts successfully');
             $postInteracts = [];
             foreach ($result as $item){
@@ -38,11 +38,11 @@ class PostInteractService implements IPostInteractService
         }
     }
 
-    function addFavoritePost($userId, $postId)
+    function addFavoritePost($postId)
     {
         // TODO: Implement addFavoritePost() method.
         try {
-            $this->postInteractDAO->addFavoritePost($userId, $postId);
+            $this->postInteractDAO->addFavoritePost($postId);
             Logger::log('Add favorite post successfully');
         }catch (\PDOException $e){
             Logger::log($e->getMessage());
@@ -53,11 +53,11 @@ class PostInteractService implements IPostInteractService
         }
     }
 
-    function deleteFavoritePost($userId, $postId)
+    function deleteFavoritePost($postId)
     {
         // TODO: Implement deleteFavoritePost() method.
         try {
-            $this->postInteractDAO->deleteFavoritePost($userId, $postId);
+            $this->postInteractDAO->deleteFavoritePost($postId);
             Logger::log('Delete favorite post successfully');
         }catch (\PDOException $e){
             Logger::log($e->getMessage());
@@ -68,11 +68,11 @@ class PostInteractService implements IPostInteractService
         }
     }
 
-    function addHiddenPost($userId, $postId)
+    function addHiddenPost($postId)
     {
         // TODO: Implement addHiddenPost() method.
         try {
-            $this->postInteractDAO->addHiddenPost($userId, $postId);
+            $this->postInteractDAO->addHiddenPost($postId);
             Logger::log('Hide post successfully');
         }catch (\PDOException $e){
             Logger::log($e->getMessage());

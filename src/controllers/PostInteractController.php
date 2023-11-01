@@ -16,10 +16,10 @@ class PostInteractController
         $this->postInteractService = $postInteractService;
     }
     //-------------------------------HTTP GET --------------------------------
-    //HTTP GET (/favorite/$userId)
-    public function getFavoritePost($userId){
+    //HTTP GET (/favorite)
+    public function getFavoritePost(){
         try {
-            $posts = $this->postInteractService->getFavoritePost($userId);
+            $posts = $this->postInteractService->getFavoritePost();
             $data =[];
             foreach($posts as $post){
                 $data[] = Mapper::mapModelToJson($post);
@@ -30,25 +30,25 @@ class PostInteractController
         }
     }
     //-------------------------------HTTP POST --------------------------------
-    //HTTP POST (/favorite/$postId/$userId)
-    public function addFavorite($postId, $userId){
+    //HTTP POST (/favorite/$postId)
+    public function addFavorite($postId){
         try {
-            $this->postInteractService->addFavoritePost($userId, $postId);
+            $this->postInteractService->addFavoritePost($postId);
             return Response::apiResponse(Status::OK, 'add favorite successfully', null);
         }catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
     }
-    //HTTP POST (/hidden/$postId/$userId)
-    public function addHidden($postId, $userId){
+    //HTTP POST (/hidden/$postId)
+    public function addHidden($postId){
         try {
-            $this->postInteractService->addHiddenPost($userId, $postId);
+            $this->postInteractService->addHiddenPost($postId);
             return Response::apiResponse(Status::OK, 'hide post successfully', null);
         }catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
     }
-    //HTTP POST (/report/$postId/$userId)
+    //HTTP POST (/report/$postId)
     public function addReport(){
         try {
             $json = Response::getJson();
@@ -61,10 +61,10 @@ class PostInteractController
     }
     //-------------------------------HTTP PUT--------------------------------
     //-------------------------------HTTP DELETE--------------------------------
-    //HTTP DELETE (/favorite/$postId/$userId)
-    public function deleteFavorite($postId, $userId){
+    //HTTP DELETE (/favorite/$postId)
+    public function deleteFavorite($postId){
         try {
-            $this->postInteractService->deleteFavoritePost($userId, $postId);
+            $this->postInteractService->deleteFavoritePost($postId);
             return Response::apiResponse(Status::OK, 'delete favorite successfully', null);
         }catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);

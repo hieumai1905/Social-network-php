@@ -142,11 +142,11 @@ function registerRoute()
     Route::delete('/api/comment/reply/{comment_id}', 'CommentReplyController@deleteCommentReply');
     //------------------------------------------------------------------------------------------------
     //-----------------------------Register route for post interact------------------------------------------------
-    Route::get('/api/favorite/{userId}', 'PostInteractController@getFavoritePost');
-    Route::post('/api/favorite/{postId}/{userId}', 'PostInteractController@addFavorite');
-    Route::post('/api/hidden/{postId}/{userId}', 'PostInteractController@addHidden');
+    Route::get('/api/favorite', 'PostInteractController@getFavoritePost');
+    Route::post('/api/favorite/{postId}', 'PostInteractController@addFavorite');
+    Route::post('/api/hidden/{postId}', 'PostInteractController@addHidden');
     Route::post('/api/report', 'PostInteractController@addReport');
-    Route::delete('/api/favorite/{postId}/{userId}', 'PostInteractController@deleteFavorite');
+    Route::delete('/api/favorite/{postId}', 'PostInteractController@deleteFavorite');
     //------------------------------------------------------------------------------------------------
     //------------------------------Register route for like-------------------------------------------
     Route::get('/api/like/post/{postId}/{userId}', 'LikeController@getLikeOfPostByUser');
