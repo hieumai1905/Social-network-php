@@ -19,7 +19,10 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-4 text-center">
                                     <figure id="uImg" class="avatar ms-auto me-auto mb-0 mt-2 w100">
-                                        @*<img src="images/pt-1.jpg" alt="image" class="shadow-sm rounded-3 w-100">*@
+                                        <?php
+                                            $urlAvatar = '/public/images/'. $data['user']->getAvatar();
+                                            echo "<img src='$urlAvatar' alt='image' class='shadow-sm rounded-3 w-100'>";
+                                        ?>
                                     </figure>
                                     <h2 id="uName" class="fw-700 font-sm text-grey-900 mt-3"></h2>
                                     <h4 id="ubd" class="text-grey-500 fw-500 mb-3 font-xsss mb-4">Create At</h4>
@@ -28,7 +31,6 @@
                                 </div>
                             </div>
 
-                            <form action="#">
                                 <div class="row">
                                     <div class="col-lg-12 mb-3">
                                         <div class="form-group">
@@ -152,8 +154,6 @@
                                     <p id="uCoverImage"></p>
                                     <p></p>
                                 </div>
-
-                            </form>
                         </div>
                     </div>
                     <!-- <div class="card w-100 border-0 p-2"></div> -->

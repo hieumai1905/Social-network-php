@@ -10,6 +10,7 @@ use https\Status;
 use Media;
 use models\Request;
 use services\mail\Mailer;
+use services\relation\IRelationService;
 use services\request\IRequestService;
 use services\user\IUserService;
 use storage\Mapper;
@@ -23,11 +24,13 @@ class UserController
 {
     private $userService;
     private $requestService;
+    private $relationService;
 
-    public function __construct(IUserService $userService, IRequestService $requestService)
+    public function __construct(IUserService $userService, IRequestService $requestService,IRelationService $relationService)
     {
         $this->userService = $userService;
         $this->requestService = $requestService;
+        $this->relationService = $relationService;
     }
 
     //---------------------------HTTP GET--------------------------------
@@ -54,11 +57,23 @@ class UserController
     }
     public function findUserByContent($content) {
         try {
+            $userLogin = unserialize($_SESSION['user-login']);
             $users = $this->userService->findUserByContent($content);
             if (!$users) {
                 return Response::view('views/Search',['users'=>[]]);
             }
-            return Response::view('views/Search',['users'=>$users]);
+            $result = [];
+            foreach ($users as $item) {
+                if ($item->getUserId() == $userLogin->getUserId()) {
+                    continue;
+                }
+                $result[] = $item;
+            }
+            $relation = [];
+            foreach ($users as $item) {
+                $relation[] = $this->relationService->getRelationBetweenUserAndUserTargetExceptFollow($userLogin->getUserId(),$item->getUserId());
+            }
+            return Response::view('views/Search',['users'=>$result , 'relation'=>$relation]);
         }catch (Exception $e) {
             return Response::view('views/Error',['error'=>$e->getMessage()]);
         }
@@ -197,7 +212,7 @@ class UserController
             $user->setDob($json['dob']);
             $user->setAddress($json['address']);
             $user->setGender($json['gender']);
-            $user->setPhone($userLogin->getPhone());
+            $user->setPhone($json['phone']);
             $user->setStatus($userLogin->getStatus());
             $user->setUserRole($userLogin->getUserRole());
             $user->setAboutMe($json['about_me']);

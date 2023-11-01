@@ -20,11 +20,12 @@
                                     $fullName = $item->getFullName();
                                     $email =$item->getEmail();
                                     $urlProfile = 'http://localhost:8080/users/'.$item->getUserId();
+                                    $avatar = '/public/images/'.$item->getAvatar();
                                     echo "<div class='col-md-12 col-sm-4 pe-2 ps-2 phong1'>
                                 <div class='card d-block border-0 shadow-xss rounded-3 overflow-hidden mb-3 phong2'>
                                     <div class='card-body w-100 ps-3 pe-3 pb-4 phong3'>
                                         <figure class='avatar mb-0 position-relative w65 z-index-1 phong4'>
-                                            <img style='width:65px; height:65px; border-radius:50px;' src='/public/images/user-7.png' alt='image' class='phong5'>
+                                            <img style='width:65px; height:65px; border-radius:50px;' src='$avatar' alt='image' class='phong5'>
                                         </figure>
                                         <div class='clearfix phong6'></div>
                                         <h4 class='fw-700 font-xsss phong7'>$fullName</h4>

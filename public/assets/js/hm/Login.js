@@ -1,7 +1,7 @@
 function checkValidation(){
     let email = $('#email-login');
     let password = $('#password-login');
-    let error = $('#error-login');
+    let error = $('#login-error');
 
     if(!validateName(email.val())){
         error.text('Email is not empty');

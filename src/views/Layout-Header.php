@@ -33,7 +33,7 @@
     <!-- navigation top-->
     <div class="nav-header bg-white shadow-xs border-0">
         <div class="nav-top">
-            <a href="Index.php">
+            <a href="http://localhost:8080/home">
                     <span>
                         <img src="/public/images/fav-icon.png" alt="" style="width: 35px; height: 35px;" />
                     </span>
@@ -46,7 +46,7 @@
                 <i class="feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight">
                 </i>
             </a>
-            <a href="default-video.html" class="mob-menu me-2">
+            <a href="#" class="mob-menu me-2">
                 <i class="feather-video text-grey-900 font-sm btn-round-md bg-greylight">
                 </i>
             </a>
@@ -64,7 +64,7 @@
                    placeholder="Start typing to search.."
                    class="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 rounded-xl w350 theme-dark-bg" />
         </div>
-        <a href="Index.php"
+        <a href="http://localhost:8080/home"
            class="p-2 text-center ms-3 menu-icon center-menu-icon">
             <i class="feather-home font-lg alert-primary btn-round-lg theme-dark-bg text-current">
             </i>
@@ -79,20 +79,17 @@
             <i class="feather-video font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500">
             </i>
         </a>
-        <a id="homeadmin" href="admin/Home.php"
+        <a id="homeadmin" href="#"
            class="p-2 text-center ms-0 menu-icon center-menu-icon">
             <i class="feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500">
             </i>
         </a>
 
-        <a href="Notification.php"
-           id="ringNotification"
-           class="p-2 text-center ms-auto menu-icon"
-        >
-                <span class="dot-count" id="showNotification" style="color:red">
-                </span>
-            <i class="feather-bell font-xl text-current">
-            </i>
+        <a href="http://localhost:8080/notification" id="ringNotification" class="p-2 text-center ms-auto menu-icon">
+            <i class="feather-bell font-xl text-current"></i>
+            <div id="countnotificationunseen">
+
+            </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end p-4 rounded-3 border-0 shadow-lg"
              aria-labelledby="dropdownMenu3">
@@ -298,8 +295,9 @@
         <?php
             $user = unserialize($_SESSION['user-login']);
             $urlProfile = 'http://localhost:8080/users/'.$user->getUserId();
+            $avatar = '/public/images/'.$user->getAvatar();
             echo "<a id='avatarprofile' href='${urlProfile}' class='p-0 ms-3 menu-icon'>
-            <img style='width:30px; height:40px; border-radius:30px;' id='avataruser' src='/public/images/profile-4.png' alt='user' class='w40 mt--1' />
+            <img style='width:30px; height:40px; border-radius:30px;' id='avataruser' src='$avatar' alt='user' class='w40 mt--1' />
         </a>"
         ?>
     </div>
@@ -315,7 +313,7 @@
                     <ul class="mb-1 top-content">
                         <li class="logo d-none d-xl-block d-lg-block"></li>
                         <li>
-                            <a href="Index.php" class="nav-content-bttn open-font">
+                            <a href="http://localhost:8080/home" class="nav-content-bttn open-font">
                                 <i class="feather-tv btn-round-md bg-blue-gradiant me-3"></i><span>Newsfeed</span>
                             </a>
                         </li>
@@ -334,9 +332,11 @@
                             </a>
                         </li>
                         <li>
-                            <a id="myprofile" href="Profile.php" class="nav-content-bttn open-font">
-                                <i class="feather-user btn-round-md bg-primary-gradiant me-3"></i><span>Author Profile </span>
-                            </a>
+                            <?php
+                                echo "<a id='myProfile' href='$urlProfile' class='nav-content-bttn open-font'>
+                                <i class='feather-user btn-round-md bg-primary-gradiant me-3'></i><span>Author Profile </span>
+                            </a>";
+                            ?>
                         </li>
                     </ul>
                 </div>

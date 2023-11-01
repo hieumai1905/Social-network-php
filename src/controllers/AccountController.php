@@ -111,8 +111,9 @@ class AccountController
                     }
                     $_SESSION['user-login'] = serialize($userLogin);
                     if ($userLogin->getUserRole() == "ADMIN") {
-                        return Response::redirect('/admin');
+                        return Response::redirect('/admin/dash-board');
                     }
+                    $_SESSION['login-at'] = time();
                     return Response::redirect('/home');
                 }
                 return Response::View('views/Login', ['error' => 'Email or password incorect']);

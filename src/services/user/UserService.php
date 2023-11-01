@@ -3,6 +3,7 @@
 namespace services\user;
 
 use DAO\user\IUserDAO;
+use services\handle\Encryption;
 use storage\Logger;
 use models\User;
 use storage\Mapper;
@@ -12,6 +13,7 @@ require_once 'IUserService.php';
 require_once 'src/storage/Logger.php';
 require_once 'src/storage/Mapper.php';
 require_once 'src/models/User.php';
+require_once 'src/services/handle/Encryption.php';
 
 
 class UserService implements IUserService
@@ -117,7 +119,7 @@ class UserService implements IUserService
             $data = $this->userDAO->getUserByEmail($email);
             if ($data) {
                 Logger::log('Get user by email successfully');
-                if ($password == $data->password) {
+                if (Encryption::encrypt($password) == $data->password) {
                     Logger::log('Login successfully User id: ' . $data->user_id);
                     return Mapper::mapStdClassToModel($data, User::class);
                 }
@@ -146,7 +148,7 @@ class UserService implements IUserService
                 $userRegister->setUserId(uniqid());
                 $userRegister->setFullName($full_name);
                 $userRegister->setEmail($email);
-                $userRegister->setPassword($password);
+                $userRegister->setPassword(Encryption::encrypt($password));
                 $userRegister->setUserRole('USER');
                 $userRegister->setStatus('INACTIVE');
                 $userRegister->setAvatar('avatar.jpg');
@@ -235,6 +237,30 @@ class UserService implements IUserService
             }
             return $users;
         } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function getNewUserInMonth()
+    {
+        try{
+            $result = $this->userDAO->getNewUserInMonth();
+            Logger::log('Get all users successfully');
+            if (count($result) == 0) {
+                Logger::log('No user found');
+                return null;
+            }
+            $users = [];
+            foreach ($result as $item) {
+                $user = Mapper::mapStdClassToModel($item, User::class);
+                $users[] = $user;
+            }
+            return $users;
+        }catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception('An error connect to database');
         } catch (\Exception $e) {

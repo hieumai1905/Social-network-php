@@ -9,7 +9,8 @@ function EditProfile() {
             "dob": document.getElementById('uDob').value,
             "address": document.getElementById('uAddress').value,
             "gender": document.getElementById('uGender').value,
-            "about_me": document.getElementById('uAboutMe').value
+            "about_me": document.getElementById('uAboutMe').value,
+            "phone" : document.getElementById('uPhone').value
         }),
         error: function (reponse) {
         },
@@ -19,6 +20,36 @@ function EditProfile() {
         }
     });
 }
+function validateFullName() {
+    var fullName = document.getElementById('uFullName').value;
+
+    if (fullName.trim() === '') {
+        alert('Full name cannot be empty');
+        return false;
+    }
+
+    return true;
+}
+function validatePhoneNumber() {
+    var phoneInput = document.getElementById('uPhone');
+    var phoneValue = phoneInput.value.trim();
+    if (phoneValue === '') {
+        return true;
+    } else {
+        if (phoneValue.length !== 10 || phoneValue.charAt(0) !== '0') {
+            alert('Invalid phone number. Please enter a valid phone number starting with 0 or enough 10 numbers.');
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
 document.getElementById('btnSave').addEventListener('click',function () {
-    EditProfile();
+    if (validateFullName() === false    ) {
+        return;
+    }
+    if (validatePhoneNumber() === false) {
+        return;
+    }
+        EditProfile();
 })
