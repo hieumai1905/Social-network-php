@@ -120,10 +120,10 @@ class PostService implements IPostService
         }
     }
 
-    function getPostForHome($userId): ?array
+    function getPostForHome(): ?array
     {
         try{
-            $result = $this->postDAO->getPostForHome($userId);
+            $result = $this->postDAO->getPostForHome();
             Logger::log('Get all post for home successfully');
             $posts = [];
             foreach ($result as $item){

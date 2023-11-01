@@ -7,7 +7,7 @@ interface IPostDAO
 {
     public function getPostForProfile($userId): ?array;
     public function getPostById($postId);
-    public function getPostForHome($userId): ?array;
+    public function getPostForHome(): ?array;
     public function createPost(post $post);
     public function updatePost(post $post);
     public function deletePost($postId);
