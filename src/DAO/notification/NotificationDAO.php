@@ -38,4 +38,21 @@ class NotificationDAO implements INotificationDAO {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function updateNotification($user_recipient)
+    {
+        $stmt = $this->connection->prepare('Update notifications set status = :status where user_recipient = :user_recipient');
+        $stmt->bindValue('status','SEEN');
+        $stmt->bindValue('user_recipient', $user_recipient);
+        $stmt->execute();
+    }
+
+    public function getNotificationUnSeen($user_recipient)
+    {
+        $stmt = $this->connection->prepare('SELECT * FROM notifications WHERE user_recipient = :user_recipient and status = :status');
+        $stmt->bindValue('user_recipient', $user_recipient);
+        $stmt->bindValue('status','UNSEEN');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

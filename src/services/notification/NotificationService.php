@@ -81,4 +81,37 @@ class NotificationService implements INotificationService {
             throw new \Exception($e->getMessage());
         }
     }
+
+    public function updateNotificationStatus($user_recipient)
+    {
+        try {
+            $this->notificationDAO->updateNotification($user_recipient);
+            Logger::log("Update status notification successfully");
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        }catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function countNotificationUnSeen($user_recipient)
+    {
+        try {
+            $result = $this->notificationDAO->getNotificationUnSeen($user_recipient);
+            $i = 0;
+            foreach ($result as $item) {
+                $i += 1;
+            }
+            Logger::log("Count notification unseen successfully");
+            return $i;
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        }catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
 }

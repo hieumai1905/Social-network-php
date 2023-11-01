@@ -30,9 +30,19 @@ class NotificationController {
             foreach ($result as $item) {
                 $notifications[] = $item;
             }
+            $this->notificationService->updateNotificationStatus($user->getUserId());
             return Response::view('views/Notification',['notification'=>$notifications]);
         }catch (Exception $e) {
             return Response::view('views/Error',['error'=>$e->getMessage()]);
+        }
+    }
+    public function countNotificationUnSeen() {
+        try {
+            $userLogin = unserialize($_SESSION['user-login']);
+            $count = $this->notificationService->countNotificationUnSeen($userLogin->getUserId());
+            return Response::apiResponse(Status::OK,'success',$count);
+        }catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR,$e->getMessage(),null);
         }
     }
 }
