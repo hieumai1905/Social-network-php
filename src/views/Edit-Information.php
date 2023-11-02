@@ -39,6 +39,7 @@
                                                 $fullName = $data['user']->getFullName();
                                                 echo "<input id='uFullName' style='font-size: 23px' data-maxlength='30' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your first name...' spellcheck='false' value='$fullName'>";
                                             ?>
+                                            <div id="fullNameError" class="error-message" style="color: red; font-size: 14px; margin-top: 5px;"></div>
                                         </div>
                                     </div>
 
@@ -68,10 +69,12 @@
                                                     echo "<input id='uPhone' type='number' style='font-size: 23px' pattern='[0-9]' data-maxlength='10' oninput='this.value=this.value.slice(0,this.dataset.maxlength)' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your phone number...' spellcheck='false' value='$phone'>";
                                                 }
                                             ?>
+                                            <div id="phoneError" class="error-message" style="color: red; font-size: 14px; margin-top: 5px;"></div>
                                         </div>
                                     </div>
                                 </div>
 
+                                <div class="row">
                                 <div class="row">
 
 
@@ -119,7 +122,7 @@
                                             <label class="mont-font fw-600 font-xsss">Birthday</label><br>
                                             <?php
                                                 $dob = $data['user']->getDob();
-                                                echo "<input id='uDob' style='font-size: 23px' class='form-control mb-0 p-3  bg-ghostwhite lh-16' type='date'  name='bday' min='1940-01-01' value='$dob'><br><br>";
+                                                echo "<input id='uDob' style='font-size: 23px' class='form-control mb-0 p-3  bg-ghostwhite lh-16' type='date'  name='bday' min='1940-01-01'><br><br>";
                                             ?>
                                         </div>
                                     </div>
@@ -159,7 +162,7 @@
                     <!-- <div class="card w-100 border-0 p-2"></div> -->
                 </div>
             </div>
-
+            </div>
         </div>
     </div>
 
