@@ -7,11 +7,11 @@ use services\IGeneralService;
 require_once 'src/services/IGeneralService.php';
 interface IPostInteractService
 {
-    function getFavoritePost($userId): ?array;
-    function addFavoritePost($userId, $postId);
-    function deleteFavoritePost($userId, $postId);
+    function getFavoritePost(): ?array;
+    function addFavoritePost($postId);
+    function deleteFavoritePost($postId);
     //   public function getHiddenPost($userId);
-    function addHiddenPost($userId, $postId);
+    function addHiddenPost($postId);
     function addReportPost(PostInteract $postInteract);
 
 }

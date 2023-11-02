@@ -17,7 +17,7 @@ class CommentDAO implements ICommentDAO
     public function getCommentOfPost($postId): ?array
     {
         // TODO: Implement getCommentOfPost() method.
-        $stmt = $this->connection->prepare("SELECT * FROM comments WHERE post_id = :post_id ORDER BY comment_at DESC");
+        $stmt = $this->connection->prepare("SELECT * FROM comments WHERE post_id = :post_id ORDER BY comment_at ASC");
         $stmt->bindValue(':post_id', $postId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -27,11 +27,12 @@ class CommentDAO implements ICommentDAO
     public function createCommentForPost(Comment $comment)
     {
         // TODO: Implement createCommentForPost() method.
+        $userId = unserialize($_SESSION['user-login']);
         $stmt = $this->connection->prepare("INSERT INTO comments (comment_at,content, post_id, user_id)
             VALUES (NOW(), :content, :post_id, :user_id)");
         $stmt->bindValue(':content',$comment->getContent());
         $stmt->bindValue(':post_id',$comment->getPostId());
-        $stmt->bindValue(':user_id',$comment->getUserId());
+        $stmt->bindValue(':user_id',$userId);
         $stmt->execute();
     }
 

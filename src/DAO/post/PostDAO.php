@@ -13,6 +13,7 @@ class PostDAO implements IPostDAO
 {
 
     private $connection;
+
     public function __construct(){
         $this->connection =\DAO\Databases\ConnectDatabase::getConnection();
     }
@@ -33,8 +34,9 @@ class PostDAO implements IPostDAO
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
     //Get post for new feed
-    public function getPostForHome($userId): ?array
+    public function getPostForHome(): ?array
     {
+        $userId = unserialize($_SESSION['user-login']);
         $stmt = $this->connection->prepare("
             (SELECT p.post_id, create_at, content, access_modifier, post_type, p.user_id 
             FROM posts p INNER JOIN relations r on p.user_id = r.user_target_id 
@@ -67,13 +69,14 @@ class PostDAO implements IPostDAO
 
     public function createPost(Post $post)
     {
+        $userId = unserialize($_SESSION['user-login']);
         $stmt = $this->connection->prepare("INSERT INTO posts (post_id, create_at, content, access_modifier, post_type, user_id)
             VALUES (:postId, NOW(), :content, :accessModifier, :postType, :userId)");
         $stmt->bindValue(':postId',uniqid());
         $stmt->bindValue(':content',$post->getContent());
         $stmt->bindValue(':accessModifier',$post->getAccessModifier());
         $stmt->bindValue(':postType',$post->getPostType());
-        $stmt->bindValue(':userId',$post->getUserId());
+        $stmt->bindValue(':userId',$userId);
         $stmt->execute();
     }
 

@@ -120,7 +120,7 @@ function registerRoute()
     Route::get('/relation/block', 'RelationController@getBlockUser');
     //------------------------------------------------------------------------------------
     //---------------------------Register route for post-------------------------------------
-    Route::get('/api/post/home/{user_id}', 'PostController@getPostForHome');
+    Route::get('/api/post/home', 'PostController@getPostForHome');
     Route::get('/api/post/profile/{user_id}', 'PostController@getPostForProfile');
     Route::get('/api/post/{post_id}', 'PostController@getPostById');
     Route::get('/api/admin/post', 'PostController@getAllPost');
@@ -142,25 +142,28 @@ function registerRoute()
     Route::delete('/api/comment/reply/{comment_id}', 'CommentReplyController@deleteCommentReply');
     //------------------------------------------------------------------------------------------------
     //-----------------------------Register route for post interact------------------------------------------------
-    Route::get('/api/favorite/{userId}', 'PostInteractController@getFavoritePost');
-    Route::post('/api/favorite/{postId}/{userId}', 'PostInteractController@addFavorite');
-    Route::post('/api/hidden/{postId}/{userId}', 'PostInteractController@addHidden');
+    Route::get('/api/favorite', 'PostInteractController@getFavoritePost');
+    Route::post('/api/favorite/{postId}', 'PostInteractController@addFavorite');
+    Route::post('/api/hidden/{postId}', 'PostInteractController@addHidden');
     Route::post('/api/report', 'PostInteractController@addReport');
-    Route::delete('/api/favorite/{postId}/{userId}', 'PostInteractController@deleteFavorite');
+    Route::delete('/api/favorite/{postId}', 'PostInteractController@deleteFavorite');
     //------------------------------------------------------------------------------------------------
     //------------------------------Register route for like-------------------------------------------
-    Route::get('/api/like/post/{postId}/{userId}', 'LikeController@getLikeOfPostByUser');
-    Route::get('/api/like/comment/{commentId}/{userId}', 'LikeController@getLikeOfCommentByUser');
-    Route::get('/api/like/comment/reply/{commentReplyId}/{userId}', 'LikeController@getLikeOfCommentReplyByUser');
+    Route::get('/api/like/post/{postId}', 'LikeController@getLikeOfPostByUser');
+    Route::get('/api/like/comment/{commentId}', 'LikeController@getLikeOfCommentByUser');
+    Route::get('/api/like/comment/reply/{commentReplyId}', 'LikeController@getLikeOfCommentReplyByUser');
     Route::get('/api/like/count/post/{postId}', 'LikeController@getCountLikePost');
     Route::get('/api/like/count/comment/{commentId}', 'LikeController@getCountLikeComment');
     Route::get('/api/like/count/comment/reply/{commentReplyId}', 'LikeController@getCountLikeCommentReply');
-    Route::post('/api/like/post/{postId}/{userId}', 'LikeController@likePost');
-    Route::post('/api/like/comment/{commentId}/{userId}', 'LikeController@likeComment');
-    Route::post('/api/like/comment/reply/{commentReplyId}/{userId}', 'LikeController@likeCommentReply');
-    Route::delete('/api/like/post/{postId}/{userId}', 'LikeController@unlikePost');
-    Route::delete('/api/like/comment/{commentId}/{userId}', 'LikeController@unlikeComment');
-    Route::delete('/api/like/comment/reply/{commentReplyId}/{userId}', 'LikeController@unlikeCommentReply');
+    Route::post('/api/like/post/{postId}', 'LikeController@likePost');
+    Route::post('/api/like/comment/{commentId}', 'LikeController@likeComment');
+    Route::post('/api/like/comment/reply/{commentReplyId}', 'LikeController@likeCommentReply');
+    Route::delete('/api/like/post/{postId}', 'LikeController@unlikePost');
+    Route::delete('/api/like/comment/{commentId}', 'LikeController@unlikeComment');
+    Route::delete('/api/like/comment/reply/{commentReplyId}', 'LikeController@unlikeCommentReply');
+    Route::delete('/api/like/all/post/{postId}', 'LikeController@deleteAllLikePost');
+    Route::delete('/api/like/all/comment/{commentId}', 'LikeController@deleteAllLikeComment');
+    Route::delete('/api/like/all/comment/reply/{commentReplyId}', 'LikeController@deleteAllLikeCommentReply');
     //------------------------------------------------------------------------------------------------
     //------------------------------Register route for media-------------------------------------------
     Route::get('/api/media/post/{postId}', 'MediaController@getMediaOfPost');

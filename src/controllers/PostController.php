@@ -24,10 +24,10 @@ class PostController
     }
 
     //----------------------HTTP GET------------------------
-    //HTTP GET (/post/home/$userId)
-    public function getPostForHome($userId){
+    //HTTP GET (/post/home)
+    public function getPostForHome(){
         try {
-            $posts = $this->postService->getPostForHome($userId);
+            $posts = $this->postService->getPostForHome();
             $data =[];
             foreach($posts as $post){
                 $data[] = Mapper::mapModelToJson($post);
