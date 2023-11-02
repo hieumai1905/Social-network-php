@@ -21,18 +21,21 @@
                             <ul id="NotificationList" class="notification-box">
 
                                 <?php
+                                    $i = 0;
                                     foreach ($data['notification'] as $item) {
                                         $content = $item->getContent();
                                         $date = $item->getNotificationAt();
                                         $url_target = $item->getUrlTarget();
+                                        $avatarUserSend = 'public/images/'.$data['user'][$i]->getAvatar();
                                         echo "<li>
                                     <a href='$url_target' class='d-flex align-items-center p-3 rounded-3 bg-lightblue theme-light-bg'>
-                                        <img src='/public/images/user-7.png' alt='user' class='w45 me-3'>
+                                        <img src='$avatarUserSend' alt='user' class='w45 me-3'>
                                         <i class='feather-heart text-white bg-red-gradiant me-2 font-xssss notification-react'></i>
                                         <h6 class='font-xssss text-grey-900 text-grey-900 mb-0 mt-0 fw-500 lh-20'>$content<span class='d-block text-grey-500 font-xssss fw-600 mb-0 mt-0 0l-auto'>$date</span></h6>
                                         <i class='ti-more-alt text-grey-500 font-xs ms-auto'></i>
                                     </a>
                                 </li>";
+                                        $i += 1;
                                     }
                                 ?>
 <!--                                <li>-->
