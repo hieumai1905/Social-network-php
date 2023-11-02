@@ -66,8 +66,9 @@ class RelationDAO implements IRelationDAO {
     public function updateTypeRelation($user_id, $user_target_id,$type_relation_before,$type_relation_after)
     {
         $stmt1 = $this->connection->prepare('UPDATE relations set type_relation = :type_relation, change_at = :change_at where user_id = :user_id and user_target_id = :user_target_id and type_relation = :type_relation_now');
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
         $stmt1->bindValue('type_relation', $type_relation_after);
-        $stmt1->bindValue('change_at',date('Y-m-d'));
+        $stmt1->bindValue('change_at',date('Y-m-d H:i:s'));
         $stmt1->bindValue('user_id', $user_id);
         $stmt1->bindValue('user_target_id',$user_target_id);
         $stmt1->bindValue('type_relation_now', $type_relation_before);

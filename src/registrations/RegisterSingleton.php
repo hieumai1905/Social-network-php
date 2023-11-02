@@ -281,7 +281,8 @@ class RegisterSingleton
 
         $container->register('\controllers\NotificationController', function () use ($container) {
             return new NotificationController(
-                $container->resolve('\services\notification\INotificationService')
+                $container->resolve('\services\notification\INotificationService'),
+                $container->resolve('\services\user\IUserService')
             );
         });
         //-------------------------------------------------------------------------------------

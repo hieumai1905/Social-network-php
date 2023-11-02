@@ -296,7 +296,7 @@
             $user = unserialize($_SESSION['user-login']);
             $urlProfile = 'http://localhost:8080/users/'.$user->getUserId();
             $avatar = '/public/images/'.$user->getAvatar();
-            echo "<a id='avatarprofile' href='${urlProfile}' class='p-0 ms-3 menu-icon'>
+            echo "<a id='avatarprofile' href='$urlProfile' class='p-0 ms-3 menu-icon'>
             <img style='width:30px; height:40px; border-radius:30px;' id='avataruser' src='$avatar' alt='user' class='w40 mt--1' />
         </a>"
         ?>

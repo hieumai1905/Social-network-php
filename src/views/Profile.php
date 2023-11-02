@@ -114,20 +114,24 @@ require_once "Layout-Header.php";
                 <div class="col-lg-12">
                     <div class="card w-100 border-0 p-0 bg-white shadow-xss rounded-xxl">
                         <div class="card-body h250 p-0 rounded-xxl overflow-hidden m-3">
-                            <img id="coverImage" src="/public/images/u-bg.jpg" alt="image" onclick="OpenImgText()" style="width: 60vw; height: 30vh;">
+                            <?php
+                                $coverImage = '/public/images/'.$data['user']->getCoverImage();
+                                echo "<img id='coverImage' src='$coverImage' alt='image' onclick='OpenImgText()' style='width: 60vw; height: 30vh;'>";
+                            ?>
                         </div>
                         <div class="card-body p-0 position-relative">
                             <a href="#" class="hover">
                                 <figure class="avatar position-absolute w100 z-index-1" style="top:-40px; left: 30px;">
                                     <?php
                                         $avatar ='/public/images/'. $data['user']->getAvatar();
+                                        echo "<img style='width:75px; height:100px; border-radius:50px;' id='avatar' src='$avatar' alt='image' class='float-right p-1 bg-white rounded-circle w-100' onclick='OpenAvtText()'>";
                                     ?>
                                 </figure>
                             </a>
                             <?php
                             $fullName = $data['user']->getFullName();
                             $email = $data['user']->getEmail();
-                            echo "<h4 id='nameuser' class='fw-700 font-sm mt-2 mb-lg-5 mb-4 pl-15'>${fullName}<span id='usermail' class='fw-500 font-xssss text-grey-500 mt-1 mb-3 d-block'>${email}</span></h4>";
+                            echo "<h4 id='nameuser' class='fw-700 font-sm mt-2 mb-lg-5 mb-4 pl-15'>$fullName<span id='usermail' class='fw-500 font-xssss text-grey-500 mt-1 mb-3 d-block'>$email</span></h4>";
                             ?>
                             <div class="d-flex align-items-center justify-content-center position-absolute-md right-15 top-0 me-2">
                                 <?php
@@ -173,7 +177,7 @@ require_once "Layout-Header.php";
                                 <li class="list-inline-item me-5">
                                     <?php
                                     $urlFriend = 'http://localhost:8080/relation/'.$data['user']->getUserId().'/friendlist';
-                                    echo "<a href='${urlFriend}' class='fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block'>Membership</a>"
+                                    echo "<a href='$urlFriend' class='fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block'>Membership</a>"
                                     ?>
                                 </li>
                                 <li class="list-inline-item me-5">
@@ -202,7 +206,7 @@ require_once "Layout-Header.php";
                             <h4 class="fw-700 mb-3 font-xsss text-grey-900">About</h4>
                             <?php
                             $aboutMe = $data['user']->getAboutMe();
-                            echo "<p class='fw-500 text-grey-500 lh-24 font-xssss mb-0'>${aboutMe}</p>"
+                            echo "<p class='fw-500 text-grey-500 lh-24 font-xssss mb-0'>$aboutMe</p>"
                             ?>
                         </div>
                         <div class="card-body border-top-xs d-flex">
