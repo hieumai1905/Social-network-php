@@ -146,9 +146,10 @@ class RelationController  {
     public function sendFriendRequest($user_target_id) {
         try {
             $user = unserialize($_SESSION['user-login']);
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
             $notification = new Notification();
             $notification->setNotificationId(uniqid());
-            $notification->setNotificationAt(date('Y-m-d'));
+            $notification->setNotificationAt(date('Y-m-d H:i:s'));
             $notification->setContent('Bạn có lời mời kết bạn từ '.$user->getFullName());
             $notification->setStatus('UNSEEN');
             $notification->setUserId($user->getUserId());
@@ -184,9 +185,10 @@ class RelationController  {
     public function acceptFriendRequest ($user_target_id) {
         try {
             $user = unserialize($_SESSION['user-login']);
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
             $notification = new Notification();
             $notification->setNotificationId(uniqid());
-            $notification->setNotificationAt(date('Y-m-d'));
+            $notification->setNotificationAt(date('Y-m-d H:i:s'));
             $notification->setContent($user->getFullName() . ' đã chấp nhận lời mời kết bạn');
             $notification->setStatus('UNSEEN');
             $notification->setUserId($user->getUserId());
