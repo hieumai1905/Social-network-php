@@ -49,10 +49,11 @@ class RelationService implements IRelationService {
     }
     public function createRelation($user_id, $user_target_id, $type_relation)
     {
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
         $relation = new Relation();
         $relation->setRelationId(uniqid());
         $relation->setTypeRelation($type_relation);
-        $relation->setChangeAt(date("Y-m-d"));
+        $relation->setChangeAt(date("Y-m-d H:i:s"));
         $relation->setUserId($user_id);
         $relation->setUserTargetId($user_target_id);
         return $relation;

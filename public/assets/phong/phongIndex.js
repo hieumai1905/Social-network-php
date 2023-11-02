@@ -32,16 +32,18 @@ function GetFriendRequest() {
             let table = '';
             for (var i = 0; i < len; ++i) {
                 var user = GetUser(response.data[i].userTargetId);
+                var avatar = '/public/images/' + user.avatar;
+                var urlProfile = 'http://localhost:8080/users/' + user.userId;
                 console.log(user);
                 table += `<div
                     class="card-body d-flex pt-4 ps-4 pe-4 pb-0 border-top-xs bor-0">
                     <figure class="avatar me-3">
                         <img
-                            src="${user.avatar}"
+                            src="${avatar}"
                             alt="image"
                             class="shadow-sm rounded-circle w45"/>
                     </figure>
-                    <a href="https://localhost:7261/profile"><h4 style="cursor:pointer" name="${user.userId}" class="namefriendrequest fw-700 text-grey-900 font-xssss mt-1">
+                    <a href="${urlProfile}"><h4 style="cursor:pointer" name="${user.userId}" class="namefriendrequest fw-700 text-grey-900 font-xssss mt-1">
                                         ${user.fullName}
                         <span
                             class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">
