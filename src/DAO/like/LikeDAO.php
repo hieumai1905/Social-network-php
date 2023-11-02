@@ -16,7 +16,7 @@ class LikeDAO implements ILikeDAO
     public function getLikeOfPostByUserId($postId)
     {
         // TODO: Implement getLikeOfPostByUserId() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("SELECT * FROM likes WHERE user_id = :user_id AND post_id = :post_id");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postId);
@@ -27,7 +27,7 @@ class LikeDAO implements ILikeDAO
     public function getLikeOfCommentByUserId($commentId)
     {
         // TODO: Implement getLikeOfCommentByUserId() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("SELECT * FROM likes WHERE user_id = :user_id AND comment_id = :comment_id");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':comment_id', $commentId);
@@ -38,7 +38,7 @@ class LikeDAO implements ILikeDAO
     public function getLikeOfCommentReplyByUserId($commentReplyId)
     {
         // TODO: Implement getLikeOfCommentReplyByUserId() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("SELECT * FROM likes WHERE user_id = :user_id AND post_id = :comment_reply_id");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':comment_reply_id', $commentReplyId);
@@ -85,7 +85,7 @@ class LikeDAO implements ILikeDAO
     public function addLikeComment($commentId)
     {
         // TODO: Implement addLikeComment() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO likes (user_id, comment_id) VALUES (:user_id,:comment_id)");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':comment_id', $commentId);
@@ -95,7 +95,7 @@ class LikeDAO implements ILikeDAO
     public function addLikeCommentReply($commentReplyId)
     {
         // TODO: Implement addLikeCommentReply() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO likes (user_id, comment_reply_id) VALUES (:user_id, :comment_reply_id)");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':comment_reply_id', $commentReplyId);
@@ -105,7 +105,7 @@ class LikeDAO implements ILikeDAO
     public function deleteLikePost($postId)
     {
         // TODO: Implement deleteLikePost() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("DELETE FROM likes WHERE post_id = :post_id AND user_id = :user_id");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postId);
@@ -115,7 +115,7 @@ class LikeDAO implements ILikeDAO
     public function deleteLikeComment($commentId)
     {
         // TODO: Implement deleteLikeComment() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("DELETE FROM likes WHERE comment_id = :comment_id AND user_id = :user_id");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':comment_id', $commentId);
@@ -125,7 +125,7 @@ class LikeDAO implements ILikeDAO
     public function deleteLikeCommentReply($commentReplyId)
     {
         // TODO: Implement deleteLikeCommentReply() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("DELETE FROM likes WHERE comment_reply_id = :comment_reply_id AND user_id = :user_id");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':comment_reply_id', $commentReplyId);

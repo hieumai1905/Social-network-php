@@ -18,7 +18,7 @@ class PostInteractDAO implements IPostInteractDAO
     public function getFavoritePost(): ?array
     {
         // TODO: Implement getFavoritePost() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("SELECT * FROM post_interacts WHERE user_id = :user_id AND type = :type");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':type', 'SAVE');
@@ -30,7 +30,7 @@ class PostInteractDAO implements IPostInteractDAO
     public function addFavoritePost($postId)
     {
         // TODO: Implement addFavoritePost() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO post_interacts (user_id, post_id, content, type) VALUES (:user_id, :post_id, :content, :type)");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postId);
@@ -42,7 +42,7 @@ class PostInteractDAO implements IPostInteractDAO
     public function deleteFavoritePost($postId)
     {
         // TODO: Implement deleteFavoritePost() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("DELETE FROM post_interacts WHERE post_id = :postId AND user_id = :userId");
         $stmt->bindValue(':postId',$postId);
         $stmt->bindValue(':userId',$userId);
@@ -57,7 +57,7 @@ class PostInteractDAO implements IPostInteractDAO
     public function addHiddenPost($postId)
     {
         // TODO: Implement addHiddenPost() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO post_interacts (user_id, post_id, content, type) VALUES (:user_id, :post_id, :content, :type)");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postId);
@@ -69,7 +69,7 @@ class PostInteractDAO implements IPostInteractDAO
     public function addReportPost(PostInteract $postInteract)
     {
         // TODO: Implement addReportPost() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO post_interacts (user_id, post_id, content, type) VALUES (:user_id, :post_id, :content, :type)");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postInteract->getPostId());

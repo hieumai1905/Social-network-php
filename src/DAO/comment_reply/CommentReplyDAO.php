@@ -25,7 +25,7 @@ class CommentReplyDAO implements ICommentReplyDAO
     public function createCommentReply(CommentReplie $commentReply)
     {
         // TODO: Implement createCommentReply() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO comment_replies (reply_at, content, user_id, comment_id)
             VALUES (NOW(), :content, :user_id, :comment_id)");
         $stmt->bindValue(':content', $commentReply->getContent());
