@@ -13,6 +13,7 @@ function EditProfile() {
             "phone" : document.getElementById('uPhone').value
         }),
         error: function (reponse) {
+            console.log('error');
         },
         success: function (reponse) {
             alert('Update Infor Success!');
@@ -22,34 +23,44 @@ function EditProfile() {
 }
 function validateFullName() {
     var fullName = document.getElementById('uFullName').value;
+    var fullNameError = document.getElementById('fullNameError');
 
     if (fullName.trim() === '') {
-        alert('Full name cannot be empty');
+        fullNameError.textContent = 'Full name cannot be empty';
+        fullNameError.style.display = 'block';
         return false;
     }
 
+    fullNameError.style.display = 'none';
     return true;
 }
+
 function validatePhoneNumber() {
     var phoneInput = document.getElementById('uPhone');
     var phoneValue = phoneInput.value.trim();
+    var phoneError = document.getElementById('phoneError');
+
     if (phoneValue === '') {
         return true;
     } else {
         if (phoneValue.length !== 10 || phoneValue.charAt(0) !== '0') {
-            alert('Invalid phone number. Please enter a valid phone number starting with 0 or enough 10 numbers.');
+            phoneError.textContent = 'Invalid phone number. Please enter a valid phone number starting with 0 or enough 10 numbers.';
+            phoneError.style.display = 'block';
             return false;
-        } else {
-            return true;
         }
     }
+
+    phoneError.style.display = 'none';
+    return true;
 }
-document.getElementById('btnSave').addEventListener('click',function () {
-    if (validateFullName() === false    ) {
+
+document.getElementById('btnSave').addEventListener('click', function () {
+    var isFullNameValid = validateFullName();
+    var isPhoneNumberValid = validatePhoneNumber();
+
+    if (!isFullNameValid || !isPhoneNumberValid) {
         return;
     }
-    if (validatePhoneNumber() === false) {
-        return;
-    }
-        EditProfile();
-})
+
+    EditProfile();
+});
