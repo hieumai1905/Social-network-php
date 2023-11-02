@@ -77,4 +77,16 @@ class PostInteractDAO implements IPostInteractDAO
         $stmt->bindValue(':type','REPORT');
         $stmt->execute();
     }
+
+    public function getFavoriteById($postId)
+    {
+        // TODO: Implement getFavoriteById() method.
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
+        $stmt = $this->connection->prepare("SELECT * FROM post_interacts WHERE user_id = :user_id AND type = :type AND post_id = :post_id");
+        $stmt->bindValue(':user_id', $userId);
+        $stmt->bindValue(':type', 'SAVE');
+        $stmt->bindValue(':post_id', $postId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

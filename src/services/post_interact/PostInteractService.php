@@ -97,4 +97,21 @@ class PostInteractService implements IPostInteractService
             throw new \Exception($e->getMessage());
         }
     }
+
+    function getFavoritePostById($postId)
+    {
+        // TODO: Implement getFavoritePostById() method.
+        try {
+            $result = $this->postInteractDAO->getFavoriteById($postId);
+            Logger::log('Get favorite posts by id successfully');
+            $postInteract = Mapper::mapStdClassToModel($result, PostInteract::class);
+            return $postInteract;
+        } catch (\PDOException $e){
+            Logger::log($e->getMessage());
+            throw new \Exception("An error connect to database");
+        }catch (\Exception $e){
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
 }
