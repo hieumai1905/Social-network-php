@@ -21,7 +21,7 @@ class PostDAO implements IPostDAO
     public function getPostForProfile($userId): ?array
     {
         $userId = unserialize($_SESSION['user-login'])->getUserId();
-        $stmt = $this->connection->prepare("SELECT * FROM posts WHERE user_id = :user_id");
+        $stmt = $this->connection->prepare("SELECT * FROM posts WHERE user_id = :user_id ORDER BY create_at DESC");
         $stmt->bindValue(':user_id',$userId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -47,7 +47,7 @@ class PostDAO implements IPostDAO
             AND access_modifier = 'PUBLIC')
             UNION
             (SELECT * FROM posts WHERE user_id = :user_id)
-            ");
+            ORDER BY create_at DESC");
         $stmt->bindValue(':user_id',$userId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
