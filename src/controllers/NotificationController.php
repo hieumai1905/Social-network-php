@@ -9,14 +9,17 @@ use https\Status;
 use models\Notification;
 use services\notification\INotificationService;
 use services\notification\NotificationService;
+use services\user\IUserService;
 use storage\Mapper;
 
 class NotificationController {
     private $notificationService;
+    private $userService;
 
-    public function __construct(INotificationService $notificationService)
+    public function __construct(INotificationService $notificationService, IUserService $userService)
     {
         $this->notificationService = $notificationService;
+        $this->userService = $userService;
     }
 
     public function getNotificationOfUser() {
@@ -27,11 +30,13 @@ class NotificationController {
                 return Response::view('views/Notification',['notification'=>[]]);
             }
             $notifications = [];
+            $userSend = [];
             foreach ($result as $item) {
                 $notifications[] = $item;
+                $userSend[] = $this->userService->getById($item->getUserId());
             }
             $this->notificationService->updateNotificationStatus($user->getUserId());
-            return Response::view('views/Notification',['notification'=>$notifications]);
+            return Response::view('views/Notification',['notification'=>$notifications,'user'=>$userSend]);
         }catch (Exception $e) {
             return Response::view('views/Error',['error'=>$e->getMessage()]);
         }
