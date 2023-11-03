@@ -383,7 +383,7 @@ function GetCmtlv1(postId) {
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: column;  margin-left: 50px;">
-                            `+ GetCmtlv2(postId, comment.data[i].commentId) +`
+                            `+ GetCmtlv2(comment.data[i].commentId) +`
                         </div>
                     </div>`; 
             }
@@ -403,7 +403,7 @@ function GetCmtlv2(commentId) {
         dataType: 'json',
         async: false,
         success: function (comment) {
-            for (var i = 0, len = comment.length; i < len; i++) {
+            for (var i = 0, len = comment.data.length; i < len; i++) {
                 cmt = comment.data[i].content;
                 $.ajax({
                     url: 'http://localhost:8080/api/users/' + comment.data[i].userId,
@@ -412,15 +412,15 @@ function GetCmtlv2(commentId) {
                     dataType: 'json',
                     async: false,
                     success: function (user) {
-                        username = user.fullName;
-                        avatar = 'public/images/' + user.avatar;
+                        username = user.data.fullName;
+                        avatar = 'public/images/' + user.data.avatar;
                     },
                     error: function () {
                         console.log("Loi user khi lay cmtreply " + comment.data[i].userId);
                     }
                 });
                 cmtContent += `
-                    <div id="cmtlv1_${comment.data[i].commentReplyId}" class="message-item" style="display: flex; flex-direction: column;">
+                    <div id="cmtlv2_${comment.data[i].commentReplyId}" class="message-item" style="display: flex; flex-direction: column;">
                         <div style="display: flex; flex-direction: row">
                             <div class="message-user" style="display: inline-block">
                                 <figure class="avatar">
@@ -484,15 +484,15 @@ function GetCmtlv2(commentId) {
                         </div>
                         <div style="display: flex; flex-direction: row; align-items: center;">
                             `+ CheckLikeCmt(comment.data[i].commentReplyId)+`
-                            <span style="margin-left: 10px; cursor: pointer" onclick="ReplyCmtlv1('${comment.data[i].commentReplyId}')">Reply</span>
+                            <span style="margin-left: 10px; cursor: pointer" onclick="ReplyCmtlv2('${comment.data[i].commentReplyId}')">Reply</span>
                         </div>
-                        <div id="replyCmt_${comment.data[i].commentReplyId}" class="replyCmtlv1" style="display: none; flex-direction: row; width: 25vw;  margin-left: 50px;">
+                        <div id="replyCmt1_${comment.data[i].commentReplyId}" class="replyCmtlv1" style="display: none; flex-direction: row; width: 25vw;  margin-left: 50px;">
                             <div style="width: 90%;">
                                 <div class="chat-form" style="border: 5px">
                                     <img src="${myAvatar}" alt="image" style="width: 35px; height: 35px; border-radius: 50px;">
-                                        <div style="display:inline-block; width: 80%;"><input id="replyCmt2Input_${comment.data[i].commentReplyId}" type="text" placeholder="Start typing.." style="color:#000; border: 1px solid #dcdcdc"></div>
-                                        <button id="reply2CmtSend_${comment.data[i].commentReplyId}" onclick="NewCommentReply2('${commentId}','${comment.data[i].commentReplyId}')" class="bg-current"><i class="ti-arrow-right text-white"></i></button>
-                                        <button id="reply2CmtEdit_${comment.data[i].commentReplyId}" onclick="EditCommentReply2('${comment.data[i].commentReplyId}')" style="display:none" class="bg-current"><i class="feather-edit text-white"></i></button>
+                                        <div style="display:inline-block; width: 80%;"><input id="replyCmt3Input_${comment.data[i].commentReplyId}" type="text" placeholder="Start typing.." style="color:#000; border: 1px solid #dcdcdc"></div>
+                                        <button id="reply3CmtSend_${comment.data[i].commentReplyId}" onclick="NewCommentReply2('${commentId}','${comment.data[i].commentReplyId}')" class="bg-current"><i class="ti-arrow-right text-white"></i></button>
+                                        <button id="reply3CmtEdit_${comment.data[i].commentReplyId}" onclick="EditCommentReply2('${comment.data[i].commentReplyId}')" style="display:none" class="bg-current"><i class="feather-edit text-white"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -501,7 +501,9 @@ function GetCmtlv2(commentId) {
                         </div>
                     </div>`;
             }
-            
+        },
+        error: function(){
+            console.log('Loi cmtlv 2');
         }
     });
     return cmtContent;
@@ -706,7 +708,17 @@ function ReplyCmtlv1(id) {
         replyDisplay.style.display = "none";
     }
 }
-
+function ReplyCmtlv2(id) {
+    var replyDisplay = document.getElementById("replyCmt1_" + id);
+    if (replyDisplay.style.display == "none") {
+        replyDisplay.style.display = "flex";
+        document.getElementById("reply3CmtSend_" + id).style.display = "inline";
+        document.getElementById("reply3CmtEdit_" + id).style.display = "none";
+    }
+    else {
+        replyDisplay.style.display = "none";
+    }
+}
 function NewPostText() {
     document.getElementById("modalInput").style.display = "flex";
     document.getElementById("testText").style.display = "flex";
