@@ -58,6 +58,7 @@ function CreatePost(post) {
     var username = '';
     var avatar = '';
     var imageUrl = [];
+    var favor = '';
     $.ajax({
         url: 'http://localhost:8080/api/users/' + post.userId,
         method: 'GET',
@@ -92,6 +93,49 @@ function CreatePost(post) {
             console.log("Loi user khi lay anh ");
         }
     });
+
+    $.ajax({
+        url: 'http://localhost:8080/api/favorite/' + post.postId,
+        dataType: 'json',
+        contentType: 'application/json',
+        async: false,
+        success: function(favorite){
+            console.log(favorite);
+            if (favorite.data[0].postId == null){
+                favor = `<div class="card-body p-0 d-flex mt-2" style="cursor: pointer" onclick="SaveThisPost('${post.postId}')" ')">
+                    <i
+                        class="feather-bookmark text-grey-500 me-3 font-lg">
+                    </i>
+                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                        Save this post
+                        <span
+                            class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                            Save to your saved items
+                        </span
+                        >
+                    </h4>
+                </div>`;
+            }
+            else {
+                favor = `<div class="card-body p-0 d-flex mt-2" style="cursor: pointer" onclick="UnsaveThisPost('${post.postId}')"')">
+                    <i
+                        class="feather-x-circle text-grey-500 me-3 font-lg">
+                    </i>
+                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                        Unsave this post
+                        <span
+                            class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                            UnSave from your saved items
+                        </span
+                        >
+                    </h4>
+                </div>`;
+            }
+        },
+        error: function(err) {
+            console.log(err, "lỗi lấy bài ưu thích");
+        }
+    });
     postContent += `<div id="post" class="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-3">
         <div class="card-body p-0 d-flex">
             <figure class="avatar me-3">
@@ -122,6 +166,7 @@ function CreatePost(post) {
                 class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-lg"
                 aria-labelledby="dropdownMenu2">
                 `;
+        postContent += favor;
 
     if (currentUserId == post.userId) {
         postContent += `<div class="card-body p-0 d-flex" style="cursor: pointer;">
@@ -151,19 +196,7 @@ function CreatePost(post) {
                 </div>`;
     }
     else{
-        postContent +=`<div class="card-body p-0 d-flex mt-2" style="cursor: pointer;')">
-                    <i
-                        class="feather-bookmark text-grey-500 me-3 font-lg">
-                    </i>
-                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
-                        Save this post
-                        <span
-                            class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
-                            Save to your saved items
-                        </span
-                        >
-                    </h4>
-                </div>
+        postContent +=`
                 <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;" onclick="HiddenPost('${post.postId}')">
                     <i
                         class="feather-x-square text-grey-500 me-3 font-lg">
@@ -369,7 +402,11 @@ function GetCmtlv1(postId) {
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: row; align-items: center;">
-                            `+ CheckLikeCmt(comment.data[i].commentId) +`
+                            <a id="Like_cmt1_${comment.data[i].commentId}" style="color: black; cursor: pointer;" onclick="LikePost('cmt1_${comment.data[i].commentId}')">
+                                <i class="feather-thumbs-up">
+                                </i>
+                                <span class="like-button-post">Like</span>
+                            </a>
                             <span style="margin-left: 10px; cursor: pointer" onclick="ReplyCmtlv1('${comment.data[i].commentId}')">Reply</span>
                         </div>
                         <div id="replyCmt_${comment.data[i].commentId}" class="replyCmtlv1" style="display: none; flex-direction: row; align-items: center; width: 30vw; margin-left: 50px;">
@@ -483,7 +520,11 @@ function GetCmtlv2(postId, commentId) {
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: row; align-items: center;">
-                            `+ CheckLikeCmt(comment.data[i].commentReplyId)+`
+                            <a id="Like_cmt2_${comment.data[i].commentReplyId}" style="color: black; cursor: pointer;" onclick="LikePost('cmt2_${comment.data[i].commentReplyId}')">
+                                <i class="feather-thumbs-up">
+                                </i>
+                                <span class="like-button-post">Like</span>
+                            </a>
                             <span style="margin-left: 10px; cursor: pointer" onclick="ReplyCmtlv2('${comment.data[i].commentReplyId}')">Reply</span>
                         </div>
                         <div id="replyCmt1_${comment.data[i].commentReplyId}" class="replyCmtlv1" style="display: none; flex-direction: row; width: 25vw;  margin-left: 50px;">
@@ -507,33 +548,6 @@ function GetCmtlv2(postId, commentId) {
         }
     });
     return cmtContent;
-}
-
-function CheckLikeCmt(commentId) {
-    var show = '';
-    $.ajax({
-        url: 'https://localhost:7131/v1/api/Like/comment/'+ commentId,
-        method: 'GET',
-        contentType: 'json',
-        dataType: 'json',
-        async: false,
-        xhrFields: {
-            withCredentials: true,
-        },
-        error: function () {
-            console.log("Loi like");
-        },
-        success: function (like) {
-            var check = like.length; 
-            if (check > 0) {
-                show = `<span id="Like_${commentId}" style="margin-left: 50px; cursor: pointer; color: blue; font-weight: bold;" onclick="LikePost('${commentId}')"><i class="feather-thumbs-up"></i>Like</span>`;
-            }
-            else {
-                show = `<span id="Like_${commentId}" style="margin-left: 50px; cursor: pointer; color: black ; font-weight: normal;" onclick="LikePost('${commentId}')"><i class="feather-thumbs-up"></i>Like</span>`;
-            }
-        }
-    });
-    return show;
 }
 
 function NewComment(postId) {
@@ -688,10 +702,23 @@ function Replycmt2Text(id, content) {
     
 }
 function DeleteCmt(postId, commentId) {
-
+    if (confirm('Bạn có chắc muốn xoá bình luận này không?') == false) return;
+    $.ajax({
+        url: 'http://localhost:8080/api/comment/' + commentId,
+        method: 'DELETE',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        success: function () {
+            GetCmtlv1(postId);
+        },
+        error: function (err) {
+            console.log(err, 'Khong xoa duoc nay');
+        }
+    });
 }
 
 function DeleteReplyCmt(postId, commentReplyId) {
+    if (confirm('Bạn có chắc muốn xoá bình luận này không?') == false) return;
     $.ajax({
         url: 'http://localhost:8080/api/comment/reply/' + commentReplyId,
         method: 'DELETE',
@@ -812,38 +839,21 @@ function UpdateThisPost(postId, postContent) {
 }
 
 function DeleteThisPost(postId) {
+    if (confirm('Bạn có chắc muốn xoá bài viết này không?') == false) return;
     $.ajax({
-        url: 'https://localhost:7131/v1/api/Comment/' + postId,
+        url: 'http://localhost:8080/api/post/' + postId,
         method: "DELETE",
         async: false,
-        xhrFields: {
-            withCredentials: true
-        },
         success: function () {
-            console.log("ok");
-        }
-    });
-    $.ajax({
-        url: 'https://localhost:7131/vi/api/Image/' + postId,
-        method: 'DELETE',
-        async: false,
-        xhrFields: {
-            withCredentials: true
+            console.log("Xoá đc nhé");
+            ShowLoader();
+            GetNewFeed();
         },
-        success: function (data) {
-            $.ajax({
-                url: 'https://localhost:7131/v2/api/Posts/' + postId,
-                method: 'DELETE',
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                success: function (data) {
-                    ShowLoader();
-                }
-            });
+        error: function(error){
+            console.log(error,"Lỗi r");
         }
     });
+
 }
 
 ipnFileElement.addEventListener('change', function (e) {
@@ -922,6 +932,17 @@ function AddImagesToPost(idNewPost = '') {
 
 }
 
+function LikePost(Id) {
+    var Like = document.getElementById("Like_" + Id);
+    if (Like.style.color == "black") {
+        Like.style.color = "blue";
+        Like.style.fontWeight = "bold";
+    }
+    else {
+        Like.style.color = "black";
+        Like.style.fontWeight = "normal";
+    }
+}
 
 function ShowLoader() {
     ClosePostText();
@@ -934,6 +955,7 @@ function ShowLoader() {
 
 }
 function HiddenPost(postId) {
+    if (confirm('Bạn có chắc muốn ẩn bài viết này không?') == false) return;
     $.ajax({
         url: 'http://localhost:8080/api/hidden/' + postId,
         method: 'POST',
@@ -947,50 +969,32 @@ function HiddenPost(postId) {
     });
 }
 
-// function LikePost(postId) {
-//     var Like = document.getElementById("Like_" + postId);
-//     if (Like.style.color == "black") {
-//         Like.style.color = "blue";
-//         Like.style.fontWeight = "bold";
-//     }
-//     else {
-//         Like.style.color = "black";
-//         Like.style.fontWeight = "normal";
-//     }
-// }
+function SaveThisPost(postId){
+    $.ajax({
+        url: 'http://localhost:8080/api/favorite/' + postId,
+        method: 'POST',
+        error: function () {
+            console.log("Loi an post");
+        },
+        success: function () {
+            ShowLoader();
+            GetNewFeed();
+        }
 
-//function LikeCmt(commentId) {
-//    var check = document.getElementById("like_" + commentId);
-//    console.log(document.getElementById("like_" + commentId).value);
-//    if (check.style.fontWeight == "none") {
-//        $.ajax({
-//            url: 'https://localhost:7131/v1/api/Like/comment/' + commentId,
-//            method: 'POST',
-//            async: false,
-//            xhrFields: {
-//                withCredentials: true,
-//            },
-//            error: function () {
-//                console.log("Loi like");
-//            },
-//            success: function () {
-//                check.style.fontWeight == "bold";
-//            }
-//        });
-//    } else {
-//        $.ajax({
-//            url: 'https://localhost:7131/v1/api/Like/comment/' + commentId,
-//            method: 'DELETE',
-//            async: false,
-//            xhrFields: {
-//                withCredentials: true,
-//            },
-//            error: function () {
-//                console.log("Loi like");
-//            },
-//            success: function () {
-//                check.style.fontWeight == "none";
-//            }
-//        });
-//    }
-//}
+    });
+}
+
+function UnsaveThisPost(postId){
+    $.ajax({
+        url: 'http://localhost:8080/api/favorite/' + postId,
+        method: 'POST',
+        error: function () {
+            console.log("Loi an post");
+        },
+        success: function () {
+            ShowLoader();
+            GetNewFeed();
+        }
+
+    });
+}
