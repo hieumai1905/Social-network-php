@@ -1,5 +1,7 @@
 <?php
 require_once "Layout-Header.php";
+
+echo '<div id="userCurrent" type="hidden">'.unserialize($_SESSION['user-login'])->getUserId().'</div>';
 ?>
 <!-- main content -->
 <div id="modalSpinner" class="modalHtd">
@@ -283,7 +285,7 @@ include "Layout-Footer.php";
 ?>
 <!-- main content -->
 <script src="public/assets/phong/phongIndex.js"></script>
-<script src="/public/assets/js/htd/hungIndex.js"></script>
+<!--<script src="/public/assets/js/htd/hungIndex.js"></script>-->
 <script src="/public/assets/js/htd/index.js"></script>
 <script src="public/js/plugin.js"></script>
 <script src="public/js/lightbox.js"></script>
