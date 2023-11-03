@@ -20,7 +20,8 @@ class PostDAO implements IPostDAO
     // get all post for uesr's profile
     public function getPostForProfile($userId): ?array
     {
-        $stmt = $this->connection->prepare("SELECT * FROM posts WHERE user_id = :user_id");
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
+        $stmt = $this->connection->prepare("SELECT * FROM posts WHERE user_id = :user_id ORDER BY create_at DESC");
         $stmt->bindValue(':user_id',$userId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -36,7 +37,7 @@ class PostDAO implements IPostDAO
     //Get post for new feed
     public function getPostForHome(): ?array
     {
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("
             (SELECT p.post_id, create_at, content, access_modifier, post_type, p.user_id 
             FROM posts p INNER JOIN relations r on p.user_id = r.user_target_id 
@@ -46,7 +47,7 @@ class PostDAO implements IPostDAO
             AND access_modifier = 'PUBLIC')
             UNION
             (SELECT * FROM posts WHERE user_id = :user_id)
-            ");
+            ORDER BY create_at DESC");
         $stmt->bindValue(':user_id',$userId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -69,7 +70,7 @@ class PostDAO implements IPostDAO
 
     public function createPost(Post $post)
     {
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO posts (post_id, create_at, content, access_modifier, post_type, user_id)
             VALUES (:postId, NOW(), :content, :accessModifier, :postType, :userId)");
         $stmt->bindValue(':postId',uniqid());

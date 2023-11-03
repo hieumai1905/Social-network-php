@@ -5,6 +5,7 @@ use models\PostInteract;
 require_once 'src/models/PostInteract.php';
 interface IPostInteractDAO
 {
+    public function getFavoriteById($postId);
     public function getFavoritePost(): ?array;
     public function addFavoritePost($postId);
     public function deleteFavoritePost($postId);

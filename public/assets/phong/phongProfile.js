@@ -332,13 +332,13 @@ document.getElementById('rejectrequest').addEventListener("click", function () {
     modalResponseFriend.style.display = "none";
 })
 window.onclick = function (event) {
-    if (event.target == modalFriend) {
+    if (event.target === modalFriend) {
         modalFriend.style.display = "none";
     }
-    else if (event.target == modalBlock) {
+    else if (event.target === modalBlock) {
         modalBlock.style.display = "none";
     }
-    else if (event.target == modalResponseFriend) {
+    else if (event.target === modalResponseFriend) {
         modalResponseFriend.style.display = "none";
     }
 }

@@ -10,6 +10,7 @@ use Media;
 use models\Request;
 use services\handle\Encryption;
 use services\mail\Mailer;
+use services\media\IMediaService;
 use services\relation\IRelationService;
 use services\request\IRequestService;
 use services\user\IUserService;
@@ -26,12 +27,14 @@ class UserController
     private $userService;
     private $requestService;
     private $relationService;
+    private $mediaService;
 
-    public function __construct(IUserService $userService, IRequestService $requestService, IRelationService $relationService)
+  public function __construct(IUserService $userService, IRequestService $requestService,IRelationService $relationService,IMediaService $mediaService)
     {
         $this->userService = $userService;
         $this->requestService = $requestService;
         $this->relationService = $relationService;
+        $this->mediaService = $mediaService;
     }
 
     //---------------------------HTTP GET--------------------------------
@@ -44,7 +47,8 @@ class UserController
     public function getUserById($id)
     {
         $user = $this->userService->getById($id);
-        return Response::view('views/Profile', ['user' => $user]);
+        $medias = $this->mediaService->getMediaOfUser($id);
+        return Response::view('views/Profile',['user'=>$user,'medias'=>$medias]);
     }
 
     public function getUser($id)

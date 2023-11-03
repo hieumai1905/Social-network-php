@@ -27,7 +27,7 @@ class CommentDAO implements ICommentDAO
     public function createCommentForPost(Comment $comment)
     {
         // TODO: Implement createCommentForPost() method.
-        $userId = unserialize($_SESSION['user-login']);
+        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO comments (comment_at,content, post_id, user_id)
             VALUES (NOW(), :content, :post_id, :user_id)");
         $stmt->bindValue(':content',$comment->getContent());

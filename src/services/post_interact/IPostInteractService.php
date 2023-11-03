@@ -7,6 +7,7 @@ use services\IGeneralService;
 require_once 'src/services/IGeneralService.php';
 interface IPostInteractService
 {
+    function getFavoritePostById($postId);
     function getFavoritePost(): ?array;
     function addFavoritePost($postId);
     function deleteFavoritePost($postId);

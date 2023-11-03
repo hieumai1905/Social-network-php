@@ -29,6 +29,16 @@ class PostInteractController
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
     }
+    //HTTP GET (/favorite/$postId)
+    public function getFavoritePostById($postId){
+        try {
+            $posts = $this->postInteractService->getFavoritePostById($postId);
+            $data[] = Mapper::mapModelToJson($posts);
+            return Response::apiResponse(Status::OK, 'success',$data);
+        } catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
     //-------------------------------HTTP POST --------------------------------
     //HTTP POST (/favorite/$postId)
     public function addFavorite($postId){

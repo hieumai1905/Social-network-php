@@ -143,6 +143,7 @@ function registerRoute()
     //------------------------------------------------------------------------------------------------
     //-----------------------------Register route for post interact------------------------------------------------
     Route::get('/api/favorite', 'PostInteractController@getFavoritePost');
+    Route::get('/api/favorite/{postId}', 'PostInteractController@getFavoriteById');
     Route::post('/api/favorite/{postId}', 'PostInteractController@addFavorite');
     Route::post('/api/hidden/{postId}', 'PostInteractController@addHidden');
     Route::post('/api/report', 'PostInteractController@addReport');
@@ -171,7 +172,7 @@ function registerRoute()
     Route::post('/api/media/post', 'MediaController@addMediaForPost');
     Route::delete('/api/media/post/{postId}', 'MediaController@deleteMediaOfPost');
     //------------------------------------------------------------------------------------------------
-    //------------------------------Register route for media-------------------------------------------
+    //------------------------------Register route for notification-------------------------------------------
     Route::get('/notification','NotificationController@getNotificationOfUser');
     Route::get('/api/notification/countnotificationunseen','NotificationController@countNotificationUnSeen');
     //------------------------------------------------------------------------------------------------

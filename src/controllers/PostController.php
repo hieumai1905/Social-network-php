@@ -93,8 +93,11 @@ class PostController
     public function createPost(){
         try {
             $json = Response::getJson();
-            if (!isset($json['userId'])) {
-                throw new Exception('ID is null');
+            $keyWord = ['bimbim', 'tăng lực', 'mệt mỏi', 'chán'];
+            foreach ($keyWord as $ban){
+                if (str_contains($json['content'], $ban)){
+                    return Response::apiResponse(Status::BAD_REQUEST, 'Bad Request',null);
+                }
             }
             $post = Response::jsonToModel($json, Post::class);
             $this->postService->add($post);
@@ -109,8 +112,11 @@ class PostController
     public function updatePost(){
         try {
             $json = Response::getJson();
-            if (!isset($json['userId'])) {
-                throw new Exception('ID is null');
+            $keyWord = ['bimbim', 'tăng lực', 'mệt mỏi', 'chán'];
+            foreach ($keyWord as $ban){
+                if (str_contains($json['content'], $ban)){
+                    return Response::apiResponse(Status::BAD_REQUEST, 'Bad Request',null);
+                }
             }
             $post = Response::jsonToModel($json, Post::class);
             $this->postService->update($post);
