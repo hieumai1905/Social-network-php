@@ -222,22 +222,12 @@ require_once "Layout-Header.php";
                             echo "<p class='fw-500 text-grey-500 lh-24 font-xssss mb-0'>$aboutMe</p>"
                             ?>
                         </div>
-                        <div class="card-body border-top-xs d-flex">
-                            <i class="feather-lock text-grey-500 me-3 font-lg"></i>
-                            <h4 class="fw-700 text-grey-900 font-xssss mt-0">Private <span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">What's up, how are you?</span></h4>
-                        </div>
-
-                        <div class="card-body d-flex pt-0">
-                            <i class="feather-eye text-grey-500 me-3 font-lg"></i>
-                            <h4 class="fw-700 text-grey-900 font-xssss mt-0">Visble <span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">Anyone can find you</span></h4>
-                        </div>
                         <div class="card-body d-flex pt-0">
                             <i class="feather-map-pin text-grey-500 me-3 font-lg"></i>
-                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">Flodia, Austia </h4>
-                        </div>
-                        <div class="card-body d-flex pt-0">
-                            <i class="feather-users text-grey-500 me-3 font-lg"></i>
-                            <h4 class="fw-700 text-grey-900 font-xssss mt-1">Genarel Group</h4>
+                            <?php
+                                $location = $data['user']->getAddress();
+                                echo "<h4 class='fw-700 text-grey-900 font-xssss mt-1'>$location</h4>"
+                            ?>
                         </div>
                     </div>
                     <div class="card w-100 shadow-xss rounded-xxl border-0 mb-3">
@@ -303,36 +293,36 @@ require_once "Layout-Header.php";
                 </div>
                 <div id='PostList'></div>
 
-                <div id="ModalBlock" class="modal">
-                    <!-- Modal Block content -->
-                    <div style="width:20%" class="modal-content">
-                        <p id="notifyBlock" style="margin:0 auto">Do you want block</p>
-                        <button id="confirmBlock" style="width:50%;margin:0 auto" type="button" class="btn btn-success">Yes</button>
-                        <button id="cancleBlock" style="width:50%;margin:0 auto" type="button" class="btn btn-danger">No</button>
-                    </div>
-                </div>
-                <div id="ModalFriend" class="modal">
-                    <!-- Modal Friend content -->
-                    <div style="width:20%" class="modal-content">
-                        <p id="notifyFriend" style="margin:0 auto">Do you want cancle friend request</p>
-                        <button id="confirmFriend" style="width:50%;margin:0 auto" type="button" class="btn btn-success">Yes</button>
-                        <button id="cancleFriend" style="width:50%;margin:0 auto" type="button" class="btn btn-danger">No</button>
-                    </div>
-                </div>
-                <div id="ModalResponseFriend" class="modal">
-                    <!-- Modal Response Friend content -->
-                    <div style="width:20%" class="modal-content">
-                        <p id="notifyResponseFriend" style="margin:0 auto">Response friend request</p>
-                        <button id="acceptrequest" style="width:50%;margin:0 auto" type="button" class="btn btn-success">Accept</button>
-                        <button id="rejectrequest" style="width:50%;margin:0 auto" type="button" class="btn btn-danger">Reject</button>
-                    </div>
-                </div>
+
 
 
             </div>
         </div>
     </div>
-
+<div id="ModalBlock" class="modal">
+    <!-- Modal Block content -->
+    <div style="width:20%" class="modal-content">
+        <p id="notifyBlock" style="margin:0 auto">Do you want block</p>
+        <button id="confirmBlock" style="width:50%;margin:0 auto" type="button" class="btn btn-success">Yes</button>
+        <button id="cancleBlock" style="width:50%;margin:0 auto" type="button" class="btn btn-danger">No</button>
+    </div>
+</div>
+<div id="ModalFriend" class="modal">
+    <!-- Modal Friend content -->
+    <div style="width:20%" class="modal-content">
+        <p id="notifyFriend" style="margin:0 auto">Do you want cancle friend request</p>
+        <button id="confirmFriend" style="width:50%;margin:0 auto" type="button" class="btn btn-success">Yes</button>
+        <button id="cancleFriend" style="width:50%;margin:0 auto" type="button" class="btn btn-danger">No</button>
+    </div>
+</div>
+<div id="ModalResponseFriend" class="modal">
+    <!-- Modal Response Friend content -->
+    <div style="width:20%" class="modal-content">
+        <p id="notifyResponseFriend" style="margin:0 auto">Response friend request</p>
+        <button id="acceptrequest" style="width:50%;margin:0 auto" type="button" class="btn btn-success">Accept</button>
+        <button id="rejectrequest" style="width:50%;margin:0 auto" type="button" class="btn btn-danger">Reject</button>
+    </div>
+</div>
 </div>
 </div>
 
