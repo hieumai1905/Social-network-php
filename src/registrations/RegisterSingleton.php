@@ -128,7 +128,8 @@ class RegisterSingleton
             return new UserController(
                 $container->resolve('\services\user\IUserService'),
                 $container->resolve('\services\request\IRequestService'),
-                $container->resolve('\services\relation\IRelationService')
+                $container->resolve('\services\relation\IRelationService'),
+                $container->resolve('\services\media\IMediaService')
             );
         });
 
