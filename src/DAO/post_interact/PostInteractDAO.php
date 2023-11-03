@@ -34,7 +34,7 @@ class PostInteractDAO implements IPostInteractDAO
         $stmt = $this->connection->prepare("INSERT INTO post_interacts (user_id, post_id, content, type) VALUES (:user_id, :post_id, :content, :type)");
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postId);
-        $stmt->bindValue(':content', '');
+        $stmt->bindValue(':content', 'Lưu để bóc phốt');
         $stmt->bindValue(':type','SAVE');
         $stmt->execute();
     }
