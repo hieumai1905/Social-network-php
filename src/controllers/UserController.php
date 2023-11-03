@@ -4,11 +4,11 @@ namespace controllers;
 
 
 use Google\Exception;
-use Google\Service\AlertCenter\User;
 use https\Response;
 use https\Status;
 use Media;
 use models\Request;
+use services\handle\Encryption;
 use services\mail\Mailer;
 use services\relation\IRelationService;
 use services\request\IRequestService;
@@ -19,6 +19,7 @@ require_once 'src/https/Response.php';
 require_once 'src/models/Media.php';
 require_once 'src/https/Status.php';
 require_once 'src/services/mail/Mailer.php';
+require_once 'src/services/handle/Encryption.php';
 
 class UserController
 {
@@ -26,7 +27,7 @@ class UserController
     private $requestService;
     private $relationService;
 
-    public function __construct(IUserService $userService, IRequestService $requestService,IRelationService $relationService)
+    public function __construct(IUserService $userService, IRequestService $requestService, IRelationService $relationService)
     {
         $this->userService = $userService;
         $this->requestService = $requestService;
@@ -43,24 +44,30 @@ class UserController
     public function getUserById($id)
     {
         $user = $this->userService->getById($id);
-        return Response::view('views/Profile',['user'=>$user]);
+        return Response::view('views/Profile', ['user' => $user]);
     }
-    public function getUser($id) {
+
+    public function getUser($id)
+    {
         $user = $this->userService->getById($id);
         $data = Mapper::mapModelToJson($user);
-        return Response::apiResponse(Status::OK,'success',$data);
+        return Response::apiResponse(Status::OK, 'success', $data);
     }
-    public function getUserToEditProfile() {
+
+    public function getUserToEditProfile()
+    {
         $userLogin = unserialize($_SESSION['user-login']);
         $user = $this->userService->getById($userLogin->getUserId());
-        return Response::view('views/Edit-Information',['user'=>$user]);
+        return Response::view('views/Edit-Information', ['user' => $user]);
     }
-    public function findUserByContent($content) {
+
+    public function findUserByContent($content)
+    {
         try {
             $userLogin = unserialize($_SESSION['user-login']);
             $users = $this->userService->findUserByContent($content);
             if (!$users) {
-                return Response::view('views/Search',['users'=>[]]);
+                return Response::view('views/Search', ['users' => []]);
             }
             $result = [];
             foreach ($users as $item) {
@@ -71,11 +78,11 @@ class UserController
             }
             $relation = [];
             foreach ($users as $item) {
-                $relation[] = $this->relationService->getRelationBetweenUserAndUserTargetExceptFollow($userLogin->getUserId(),$item->getUserId());
+                $relation[] = $this->relationService->getRelationBetweenUserAndUserTargetExceptFollow($userLogin->getUserId(), $item->getUserId());
             }
-            return Response::view('views/Search',['users'=>$result , 'relation'=>$relation]);
-        }catch (Exception $e) {
-            return Response::view('views/Error',['error'=>$e->getMessage()]);
+            return Response::view('views/Search', ['users' => $result, 'relation' => $relation]);
+        } catch (Exception $e) {
+            return Response::view('views/Error', ['error' => $e->getMessage()]);
         }
     }
 
@@ -177,17 +184,13 @@ class UserController
                 $newPassword = $_POST['new-password'];
                 $confirmPassword = $_POST['confirm-password'];
                 $user = unserialize($_SESSION['user-login']);
-                $message = null;
-                if ($user->getPassword() != $oldPassword) {
-                    $message = 'Old password is not correct';
+                if ($user->getPassword() != Encryption::encrypt($oldPassword)) {
+                    return Response::view('views/Change-Password', ['error' => 'Old password is not correct']);
                 }
                 if ($newPassword != $confirmPassword) {
-                    $message = 'Confirm password is not correct';
+                    return Response::view('views/Change-Password', ['error' => 'Confirm password is not correct']);
                 }
-                if($message != null){
-                    return Response::view('views/Change-Password', ['error' => $message]);
-                }
-                $user->setPassword($newPassword);
+                $user->setPassword(Encryption::encrypt($newPassword));
                 $this->userService->update($user);
                 return Response::view('views/Change-Password', ['error' => 'Change password success']);
             }
@@ -199,7 +202,8 @@ class UserController
     //---------------------------------------------------------------------
 
     //---------------------------HTTP PUT--------------------------------
-    public function updateUser() {
+    public function updateUser()
+    {
         try {
             $userLogin = unserialize($_SESSION['user-login']);
             $user = new \models\User();
@@ -207,7 +211,7 @@ class UserController
             $user->setUserId($userLogin->getUserId());
             $user->setFullName($json['full_name']);
             $user->setAvatar($userLogin->getAvatar());
-            $user->setPassword($userLogin->getPassword());
+            $user->setPassword(Encryption::encrypt($userLogin->getPassword()));
             $user->setEmail($userLogin->getEmail());
             $user->setDob($json['dob']);
             $user->setAddress($json['address']);
@@ -219,9 +223,9 @@ class UserController
             $user->setCoverImage($userLogin->getCoverImage());
             $user->setRegisterAt($userLogin->getRegisterAt());
             $this->userService->update($user);
-            return Response::apiResponse(Status::OK,'success',null);
-        }catch (Exception $e) {
-            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR,$e->getMessage(),null);
+            return Response::apiResponse(Status::OK, 'success', null);
+        } catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
     }
 
