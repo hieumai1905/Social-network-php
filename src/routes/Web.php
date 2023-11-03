@@ -171,7 +171,7 @@ function registerRoute()
     Route::post('/api/media/post', 'MediaController@addMediaForPost');
     Route::delete('/api/media/post/{postId}', 'MediaController@deleteMediaOfPost');
     //------------------------------------------------------------------------------------------------
-    //------------------------------Register route for media-------------------------------------------
+    //------------------------------Register route for notification-------------------------------------------
     Route::get('/notification','NotificationController@getNotificationOfUser');
     Route::get('/api/notification/countnotificationunseen','NotificationController@countNotificationUnSeen');
     //------------------------------------------------------------------------------------------------

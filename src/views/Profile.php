@@ -1,6 +1,19 @@
 <?php
 require_once "Layout-Header.php";
 ?>
+<style>
+    .media-container {
+        width: 100%;
+        height: 150px;
+    }
+
+    .media-container video,
+    .media-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
 <!-- main content -->
 <div id="modalSpinner" class="modalHtd">
     <div id="loadingSrc">
@@ -115,16 +128,16 @@ require_once "Layout-Header.php";
                     <div class="card w-100 border-0 p-0 bg-white shadow-xss rounded-xxl">
                         <div class="card-body h250 p-0 rounded-xxl overflow-hidden m-3">
                             <?php
-                                $coverImage = '/public/images/'.$data['user']->getCoverImage();
-                                echo "<img id='coverImage' src='$coverImage' alt='image' onclick='OpenImgText()' style='width: 60vw; height: 30vh;'>";
+                            $coverImage = '/public/images/'.$data['user']->getCoverImage();
+                            echo "<img id='coverImage' src='$coverImage' alt='image' onclick='OpenImgText()' style='width: 60vw; height: 30vh;'>";
                             ?>
                         </div>
                         <div class="card-body p-0 position-relative">
                             <a href="#" class="hover">
                                 <figure class="avatar position-absolute w100 z-index-1" style="top:-40px; left: 30px;">
                                     <?php
-                                        $avatar ='/public/images/'. $data['user']->getAvatar();
-                                        echo "<img style='width:75px; height:100px; border-radius:50px;' id='avatar' src='$avatar' alt='image' class='float-right p-1 bg-white rounded-circle w-100' onclick='OpenAvtText()'>";
+                                    $avatar ='/public/images/'. $data['user']->getAvatar();
+                                    echo "<img style='width:75px; height:100px; border-radius:50px;' id='avatar' src='$avatar' alt='image' class='float-right p-1 bg-white rounded-circle w-100' onclick='OpenAvtText()'>";
                                     ?>
                                 </figure>
                             </a>
@@ -135,12 +148,12 @@ require_once "Layout-Header.php";
                             ?>
                             <div class="d-flex align-items-center justify-content-center position-absolute-md right-15 top-0 me-2">
                                 <?php
-                                    $user = unserialize($_SESSION['user-login']);
-                                    if ($user->getUserId() != $data['user']->getUserId()) {
-                                        echo "<a style='cursor:pointer;background-color:green; margin-right:10px' id='block' class='p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3'>Block</a>
+                                $user = unserialize($_SESSION['user-login']);
+                                if ($user->getUserId() != $data['user']->getUserId()) {
+                                    echo "<a style='cursor:pointer;background-color:green; margin-right:10px' id='block' class='p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3'>Block</a>
                                               <a style='cursor:pointer;background-color:green; margin-right:10px' id='follow' class='p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3'>Follow</a>
                                               <a style='cursor:pointer;background-color:green' id='addfriend' class='p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3'>Add Friend</a>";
-                                    }
+                                }
                                 ?>
                                 <a id="message" href="#" class="bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700">
                                     <i class="feather-mail font-md"></i>
@@ -234,7 +247,32 @@ require_once "Layout-Header.php";
                         </div>
                         <div class="card-body d-block pt-0 pb-2">
                             <div id="allimages" class="row">
-
+                                <?php
+                                foreach ($data['medias'] as $item) {
+                                    $urlMedia = '/public/images/'.$item->getUrl();
+                                    $parts = explode(".", $item->getUrl());
+                                    if ($parts[count($parts) - 1] === "mp4") {
+                                        echo "<div class='col-6 mb-2 pe-1'>
+                            <a href='$urlMedia' data-lightbox='roadtrip'>
+                                <div class='media-container'>
+                                    <video controls>
+                                        <source src='$urlMedia'>
+                                    </video>
+                                </div>
+                            </a>
+                          </div>";
+                                    }
+                                    else {
+                                        echo "<div class='col-6 mb-2 pe-1'>
+                            <a href='$urlMedia' data-lightbox='roadtrip'>
+                                <div class='media-container'>
+                                    <img src='$urlMedia' alt='image'>
+                                </div>
+                            </a>
+                          </div>";
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="card-body d-block w-100 pt-0">
@@ -245,7 +283,14 @@ require_once "Layout-Header.php";
                     <div class="card w-100 shadow-xss rounded-xxl border-0 mb-3">
                     </div>
                 </div>
-                <div class="col-xl-8 col-xxl-9 col-lg-8">
+                <?php
+                    if ($user->getUserId() == $data['user']->getUserId()) {
+                        echo "<div class='col-xl-8 col-xxl-9 col-lg-8'>";
+                    }
+                    else {
+                        echo "<div style='display: none' class='col-xl-8 col-xxl-9 col-lg-8'>";
+                    }
+                ?>
                     <div class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3">
                         <div class="card-padding>
                             <i class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create Post
@@ -256,7 +301,6 @@ require_once "Layout-Header.php";
                         </div>
                     </div>
                 </div>
-
                 <div id='PostList'></div>
 
                 <div id="ModalBlock" class="modal">
