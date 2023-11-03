@@ -335,7 +335,7 @@ function GetCmtlv1(postId) {
                                         </span>
                                     </h4>
                                 </div>
-                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;" onclick="DeleteReplyCmt('${postId}', '${comment.data[i].commentId}')">
+                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;" onclick="DeleteCmt('${postId}', '${comment.data[i].commentId}')">
                                     <i class="feather-trash-2 text-grey-500 me-3 font-lg">
                                     </i>
                                     <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
@@ -378,12 +378,12 @@ function GetCmtlv1(postId) {
                                     <img src="${myAvatar}" alt="image" style="width: 35px; height: 35px; border-radius: 50px;">
                                         <div style="display:inline-block; width: 80%;"><input id="replyCmtInput_${comment.data[i].commentId}" type="text" placeholder="Start typing.." style="color:#000; border: 1px solid #dcdcdc"></div>
                                         <button id="replyCmtSend_${comment.data[i].commentId}" onclick="NewCommentReply1('${postId}','${comment.data[i].commentId}')" class="bg-current"><i class="ti-arrow-right text-white"></i></button>
-                                        <button id="replyCmtEdit_${comment.data[i].commentId}" onclick="EditCommentReply1('${postId}', '${comment.data[i].commentId}')" style="display:none" class="bg-current"><i class="feather-edit text-white"></i></button>
+                                        <button id="replyCmtEdit_${comment.data[i].commentId}" onclick="EditCommentReply1('${postId}','${comment.data[i].commentId}')" style="display:none" class="bg-current"><i class="feather-edit text-white"></i></button>
                                 </div>
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: column;  margin-left: 50px;">
-                            `+ GetCmtlv2(comment.data[i].commentId) +`
+                            `+ GetCmtlv2(postId, comment.data[i].commentId) +`
                         </div>
                     </div>`; 
             }
@@ -392,7 +392,7 @@ function GetCmtlv1(postId) {
     });
 }
 
-function GetCmtlv2(commentId) {
+function GetCmtlv2(postId, commentId) {
     var cmtContent = '';
     var cmt = '';
     var username = '';
@@ -449,7 +449,7 @@ function GetCmtlv2(commentId) {
                                         </span>
                                     </h4>
                                 </div>
-                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;" onclick="DeleteReplyCmt('${comment.data[i].commentReplyId}')">
+                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;" onclick="DeleteReplyCmt('${postId}', '${comment.data[i].commentReplyId}')">
                                     <i class="feather-trash-2 text-grey-500 me-3 font-lg">
                                     </i>
                                     <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
@@ -490,9 +490,9 @@ function GetCmtlv2(commentId) {
                             <div style="width: 90%;">
                                 <div class="chat-form" style="border: 5px">
                                     <img src="${myAvatar}" alt="image" style="width: 35px; height: 35px; border-radius: 50px;">
-                                        <div style="display:inline-block; width: 80%;"><input id="replyCmt3Input_${comment.data[i].commentReplyId}" type="text" placeholder="Start typing.." style="color:#000; border: 1px solid #dcdcdc"></div>
-                                        <button id="reply3CmtSend_${comment.data[i].commentReplyId}" onclick="NewCommentReply2('${commentId}','${comment.data[i].commentReplyId}')" class="bg-current"><i class="ti-arrow-right text-white"></i></button>
-                                        <button id="reply3CmtEdit_${comment.data[i].commentReplyId}" onclick="EditCommentReply2('${comment.data[i].commentReplyId}')" style="display:none" class="bg-current"><i class="feather-edit text-white"></i></button>
+                                        <div style="display:inline-block; width: 80%;"><input id="replyCmt2Input_${comment.data[i].commentReplyId}" type="text" placeholder="Start typing.." style="color:#000; border: 1px solid #dcdcdc"></div>
+                                        <button id="reply2CmtSend_${comment.data[i].commentReplyId}" onclick="NewCommentReply2('${postId}','${commentId}','${comment.data[i].commentReplyId}')" class="bg-current"><i class="ti-arrow-right text-white"></i></button>
+                                        <button id="reply2CmtEdit_${comment.data[i].commentReplyId}" onclick="EditCommentReply2('${postId}','${commentId}','${comment.data[i].commentReplyId}')" style="display:none" class="bg-current"><i class="feather-edit text-white"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -538,20 +538,23 @@ function CheckLikeCmt(commentId) {
 
 function NewComment(postId) {
     var contentInput = document.getElementById("inputCmt_" + postId).value;
+    if (contentInput == ''){
+        return;
+    }
     $.ajax({
-        url: 'https://localhost:7131/v1/api/Comment/' + postId,
+        url: 'http://localhost:8080/api/comment',
         method: 'POST',
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
-        xhrFields: {
-            withCredentials: true
-        },
         data: JSON.stringify({
+            commentId: 'I dont wanna continue',
+            commentAt: 'now is 2:00 AM, i need go to sleep',
             content: contentInput,
             postId: postId,
             userId: currentUserId
         }),
         success: function () {
+            ShowLoader();
             GetCmtlv1(postId);
             document.getElementById("inputCmt_" + postId).value = "";
         },
@@ -560,23 +563,25 @@ function NewComment(postId) {
     });
 }
 
-function NewCommentReply1(commentId) {
+function NewCommentReply1(postId, commentId) {
     var contentInput = document.getElementById("replyCmtInput_"+ commentId).value;
+    if (contentInput == ''){
+        return;
+    }
     $.ajax({
-        url: 'https://localhost:7131/v1/api/Comment/' + postId + "/" + commentId,
+        url: 'http://localhost:8080/api/comment/reply',
         method: 'POST',
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
-        xhrFields: {
-            withCredentials: true
-        },
         data: JSON.stringify({
-            commentReply: commentId,
+            commentReplyId: 'nobody know',
+            replyAt: 'iwannacry',
             content: contentInput,
-            postId: postId,
-            userId: currentUserId
+            userId: currentUserId,
+            commentId: commentId
         }),
         success: function () {
+            ShowLoader();
             GetCmtlv1(postId);
             document.getElementById("replyCmtInput_" + commentId).value = "";
             document.getElementById("replyCmt_" + commentId).style.display = "none";
@@ -586,25 +591,24 @@ function NewCommentReply1(commentId) {
     });
 }
 
-function EditCommentReply1(commentId) {
+function EditCommentReply1(postId, commentId) {
     var contentInput = document.getElementById("replyCmtInput_" + commentId).value;
     $.ajax({
-        url: 'https://localhost:7131/v1/api/Comment/' + postId + "/" + commentId,
+        url: 'http://localhost:8080/api/comment',
         method: 'PUT',
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
-        xhrFields: {
-            withCredentials: true
-        },
         data: JSON.stringify({
+            commentId: commentId,
+            commentAt: 'many bug',
             content: contentInput,
-            postId: postId,
+            postId: 'hu hu',
             userId: currentUserId
         }),
         success: function () {
             GetCmtlv1(postId);
             document.getElementById("replyCmtInput_" + commentId).value = "";
-            document.getElementById("replyCmt_" + id).style.display = "none";
+            document.getElementById("replyCmt_" + commentId).style.display = "none";
 
         },
         error: function (err) {
@@ -620,36 +624,38 @@ function Replycmt1Text(id, content) {
 
 }
 
-function NewCommentReply2(postId, commentId, commentText) {
-    var contentInput = document.getElementById("replyCmt2Input_" + commentText).value;
+function NewCommentReply2(postId, commentId, commentReplyId) {
+    var contentInput = document.getElementById("replyCmt2Input_"+ commentReplyId).value;
+    if (contentInput == ''){
+        return;
+    }
     $.ajax({
-        url: 'https://localhost:7131/v1/api/Comment/' + postId + "/" + commentId,
+        url: 'http://localhost:8080/api/comment/reply',
         method: 'POST',
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
-        xhrFields: {
-            withCredentials: true
-        },
         data: JSON.stringify({
-            commentReply: commentId,
+            commentReplyId: 'nobody know',
+            replyAt: 'iwannacry',
             content: contentInput,
-            postId: postId,
-            userId: currentUserId
+            userId: currentUserId,
+            commentId: commentId
         }),
         success: function () {
+            ShowLoader();
             GetCmtlv1(postId);
             document.getElementById("replyCmt2Input_" + commentId).value = "";
-            document.getElementById("replyCmt_" + id).style.display = "none";
+            document.getElementById("replyCmt1_" + commentReplyId).style.display = "none";
         },
         error: function (err) {
         }
     });
 }
 
-function EditCommentReply2(postId, commentId) {
-    var contentInput = document.getElementById("replyCmt2Input_" + commentId).value;
+function EditCommentReply2(postId, commentId, commentReplyId) {
+    var contentInput = document.getElementById("replyCmt2Input_" + commentReplyId).value;
     $.ajax({
-        url: 'https://localhost:7131/v1/api/Comment/' + postId + "/" + commentId,
+        url: 'http://localhost:8080/api/comment/reply',
         method: 'PUT',
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
@@ -657,14 +663,16 @@ function EditCommentReply2(postId, commentId) {
             withCredentials: true
         },
         data: JSON.stringify({
+            commentReplyId: commentReplyId,
+            replyAt: 'iwannacry',
             content: contentInput,
-            postId: postId,
-            userId: currentUserId
+            userId: currentUserId,
+            commentId: commentId
         }),
         success: function () {
             GetCmtlv1(postId);
-            document.getElementById("replyCmt2Input_" + commentId).value = "";
-            document.getElementById("replyCmt_" + id).style.display = "none";
+            document.getElementById("replyCmt2Input_" + commentReplyId).value = "";
+            document.getElementById("replyCmt1_" + commentReplyId).style.display = "none";
 
         },
         error: function (err) {
@@ -673,26 +681,27 @@ function EditCommentReply2(postId, commentId) {
 }
 
 function Replycmt2Text(id, content) {
-    document.getElementById("replyCmt_" + id).style.display = "flex";
+    document.getElementById("replyCmt1_" + id).style.display = "flex";
     document.getElementById("replyCmt2Input_" + id).value = content;
     document.getElementById("reply2CmtSend_" + id).style.display = "none";
     document.getElementById("reply2CmtEdit_" + id).style.display = "inline";
     
 }
+function DeleteCmt(postId, commentId) {
 
-function DeleteReplyCmt(postId, commentId) {
+}
+
+function DeleteReplyCmt(postId, commentReplyId) {
     $.ajax({
-        url: 'https://localhost:7131/v1/api/Comment/' + postId + "/" + commentId,
-        method: 'Delete',
+        url: 'http://localhost:8080/api/comment/reply/' + commentReplyId,
+        method: 'DELETE',
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
-        xhrFields: {
-            withCredentials: true
-        },
         success: function () {
             GetCmtlv1(postId);
         },
         error: function (err) {
+            console.log(err, 'Khong xoa duoc nay');
         }
     });
 }
@@ -701,22 +710,24 @@ function ReplyCmtlv1(id) {
     var replyDisplay = document.getElementById("replyCmt_" + id);
     if (replyDisplay.style.display == "none") {
         replyDisplay.style.display = "flex";
-        document.getElementById("reply2CmtSend_" + id).style.display = "inline";
-        document.getElementById("reply2CmtEdit_" + id).style.display = "none";
+        document.getElementById("replyCmtSend_" + id).style.display = "inline";
+        document.getElementById("replyCmtEdit_" + id).style.display = "none";
     }
     else {
         replyDisplay.style.display = "none";
+        document.getElementById("replyCmtInput_"+ id).value = '';
     }
 }
 function ReplyCmtlv2(id) {
     var replyDisplay = document.getElementById("replyCmt1_" + id);
     if (replyDisplay.style.display == "none") {
         replyDisplay.style.display = "flex";
-        document.getElementById("reply3CmtSend_" + id).style.display = "inline";
-        document.getElementById("reply3CmtEdit_" + id).style.display = "none";
+        document.getElementById("reply2CmtSend_" + id).style.display = "inline";
+        document.getElementById("reply2CmtEdit_" + id).style.display = "none";
     }
     else {
         replyDisplay.style.display = "none";
+        document.getElementById("replyCmt2Input_"+ id).value = '';
     }
 }
 function NewPostText() {
@@ -735,6 +746,9 @@ function ClosePostText() {
 function NewPost() {
     var content = $('#postContent').val();
     var access = $("#selectType").val();
+    if (content == '' && imageList.length == 0) {
+        ClosePostText();
+    }
     $.ajax({
         url: 'http://localhost:8080/api/post',
         method: 'POST',
@@ -751,6 +765,7 @@ function NewPost() {
         success: function () {
             AddImagesToPost();
             ShowLoader();
+            GetNewFeed();
         },
         error: function (err) {
             if (err.status == 400)
@@ -785,6 +800,7 @@ function UpdateThisPost(postId, postContent) {
             }),
             success: function () {
                 ShowLoader();
+                GetNewFeed();
             },
             error: function () {
                 console.log("Loi");
@@ -915,7 +931,7 @@ function ShowLoader() {
         document.getElementById("loadingSrc").style.display = "none";
         document.getElementById("modalSpinner").style.display = "none";
     } ,3000);
-    GetNewFeed();
+
 }
 function HiddenPost(postId) {
     $.ajax({
