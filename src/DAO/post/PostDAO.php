@@ -39,12 +39,14 @@ class PostDAO implements IPostDAO
     {
         $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("
-            (SELECT p.post_id, create_at, content, access_modifier, post_type, p.user_id 
-            FROM posts p INNER JOIN relations r on p.user_id = r.user_target_id 
+            (SELECT p.post_id, create_at, p.content, access_modifier, post_type, p.user_id
+            FROM posts p INNER JOIN relations r on p.user_id = r.user_target_id
+            LEFT JOIN post_interacts i ON p.post_id = i.post_id
             WHERE r.user_id = :user_id
-            AND  ( r.type_relation = 'FRIEND' 
+            AND  ( r.type_relation = 'FRIEND'
             OR    r.type_relation = 'FOLLOW')
-            AND access_modifier = 'PUBLIC')
+            AND access_modifier = 'PUBLIC'
+            AND (p.post_id NOT IN (SELECT post_id FROM post_interacts WHERE (type = 'HIDDEN' OR type = 'REPORT') AND user_id = :user_id)))
             UNION
             (SELECT * FROM posts WHERE user_id = :user_id)
             ORDER BY create_at DESC");

@@ -143,7 +143,7 @@ function registerRoute()
     //------------------------------------------------------------------------------------------------
     //-----------------------------Register route for post interact------------------------------------------------
     Route::get('/api/favorite', 'PostInteractController@getFavoritePost');
-    Route::get('/api/favorite/{postId}', 'PostInteractController@getFavoriteById');
+    Route::get('/api/favorite/{postId}', 'PostInteractController@getFavoritePostById');
     Route::post('/api/favorite/{postId}', 'PostInteractController@addFavorite');
     Route::post('/api/hidden/{postId}', 'PostInteractController@addHidden');
     Route::post('/api/report', 'PostInteractController@addReport');
