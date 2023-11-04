@@ -210,7 +210,7 @@ function CreatePost(post) {
                         >
                     </h4>
                 </div>
-                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;">
+                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer" onclick="ReportPost('${post.postId}')">
                     <i class="feather-lock text-grey-500 me-3 font-lg"></i>
                     <h4 id="report-btn"
                         class="fw-600 mb-0 text-grey-900 font-xssss mt-0 me-4">
@@ -959,13 +959,13 @@ function HiddenPost(postId) {
     $.ajax({
         url: 'http://localhost:8080/api/hidden/' + postId,
         method: 'POST',
-        error: function () {
-            console.log("Loi an post");
+        error: function (error) {
+            console.log(error, "Loi an post");
         },
         success: function () {
+            ShowLoader
             GetNewFeed();
-        }    
-
+        }
     });
 }
 
@@ -987,14 +987,39 @@ function SaveThisPost(postId){
 function UnsaveThisPost(postId){
     $.ajax({
         url: 'http://localhost:8080/api/favorite/' + postId,
-        method: 'POST',
-        error: function () {
-            console.log("Loi an post");
+        method: 'DELETE',
+        error: function (error) {
+            console.log(error, "Loi bo luu post");
         },
         success: function () {
             ShowLoader();
             GetNewFeed();
         }
 
+    });
+}
+
+function ReportPost(postId) {
+    var content = prompt('Lí do bạn báo cáo bài viết này:', 'Đừng report mà, hãy liên hệ với nhà phát triển để lấy kẹo nhé');
+    if (content == null || content == '')
+        return;
+    $.ajax({
+        url: 'http://localhost:8080/api/report',
+        method: 'POST',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            userId: currentUserId,
+            postId: postId,
+            content: content,
+            type: 'REPORT'
+        }),
+        error: function (error) {
+            console.log(error, "Loi report post");
+        },
+        success: function () {
+            ShowLoader
+            GetNewFeed();
+        }
     });
 }
