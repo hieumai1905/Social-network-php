@@ -15,4 +15,6 @@ interface IUserService extends IGeneralService
     function getUserByEmail($email): ?User;
     function findUserByContent($content);
     function getNewUserInMonth();
+    function updateAvatar($image);
+    function updateCoverImage($image);
 }

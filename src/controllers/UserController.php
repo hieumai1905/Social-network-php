@@ -47,6 +47,7 @@ class UserController
     public function getUserById($id)
     {
         $user = $this->userService->getById($id);
+        $e = $_SESSION['user-login'];
         $medias = $this->mediaService->getMediaOfUser($id);
         return Response::view('views/Profile',['user'=>$user,'medias'=>$medias]);
     }
@@ -230,6 +231,22 @@ class UserController
             return Response::apiResponse(Status::OK, 'success', null);
         } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
+    public function changeAvatar($image) {
+      try {
+          $this->userService->updateAvatar($image);
+          return Response::apiResponse(Status::OK,'success',null);
+      }catch (Exception $e) {
+          return Response::apiResponse(Status::INTERNAL_SERVER_ERROR,$e->getMessage(),null);
+      }
+    }
+    public function changeCoverImage($image) {
+        try {
+            $this->userService->updateCoverImage($image);
+            return Response::apiResponse(Status::OK,'success',null);
+        }catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR,$e->getMessage(),null);
         }
     }
 

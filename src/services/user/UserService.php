@@ -268,4 +268,37 @@ class UserService implements IUserService
             throw new \Exception($e->getMessage());
         }
     }
+
+    function updateAvatar($image)
+    {
+        try {
+            $userLogin = unserialize($_SESSION['user-login']);
+            $userLogin->setAvatar($image);
+            $_SESSION['user-login'] = serialize($userLogin);
+            $this->userDAO->updateUser($userLogin);
+            Logger::log('Change avatar successfully');
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function updateCoverImage($image)
+    {
+        try {
+            $userLogin = unserialize($_SESSION['user-login']);
+            $userLogin->setCoverImage($image);
+            $this->userDAO->updateUser($userLogin);
+            Logger::log('Change cover image successfully');
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
 }
