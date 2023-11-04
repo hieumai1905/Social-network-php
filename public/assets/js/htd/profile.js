@@ -8,7 +8,6 @@ let changeAvt = '';
 var currentUrl = window.location.href;
 var urlParts = currentUrl.split('/');
 var userId = urlParts[urlParts.length - 1];
-console.log(userId);
 $(document).ready(function () {
     GetNewFeed();
     GetInforUser();
@@ -775,6 +774,7 @@ function NewPost() {
     var access = $("#selectType").val();
     if (content == '' && imageList.length == 0) {
         ClosePostText();
+        return;
     }
     $.ajax({
         url: 'http://localhost:8080/api/post',
@@ -1020,6 +1020,7 @@ function NewAvt() {
             setTimeout(function () {
                 document.getElementById("avatar").src = "/public/images/" + changeAvt;
                 document.getElementById("avataruser").src = "/public/images/" + changeAvt;
+                document.getElementById("avatar1").src = "/public/images/" + changeAvt;
             }, 3000);
 
         }
@@ -1035,12 +1036,18 @@ function ChangeAvt() {
     });
 }
 function OpenAvtText() {
+    if (currentUserId != userId) {
+        return;
+    }
     document.getElementById("modalChangeAvt").style.display = "flex";
 }
 function CloseAvtText() {
     document.getElementById("modalChangeAvt").style.display = "none";
 }
 function OpenImgText() {
+    if (currentUserId != userId) {
+        return;
+    }
     document.getElementById("modalCoverImage").style.display = "flex";
 }
 function CloseImgText() {
