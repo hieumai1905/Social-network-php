@@ -20,7 +20,7 @@ class PostDAO implements IPostDAO
     // get all post for uesr's profile
     public function getPostForProfile($userId): ?array
     {
-        $userId = unserialize($_SESSION['user-login'])->getUserId();
+//        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("SELECT * FROM posts WHERE user_id = :user_id ORDER BY create_at DESC");
         $stmt->bindValue(':user_id',$userId);
         $stmt->execute();
