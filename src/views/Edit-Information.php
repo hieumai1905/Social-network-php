@@ -1,6 +1,24 @@
 <?php
     require_once "Layout-Header.php";
 ?>
+<style>
+    .select-css {
+        font-size: 21px;
+        font-family: "Open Sans", sans-serif;
+        padding: 10px;
+        width: 200px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        height: 45px;
+        background-color: white;
+    }
+
+    .select-css option {
+        font-size: 21px;
+        font-family: "Open Sans", sans-serif;
+        padding: 5px;
+    }
+</style>
     <!-- main content -->
 
     <div class="main-content bg-lightblue theme-dark-bg right-chat-active">
@@ -25,7 +43,6 @@
                                         ?>
                                     </figure>
                                     <h2 id="uName" class="fw-700 font-sm text-grey-900 mt-3"></h2>
-                                    <h4 id="ubd" class="text-grey-500 fw-500 mb-3 font-xsss mb-4">Create At</h4>
                                     <h4 id="uRegisterAt" class="fw-500 font-sm text-grey-700 mt-3"></h4>
                                     <!-- <a href="#" class="p-3 alert-primary text-primary font-xsss fw-500 mt-2 rounded-3">Upload New Photo</a> -->
                                 </div>
@@ -37,7 +54,7 @@
                                             <label class="mont-font fw-600 font-xsss">Full Name</label>
                                             <?php
                                                 $fullName = $data['user']->getFullName();
-                                                echo "<input id='uFullName' style='font-size: 23px' data-maxlength='30' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your first name...' spellcheck='false' value='$fullName'>";
+                                            echo "<input id='uFullName' style='font-size: 21px; font-family:\"Open Sans\", sans-serif;' data-maxlength='30' class='form-control mb-0 p-3 bg-ghostwhite lh-16' rows='1' placeholder='Type your first name...' spellcheck='false' value='" . $fullName . "'>";
                                             ?>
                                             <div id="fullNameError" class="error-message" style="color: red; font-size: 14px; margin-top: 5px;"></div>
                                         </div>
@@ -51,7 +68,7 @@
                                             <label class="mont-font fw-600 font-xsss">Email</label>
                                             <?php
                                                 $email = $data['user']->getEmail();
-                                                echo "<input id='uEmail' style='font-size: 23px; ' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your Email...' spellcheck='false' disabled value='$email'>";
+                                                echo "<input id='uEmail' style='font-size: 21px;font-family:\"Open Sans\", sans-serif; ' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your Email...' spellcheck='false' disabled value='$email'>";
 
                                             ?>
                                         </div>
@@ -63,10 +80,10 @@
                                             <?php
                                                 $phone = $data['user']->getPhone();
                                                 if ($phone == null) {
-                                                    echo "<input id='uPhone' type='number' style='font-size: 23px' pattern='[0-9]' data-maxlength='10' oninput='this.value=this.value.slice(0,this.dataset.maxlength)' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your phone number...' spellcheck='false'>";
+                                                    echo "<input id='uPhone' type='number' style='font-size: 21px; font-family:\"Open Sans\", sans-serif;' pattern='[0-9]' data-maxlength='10' oninput='this.value=this.value.slice(0,this.dataset.maxlength)' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your phone number...' spellcheck='false'>";
                                                 }
                                                 else {
-                                                    echo "<input id='uPhone' type='number' style='font-size: 23px' pattern='[0-9]' data-maxlength='10' oninput='this.value=this.value.slice(0,this.dataset.maxlength)' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your phone number...' spellcheck='false' value='$phone'>";
+                                                    echo "<input id='uPhone' type='number' style='font-size: 21px; font-family:\"Open Sans\", sans-serif;' pattern='[0-9]' data-maxlength='10' oninput='this.value=this.value.slice(0,this.dataset.maxlength)' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Type your phone number...' spellcheck='false' value='$phone'>";
                                                 }
                                             ?>
                                             <div id="phoneError" class="error-message" style="color: red; font-size: 14px; margin-top: 5px;"></div>
@@ -84,10 +101,10 @@
                                             <?php
                                                 $address = $data['user']->getAddress();
                                                 if ($address == null) {
-                                                    echo "<input id='uAddress' style='font-size: 23px' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Write your Address...' spellcheck='false'>";
+                                                    echo "<input id='uAddress' style='font-size: 21px; font-family:\"Open Sans\", sans-serif;width: 865px;' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Write your Address...' spellcheck='false'>";
                                                 }
                                                 else {
-                                                    echo "<input id='uAddress' style='font-size: 23px' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Write your Address...' spellcheck='false' value='$address'>";
+                                                    echo "<input id='uAddress' style='font-size: 21px; font-family:\"Open Sans\", sans-serif;width: 865px;' class='form-control mb-0 p-3  bg-ghostwhite lh-16' rows='1' placeholder='Write your Address...' spellcheck='false' value='$address'>";
                                                 }
                                             ?>
                                         </div>
@@ -100,8 +117,8 @@
                                             <div>
                                                 <label class="mont-font fw-600 font-xsss">Gender</label><br>
                                                 <?php
-                                                $gender = $data['user']->getGender(); // Giả sử giá trị a là "female"
-                                                $options = array("Nam", "Nữ", "Khác"); // Mảng chứa các tùy chọn
+                                                $gender = $data['user']->getGender();
+                                                $options = array("Nam", "Nữ", "Khác");
 
                                                 echo '<select id="uGender" class="select-css">';
                                                 foreach ($options as $option) {
@@ -122,7 +139,7 @@
                                             <label class="mont-font fw-600 font-xsss">Birthday</label><br>
                                             <?php
                                                 $dob = $data['user']->getDob();
-                                                echo "<input id='uDob' style='font-size: 23px' class='form-control mb-0 p-3  bg-ghostwhite lh-16' type='date'  name='bday' min='1940-01-01'><br><br>";
+                                                echo "<input id='uDob' style='font-size: 21px; width: 650px; font-family:\"Open Sans\", sans-serif;' class='form-control bg-ghostwhite lh-16' type='date'  name='bday' min='1940-01-01' value='$dob'>";
                                             ?>
                                         </div>
                                     </div>
@@ -133,10 +150,10 @@
                                         <?php
                                             $aboutMe = $data['user']->getAboutMe();
                                             if ($aboutMe == null) {
-                                                echo "<input id='uAboutMe'style='font-size: 23px' class='form-control mb-0 p-3 h100 bg-greylight lh-16' rows='5' placeholder='Write your message...' spellcheck='false'>";
+                                                echo "<input id='uAboutMe'style='font-size: 21px; background-color: white; font-family:\"Open Sans\", sans-serif; width: 865px' class='form-control mb-0 p-3 h100 lh-16' rows='5' placeholder='Write your message...' spellcheck='false'>";
                                             }
                                             else {
-                                                echo "<input id='uAboutMe'style='font-size: 23px' class='form-control mb-0 p-3 h100 bg-greylight lh-16' rows='5' placeholder='Write your message...' spellcheck='false' value='$aboutMe'>";
+                                                echo "<input id='uAboutMe'style='font-size: 21px; background-color:white; font-family:\"Open Sans\", sans-serif; width: 865px ' class='form-control mb-0 p-3 h100 lh-16' rows='5' placeholder='Write your message...' spellcheck='false' value='$aboutMe'>";
                                             }
                                         ?>
                                     </div>
