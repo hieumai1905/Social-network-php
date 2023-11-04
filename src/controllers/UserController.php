@@ -47,7 +47,6 @@ class UserController
     public function getUserById($id)
     {
         $user = $this->userService->getById($id);
-        $e = $_SESSION['user-login'];
         $medias = $this->mediaService->getMediaOfUser($id);
         return Response::view('views/Profile',['user'=>$user,'medias'=>$medias]);
     }
@@ -197,6 +196,7 @@ class UserController
                 }
                 $user->setPassword(Encryption::encrypt($newPassword));
                 $this->userService->update($user);
+                $_SESSION['user-login'] = serialize($user);
                 return Response::view('views/Change-Password', ['error' => 'Change password success']);
             }
         } catch (\Exception $e) {
