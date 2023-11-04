@@ -32,7 +32,7 @@ echo '<div id="userCurrent" type="hidden">'.unserialize($_SESSION['user-login'])
             <div class="card-body p-0 mt-3 position-relative">
                 <textarea id="postContent"
                           name="message"
-                          class="h100 bor-0 w-100 rounded-xxl p-2 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg"
+                          class="h100 bor-0 w-100 rounded-xxl p-2 ps-5 font-xssss text-black-500 fw-500 border-light-md theme-dark-bg"
                           cols="30"
                           rows="10"
                           placeholder="What's on your mind?"></textarea>
