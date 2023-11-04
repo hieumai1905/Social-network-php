@@ -280,15 +280,23 @@ require_once "Layout-Header.php";
                     <div class="card w-100 shadow-xss rounded-xxl border-0 mb-3">
                     </div>
                 </div>
-                <?php
-                    if ($user->getUserId() == $data['user']->getUserId()) {
-                        echo "<div class='col-xl-8 col-xxl-9 col-lg-8'>";
-                    }
-                    else {
-                        echo "<div style='display: none' class='col-xl-8 col-xxl-9 col-lg-8'>";
-                    }
-                ?>
-                    <div class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3">
+<!--                --><?php
+//                    if ($user->getUserId() == $data['user']->getUserId()) {
+//                        echo "<div class='col-xl-8 col-xxl-9 col-lg-8'>";
+//                    }
+//                    else {
+//                        echo "<div style='display: none' class='col-xl-8 col-xxl-9 col-lg-8'>";
+//                    }
+//                ?>
+                <div class='col-xl-8 col-xxl-9 col-lg-8'>
+                    <?php
+                        if ($user->getUserId() == $data['user']->getUserId()) {
+                            echo "<div class='card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3'>";
+                        }
+                        else {
+                            echo "<div class='card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3' style='display: none'>";
+                        }
+                    ?>
                         <div class="card-padding>
                             <i class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create Post
                     </div>
