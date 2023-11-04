@@ -109,11 +109,11 @@ class AccountController
                         $_SESSION['user-register'] = serialize($userLogin);
                         return Response::redirect('/register/confirm');
                     }
+                    $_SESSION['login-at'] = time();
                     $_SESSION['user-login'] = serialize($userLogin);
                     if ($userLogin->getUserRole() == "ADMIN") {
                         return Response::redirect('/admin/dash-board');
                     }
-                    $_SESSION['login-at'] = time();
                     return Response::redirect('/home');
                 }
                 return Response::View('views/Login', ['error' => 'Email or password incorect']);
