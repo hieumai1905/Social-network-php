@@ -11,28 +11,32 @@ require_once 'IMediaService.php';
 require_once 'src/storage/Logger.php';
 require_once 'src/storage/Mapper.php';
 require_once 'src/models/Media.php';
+
 class MediaService implements IMediaService
 {
     private $mediaDAO;
-    public function __construct(IMediaDAO $mediaDAO){
+
+    public function __construct(IMediaDAO $mediaDAO)
+    {
         $this->mediaDAO = $mediaDAO;
     }
+
     function getMediaOfPost($postId): ?array
     {
         // TODO: Implement getMediaOfPost() method.
-        try{
+        try {
             $result = $this->mediaDAO->getMediaOfPost($postId);
             Logger::log('Get media of post successfully');
             $medias = [];
-            foreach ($result as $item){
+            foreach ($result as $item) {
                 $media = Mapper::mapStdClassToModel($item, Media::class);
                 $medias[] = $media;
             }
             return $medias;
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -44,10 +48,10 @@ class MediaService implements IMediaService
         try {
             $this->mediaDAO->deleteMediaOfPost($postId);
             Logger::log('Delete media successfully');
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -56,19 +60,19 @@ class MediaService implements IMediaService
     function getMediaOfUser($userId): ?array
     {
         // TODO: Implement getMediaOfUser() method.
-        try{
+        try {
             $result = $this->mediaDAO->getMediaOfUser($userId);
             Logger::log('Get media of user successfully');
             $medias = [];
-            foreach ($result as $item){
+            foreach ($result as $item) {
                 $media = Mapper::mapStdClassToModel($item, Media::class);
                 $medias[] = $media;
             }
             return $medias;
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -80,10 +84,10 @@ class MediaService implements IMediaService
         try {
             $this->mediaDAO->addMedia($Media);
             Logger::log('add media successfully');
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }

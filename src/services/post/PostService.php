@@ -11,21 +11,24 @@ require_once 'IPostService.php';
 require_once 'src/storage/Logger.php';
 require_once 'src/storage/Mapper.php';
 require_once 'src/models/Post.php';
+
 class PostService implements IPostService
 {
     private $postDAO;
-    public function __construct(IPostDAO $postDAO){
+
+    public function __construct(IPostDAO $postDAO)
+    {
         $this->postDAO = $postDAO;
     }
 
 
     function getAll(): ?array
     {
-        try{
+        try {
             $result = $this->postDAO->getAllPost();
             Logger::log('Get all post successfully');
             $posts = [];
-            foreach ($result as $item){
+            foreach ($result as $item) {
                 $post = Mapper::mapStdClassToModel($item, Post::class);
                 $posts[] = $post;
             }
@@ -41,11 +44,11 @@ class PostService implements IPostService
 
     function getMonthPost(): ?array
     {
-        try{
+        try {
             $result = $this->postDAO->getMonthPost();
             Logger::log('Get all post in month successfully');
             $posts = [];
-            foreach ($result as $item){
+            foreach ($result as $item) {
                 $post = Mapper::mapStdClassToModel($item, Post::class);
                 $posts[] = $post;
             }
@@ -61,18 +64,18 @@ class PostService implements IPostService
 
     function getById($id): ?object
     {
-        try{
+        try {
             $result = $this->postDAO->getPostById($id);
             Logger::log("Get post successfully");
-            if (!$result){
+            if (!$result) {
                 Logger::log("No post found");
                 return null;
             }
             return Mapper::mapStdClassToModel($result, Post::class);
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -80,13 +83,13 @@ class PostService implements IPostService
 
     function add($object)
     {
-        try{
+        try {
             $this->postDAO->createPost($object);
             Logger::log('Create new post successfully');
-        }catch(\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new (\Exception('An error connect to database'));
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -94,13 +97,13 @@ class PostService implements IPostService
 
     function update($object)
     {
-        try{
+        try {
             $this->postDAO->updatePost($object);
             Logger::log('Update post successfully');
-        }catch(\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new (\Exception('An error connect to database'));
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -108,13 +111,13 @@ class PostService implements IPostService
 
     function delete($id)
     {
-        try{
+        try {
             $this->postDAO->deletePost($id);
             Logger::log('Delete post successfully');
-        }catch(\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new (\Exception('An error connect to database'));
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -122,11 +125,11 @@ class PostService implements IPostService
 
     function getPostForHome(): ?array
     {
-        try{
+        try {
             $result = $this->postDAO->getPostForHome();
             Logger::log('Get all post for home successfully');
             $posts = [];
-            foreach ($result as $item){
+            foreach ($result as $item) {
                 $post = Mapper::mapStdClassToModel($item, Post::class);
                 $posts[] = $post;
             }
@@ -142,11 +145,11 @@ class PostService implements IPostService
 
     function getPostForProfile($userId): ?array
     {
-        try{
+        try {
             $result = $this->postDAO->getPostForProfile($userId);
             Logger::log('Get all post for profile successfully');
             $posts = [];
-            foreach ($result as $item){
+            foreach ($result as $item) {
                 $post = Mapper::mapStdClassToModel($item, Post::class);
                 $posts[] = $post;
             }

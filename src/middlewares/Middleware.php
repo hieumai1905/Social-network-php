@@ -4,5 +4,5 @@ namespace middlewares;
 
 interface Middleware
 {
-    function handle();
+    function handle(...$args);
 }

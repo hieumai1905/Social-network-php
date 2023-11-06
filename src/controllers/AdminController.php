@@ -42,7 +42,8 @@ class AdminController
     }
 
     // API HTTP GET('/api/admin/users-all/month')
-    public function getNewUserInMonth(){
+    public function getNewUserInMonth()
+    {
         try {
             $users = $this->userService->getNewUserInMonth();
             if (!$users) {

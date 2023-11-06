@@ -37,7 +37,7 @@ class RequestService implements IRequestService
      */
     function add($object)
     {
-        try{
+        try {
             $this->requestDAO->addRequest($object);
             Logger::log('Add request successfully');
         } catch (\PDOException $e) {
@@ -54,7 +54,7 @@ class RequestService implements IRequestService
      */
     function update($object)
     {
-        try{
+        try {
             $this->requestDAO->updateRequest($object);
             Logger::log('Update request successfully');
         } catch (\PDOException $e) {
@@ -71,7 +71,7 @@ class RequestService implements IRequestService
      */
     function delete($id)
     {
-        try{
+        try {
             $this->requestDAO->deleteRequest($id);
             Logger::log('Delete request successfully');
         } catch (\PDOException $e) {
@@ -88,10 +88,10 @@ class RequestService implements IRequestService
      */
     public function getRequestByEmail($email): ?Request
     {
-        try{
+        try {
             $result = $this->requestDAO->getRequestByEmail($email);
             Logger::log('Get request by email successfully');
-            if(!$result){
+            if (!$result) {
                 Logger::log('No request found');
                 return null;
             }
@@ -110,7 +110,7 @@ class RequestService implements IRequestService
      */
     public function cleanRequestCode()
     {
-        try{
+        try {
             $this->requestDAO->cleanRequestCode();
             Logger::log('Clean request code successfully');
         } catch (\PDOException $e) {
@@ -127,14 +127,13 @@ class RequestService implements IRequestService
      */
     public function refreshCode($email, $code)
     {
-        try{
+        try {
             $request = $this->getRequestByEmail($email);
-            if($request){
+            if ($request) {
                 $request->setRequestCode($code);
                 $this->requestDAO->updateRequest($request);
                 Logger::log('Refresh code successfully');
-            }
-            else{
+            } else {
                 Logger::log("Request don't exist");
                 throw new \Exception("Request don't exist");
             }

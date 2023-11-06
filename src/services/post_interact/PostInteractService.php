@@ -11,12 +11,16 @@ require_once 'IPostInteractService.php';
 require_once 'src/storage/Logger.php';
 require_once 'src/storage/Mapper.php';
 require_once 'src/models/PostInteract.php';
+
 class PostInteractService implements IPostInteractService
 {
     private $postInteractDAO;
-    function __construct(IPostInteractDAO $postInteractDAO){
+
+    function __construct(IPostInteractDAO $postInteractDAO)
+    {
         $this->postInteractDAO = $postInteractDAO;
     }
+
     function getFavoritePost(): ?array
     {
         // TODO: Implement getFavoritePost() method.
@@ -24,15 +28,15 @@ class PostInteractService implements IPostInteractService
             $result = $this->postInteractDAO->getFavoritePost();
             Logger::log('Get all favorite posts successfully');
             $postInteracts = [];
-            foreach ($result as $item){
+            foreach ($result as $item) {
                 $postInteract = Mapper::mapStdClassToModel($item, PostInteract::class);
                 $postInteracts[] = $postInteract;
             }
             return $postInteracts;
-        } catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -44,10 +48,10 @@ class PostInteractService implements IPostInteractService
         try {
             $this->postInteractDAO->addFavoritePost($postId);
             Logger::log('Add favorite post successfully');
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -59,10 +63,10 @@ class PostInteractService implements IPostInteractService
         try {
             $this->postInteractDAO->deleteFavoritePost($postId);
             Logger::log('Delete favorite post successfully');
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -74,10 +78,10 @@ class PostInteractService implements IPostInteractService
         try {
             $this->postInteractDAO->addHiddenPost($postId);
             Logger::log('Hide post successfully');
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -89,10 +93,10 @@ class PostInteractService implements IPostInteractService
         try {
             $this->postInteractDAO->addReportPost($postInteract);
             Logger::log('Report post successfully');
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -107,10 +111,10 @@ class PostInteractService implements IPostInteractService
             if (!$result)
                 return Mapper::mapStdClassToModel($result, PostInteract::class);
             return Mapper::mapStdClassToModel($result[0], PostInteract::class);
-        } catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }

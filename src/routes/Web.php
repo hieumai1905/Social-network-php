@@ -3,18 +3,9 @@
 namespace routes;
 
 use https\Response;
-use middlewares\AuthMiddleware;
-use middlewares\TestMiddleware;
-use middlewares\ValidationMiddleware;
-use middlewares\MiddlewareRegister;
-use middlewares\UserMiddleware;
 
 require_once 'Route.php';
 require_once 'src/https/Response.php';
-require_once 'src/middlewares/AuthMiddleware.php';
-require_once 'src/middlewares/ValidationMiddleware.php';
-require_once 'src/middlewares/UserMiddleware.php';
-require_once 'src/middlewares/TestMiddleware.php';
 
 function registerMiddleware()
 {
@@ -62,8 +53,8 @@ function registerRoute()
     Route::get('/editinformation', 'UserController@getUserToEditProfile');
 
     Route::put('/api/updateuser', 'UserController@updateUser');
-    Route::put('/api/changeavatar/{image}','UserController@changeAvatar');
-    Route::put('/api/changecoverimage/{image}','UserController@changeCoverImage');
+    Route::put('/api/changeavatar/{image}', 'UserController@changeAvatar');
+    Route::put('/api/changecoverimage/{image}', 'UserController@changeCoverImage');
     Route::get('/change-email', 'UserController@showFormChangeEmail');
     Route::post('/change-email', 'UserController@changeEmail');
     Route::post('/api/change-email/code', 'UserController@getCodeChangeEmail');
@@ -76,15 +67,21 @@ function registerRoute()
     //-------------------------------------------------------------------------------------
 
     //---------------------------Register route for account--------------------------------
-    Route::get('/login', 'AccountController@showFormLogin');
+    Route::get('/login', function () {
+        return Response::view('views/Login');
+    });
     Route::post('/login', 'AccountController@loginAccount');
 
-    Route::get('/register', 'AccountController@showFormRegister');
+    Route::get('/register', function () {
+        return Response::view('views/Register');
+    });
     Route::post('/register', 'AccountController@registerAccount');
 
     Route::get('/logout', 'AccountController@logoutAccount');
 
-    Route::get('/account/forgot', 'AccountController@showFormForgot');
+    Route::get('/account/forgot', function () {
+        return Response::view('views/Forgot');
+    });
     Route::post('/api/account/forgot', 'AccountController@getCodeForgot');
     Route::post('/account/forgot/confirm', 'AccountController@confirmForgotPassword');
     Route::post('/account/reset-password', 'AccountController@updatePassword');
@@ -175,8 +172,8 @@ function registerRoute()
     Route::delete('/api/media/post/{postId}', 'MediaController@deleteMediaOfPost');
     //------------------------------------------------------------------------------------------------
     //------------------------------Register route for notification-------------------------------------------
-    Route::get('/notification','NotificationController@getNotificationOfUser');
-    Route::get('/api/notification/countnotificationunseen','NotificationController@countNotificationUnSeen');
+    Route::get('/notification', 'NotificationController@getNotificationOfUser');
+    Route::get('/api/notification/countnotificationunseen', 'NotificationController@countNotificationUnSeen');
     //------------------------------------------------------------------------------------------------
     Route::registerResource();
     Route::dispatch();
