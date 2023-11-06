@@ -8,10 +8,13 @@ use models\Media;
 require_once 'src/DAO/databases/ConnectDatabase.php';
 require_once 'IMediaDAO.php';
 require_once 'src/models/Media.php';
+
 class MediaDAO implements IMediaDAO
 {
     private $connection;
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->connection = \DAO\Databases\ConnectDatabase::getConnection();
     }
 

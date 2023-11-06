@@ -26,25 +26,6 @@ class AccountController
     }
 
     //---------------------------HTTP GET--------------------------------
-
-    // HTTP:GET('/login')
-    public function showFormLogin()
-    {
-        return Response::view('views/Login');
-    }
-
-    // HTTP:GET('/register')
-    public function showFormRegister()
-    {
-        return Response::view('views/Register');
-    }
-
-    // HTTP:GET('/forgot')
-    public function showFormForgot()
-    {
-        return Response::view('views/Forgot');
-    }
-
     // HTTP:GET('/logout')
     public function logoutAccount()
     {

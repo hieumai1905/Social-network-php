@@ -1,18 +1,23 @@
 <?php
 
 namespace DAO\like;
+
 use PDO;
 use models\Like;
 
 require_once 'src/DAO/databases/ConnectDatabase.php';
 require_once 'ILikeDAO.php';
 require_once 'src/models/Like.php';
+
 class LikeDAO implements ILikeDAO
 {
     private $connection;
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->connection = \DAO\Databases\ConnectDatabase::getConnection();
     }
+
     public function getLikeOfPostByUserId($postId)
     {
         // TODO: Implement getLikeOfPostByUserId() method.
@@ -45,11 +50,12 @@ class LikeDAO implements ILikeDAO
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+
     public function getLikeCountOfPost($postId)
     {
         // TODO: Implement getLikeCountOfPost() method.
         $stmt = $this->connection->prepare("SELECT * FROM likes WHERE post_id = :post_id");
-        $stmt->bindValue(':post_id',$postId);
+        $stmt->bindValue(':post_id', $postId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }

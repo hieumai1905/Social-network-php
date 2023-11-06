@@ -1,17 +1,21 @@
 <?php
 
 namespace DAO\comment;
+
 use PDO;
 use models\Comment;
 
 require_once 'src/DAO/databases/ConnectDatabase.php';
 require_once 'ICommentDAO.php';
 require_once 'src/models/Comment.php';
+
 class CommentDAO implements ICommentDAO
 {
     private $connection;
-    public function __construct(){
-        $this->connection =\DAO\Databases\ConnectDatabase::getConnection();
+
+    public function __construct()
+    {
+        $this->connection = \DAO\Databases\ConnectDatabase::getConnection();
     }
 
     public function getCommentOfPost($postId): ?array
@@ -30,9 +34,9 @@ class CommentDAO implements ICommentDAO
         $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO comments (comment_at,content, post_id, user_id)
             VALUES (NOW(), :content, :post_id, :user_id)");
-        $stmt->bindValue(':content',$comment->getContent());
-        $stmt->bindValue(':post_id',$comment->getPostId());
-        $stmt->bindValue(':user_id',$userId);
+        $stmt->bindValue(':content', $comment->getContent());
+        $stmt->bindValue(':post_id', $comment->getPostId());
+        $stmt->bindValue(':user_id', $userId);
         $stmt->execute();
     }
 
@@ -40,8 +44,8 @@ class CommentDAO implements ICommentDAO
     {
         // TODO: Implement updateComment() method.
         $stmt = $this->connection->prepare("UPDATE comments SET content = :content WHERE comment_id = :comment_id ");
-        $stmt->bindValue(':content',$comment->getContent());
-        $stmt->bindValue(':comment_id',$comment->getCommentId());
+        $stmt->bindValue(':content', $comment->getContent());
+        $stmt->bindValue(':comment_id', $comment->getCommentId());
         $stmt->execute();
     }
 
@@ -49,7 +53,7 @@ class CommentDAO implements ICommentDAO
     {
         // TODO: Implement deleteComment() method.
         $stmt = $this->connection->prepare("DELETE FROM comments WHERE comment_id = :comment_id");
-        $stmt->bindValue(':comment_id',$commentId);
+        $stmt->bindValue(':comment_id', $commentId);
         $stmt->execute();
     }
 }
