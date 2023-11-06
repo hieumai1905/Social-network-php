@@ -148,6 +148,9 @@ function registerRoute()
     Route::post('/api/hidden/{postId}', 'PostInteractController@addHidden');
     Route::post('/api/report', 'PostInteractController@addReport');
     Route::delete('/api/favorite/{postId}', 'PostInteractController@deleteFavorite');
+    Route::get('/favorite', function () {
+        return Response::view('views/Favorite');
+    });
     //------------------------------------------------------------------------------------------------
     //------------------------------Register route for like-------------------------------------------
     Route::get('/api/like/post/{postId}', 'LikeController@getLikeOfPostByUser');
