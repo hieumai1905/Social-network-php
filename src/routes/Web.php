@@ -62,6 +62,8 @@ function registerRoute()
     Route::get('/editinformation', 'UserController@getUserToEditProfile');
 
     Route::put('/api/updateuser', 'UserController@updateUser');
+    Route::put('/api/changeavatar/{image}','UserController@changeAvatar');
+    Route::put('/api/changecoverimage/{image}','UserController@changeCoverImage');
     Route::get('/change-email', 'UserController@showFormChangeEmail');
     Route::post('/change-email', 'UserController@changeEmail');
     Route::post('/api/change-email/code', 'UserController@getCodeChangeEmail');

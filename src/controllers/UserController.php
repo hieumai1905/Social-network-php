@@ -196,6 +196,7 @@ class UserController
                 }
                 $user->setPassword(Encryption::encrypt($newPassword));
                 $this->userService->update($user);
+                $_SESSION['user-login'] = serialize($user);
                 return Response::view('views/Change-Password', ['error' => 'Change password success']);
             }
         } catch (\Exception $e) {
@@ -230,6 +231,22 @@ class UserController
             return Response::apiResponse(Status::OK, 'success', null);
         } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
+    public function changeAvatar($image) {
+      try {
+          $this->userService->updateAvatar($image);
+          return Response::apiResponse(Status::OK,'success',null);
+      }catch (Exception $e) {
+          return Response::apiResponse(Status::INTERNAL_SERVER_ERROR,$e->getMessage(),null);
+      }
+    }
+    public function changeCoverImage($image) {
+        try {
+            $this->userService->updateCoverImage($image);
+            return Response::apiResponse(Status::OK,'success',null);
+        }catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR,$e->getMessage(),null);
         }
     }
 
