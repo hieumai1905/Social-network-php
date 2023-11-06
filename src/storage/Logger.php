@@ -2,7 +2,7 @@
 
 namespace storage;
 
-class Logger
+class ÎLogger
 {
     public static function log($message)
     {
