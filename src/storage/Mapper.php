@@ -4,7 +4,7 @@ namespace storage;
 
 use ReflectionClass;
 
-class ÎMapper
+class Mapper
 {
     public static function mapStdClassToModel($stdClass, $modelClass): object
     {

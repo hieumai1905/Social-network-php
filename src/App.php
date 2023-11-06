@@ -1,4 +1,4 @@
-Î<?php
+<?php
 session_start();
 
 use https\Request;
