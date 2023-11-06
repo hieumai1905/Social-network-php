@@ -123,6 +123,7 @@ class Request
     {
         return $this->cookies[$key] ?? $default;
     }
+
     public static function getRequestCurrent(): Request
     {
         $requestData = $_REQUEST;
@@ -132,6 +133,7 @@ class Request
         $requestCookies = $_COOKIE;
         return new Request($requestData, $requestMethod, $requestUri, $requestHeaders, $requestCookies);
     }
+
     public static function getModelJson($model)
     {
         $jsonData = json_encode($model);

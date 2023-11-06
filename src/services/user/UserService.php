@@ -232,7 +232,7 @@ class UserService implements IUserService
             }
             $users = [];
             foreach ($data as $item) {
-                $user = Mapper::mapStdClassToModel($item,User::class);
+                $user = Mapper::mapStdClassToModel($item, User::class);
                 $users[] = $user;
             }
             return $users;
@@ -247,7 +247,7 @@ class UserService implements IUserService
 
     function getNewUserInMonth()
     {
-        try{
+        try {
             $result = $this->userDAO->getNewUserInMonth();
             Logger::log('Get all users successfully');
             if (count($result) == 0) {
@@ -260,7 +260,40 @@ class UserService implements IUserService
                 $users[] = $user;
             }
             return $users;
-        }catch (\PDOException $e) {
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function updateAvatar($image)
+    {
+        try {
+            $userLogin = unserialize($_SESSION['user-login']);
+            $userLogin->setAvatar($image);
+            $_SESSION['user-login'] = serialize($userLogin);
+            $this->userDAO->updateUser($userLogin);
+            Logger::log('Change avatar successfully');
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    function updateCoverImage($image)
+    {
+        try {
+            $userLogin = unserialize($_SESSION['user-login']);
+            $userLogin->setCoverImage($image);
+            $this->userDAO->updateUser($userLogin);
+            Logger::log('Change cover image successfully');
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception('An error connect to database');
         } catch (\Exception $e) {

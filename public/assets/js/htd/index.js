@@ -775,6 +775,7 @@ function NewPost() {
     var access = $("#selectType").val();
     if (content == '' && imageList.length == 0) {
         ClosePostText();
+        return;
     }
     $.ajax({
         url: 'http://localhost:8080/api/post',

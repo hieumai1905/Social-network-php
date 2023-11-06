@@ -29,7 +29,7 @@ class UserController
     private $relationService;
     private $mediaService;
 
-  public function __construct(IUserService $userService, IRequestService $requestService,IRelationService $relationService,IMediaService $mediaService)
+    public function __construct(IUserService $userService, IRequestService $requestService, IRelationService $relationService, IMediaService $mediaService)
     {
         $this->userService = $userService;
         $this->requestService = $requestService;
@@ -48,7 +48,7 @@ class UserController
     {
         $user = $this->userService->getById($id);
         $medias = $this->mediaService->getMediaOfUser($id);
-        return Response::view('views/Profile',['user'=>$user,'medias'=>$medias]);
+        return Response::view('views/Profile', ['user' => $user, 'medias' => $medias]);
     }
 
     public function getUser($id)
@@ -196,6 +196,7 @@ class UserController
                 }
                 $user->setPassword(Encryption::encrypt($newPassword));
                 $this->userService->update($user);
+                $_SESSION['user-login'] = serialize($user);
                 return Response::view('views/Change-Password', ['error' => 'Change password success']);
             }
         } catch (\Exception $e) {
@@ -227,6 +228,26 @@ class UserController
             $user->setCoverImage($userLogin->getCoverImage());
             $user->setRegisterAt($userLogin->getRegisterAt());
             $this->userService->update($user);
+            return Response::apiResponse(Status::OK, 'success', null);
+        } catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
+
+    public function changeAvatar($image)
+    {
+        try {
+            $this->userService->updateAvatar($image);
+            return Response::apiResponse(Status::OK, 'success', null);
+        } catch (Exception $e) {
+            return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
+        }
+    }
+
+    public function changeCoverImage($image)
+    {
+        try {
+            $this->userService->updateCoverImage($image);
             return Response::apiResponse(Status::OK, 'success', null);
         } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);

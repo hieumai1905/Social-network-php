@@ -11,6 +11,7 @@ use models\Post;
 
 require_once 'src/https/Status.php';
 require_once 'src/models/Post.php';
+
 class PostController
 {
     private $postService;
@@ -25,78 +26,88 @@ class PostController
 
     //----------------------HTTP GET------------------------
     //HTTP GET (/post/home)
-    public function getPostForHome(){
+    public function getPostForHome()
+    {
         try {
             $posts = $this->postService->getPostForHome();
-            $data =[];
-            foreach($posts as $post){
+            $data = [];
+            foreach ($posts as $post) {
                 $data[] = Mapper::mapModelToJson($post);
             }
-            return Response::apiResponse(Status::OK, 'success',$data);
+            return Response::apiResponse(Status::OK, 'success', $data);
         } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
 
     }
+
     //HTTP GET (/post/profile/$userId)
-    public function getPostForProfile($userId){
+    public function getPostForProfile($userId)
+    {
         try {
             $posts = $this->postService->getPostForProfile($userId);
-            $data =[];
-            foreach($posts as $post){
+            $data = [];
+            foreach ($posts as $post) {
                 $data[] = Mapper::mapModelToJson($post);
             }
-            return Response::apiResponse(Status::OK, 'success',$data);
-        }catch (Exception $e) {
+            return Response::apiResponse(Status::OK, 'success', $data);
+        } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
     }
+
     //HTTP GET (/post/$postId)
-    public function getPostById($postId){
+    public function getPostById($postId)
+    {
         try {
             $post = $this->postService->getById($postId);
             $data = Mapper::mapModelToJson($post);
             return Response::apiResponse(Status::OK, 'success', $data);
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
     }
+
     //HTTP GET (/admin/post)
-    public function getAllPost() {
+    public function getAllPost()
+    {
         try {
             $posts = $this->postService->getAll();
-            $data =[];
-            foreach($posts as $post){
+            $data = [];
+            foreach ($posts as $post) {
                 $data[] = Mapper::mapModelToJson($post);
             }
-            return Response::apiResponse(Status::OK, 'success',$data);
-        }catch (Exception $e) {
+            return Response::apiResponse(Status::OK, 'success', $data);
+        } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
     }
+
     //HTTP GET (/admin/post/month)
-    public function getMonthPost(){
+    public function getMonthPost()
+    {
         try {
             $posts = $this->postService->getMonthPost();
-            $data =[];
-            foreach($posts as $post){
+            $data = [];
+            foreach ($posts as $post) {
                 $data[] = Mapper::mapModelToJson($post);
             }
-            return Response::apiResponse(Status::OK, 'success',$data);
-        }catch (Exception $e) {
+            return Response::apiResponse(Status::OK, 'success', $data);
+        } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
     }
 
     //-------------------------HTTP POST-----------------------------------
     //HTTP POST (/post)
-    public function createPost(){
+    public function createPost()
+    {
         try {
             $json = Response::getJson();
             $keyWord = ['bimbim', 'tăng lực', 'mệt mỏi', 'chán'];
-            foreach ($keyWord as $ban){
-                if (str_contains($json['content'], $ban)){
-                    return Response::apiResponse(Status::BAD_REQUEST, 'Bad Request',null);
+            foreach ($keyWord as $ban) {
+                if (str_contains($json['content'], $ban)) {
+                    return Response::apiResponse(Status::BAD_REQUEST, 'Bad Request', null);
                 }
             }
             $post = Response::jsonToModel($json, Post::class);
@@ -109,13 +120,14 @@ class PostController
 
     //--------------------------HTTP PUT------------------------
     //HTTP PUT (/post)
-    public function updatePost(){
+    public function updatePost()
+    {
         try {
             $json = Response::getJson();
             $keyWord = ['bimbim', 'tăng lực', 'mệt mỏi', 'chán'];
-            foreach ($keyWord as $ban){
-                if (str_contains($json['content'], $ban)){
-                    return Response::apiResponse(Status::BAD_REQUEST, 'Bad Request',null);
+            foreach ($keyWord as $ban) {
+                if (str_contains($json['content'], $ban)) {
+                    return Response::apiResponse(Status::BAD_REQUEST, 'Bad Request', null);
                 }
             }
             $post = Response::jsonToModel($json, Post::class);
@@ -127,11 +139,12 @@ class PostController
     }
     //--------------------------HTTP DELETE --------------------------------
     //HTTP DELETE (/post/$postId)
-    public function deletePost($postId){
+    public function deletePost($postId)
+    {
         try {
             $this->postService->delete($postId);
             return Response::apiResponse(Status::OK, 'delete post successfully', null);
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
         }
 

@@ -14,18 +14,21 @@ class PostDAO implements IPostDAO
 
     private $connection;
 
-    public function __construct(){
-        $this->connection =\DAO\Databases\ConnectDatabase::getConnection();
+    public function __construct()
+    {
+        $this->connection = \DAO\Databases\ConnectDatabase::getConnection();
     }
+
     // get all post for uesr's profile
     public function getPostForProfile($userId): ?array
     {
-        $userId = unserialize($_SESSION['user-login'])->getUserId();
+    //        $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("SELECT * FROM posts WHERE user_id = :user_id ORDER BY create_at DESC");
-        $stmt->bindValue(':user_id',$userId);
+        $stmt->bindValue(':user_id', $userId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
     // get post by id
     public function getPostById($postId)
     {
@@ -34,6 +37,7 @@ class PostDAO implements IPostDAO
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+
     //Get post for new feed
     public function getPostForHome(): ?array
     {
@@ -50,7 +54,7 @@ class PostDAO implements IPostDAO
             UNION
             (SELECT * FROM posts WHERE user_id = :user_id)
             ORDER BY create_at DESC");
-        $stmt->bindValue(':user_id',$userId);
+        $stmt->bindValue(':user_id', $userId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
@@ -62,34 +66,35 @@ class PostDAO implements IPostDAO
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-     public function getMonthPost(): ?array
-     {
-         // TODO: Implement getMonthPost() method.
-         $stmt = $this->connection->prepare("SELECT * FROM posts WHERE MONTH(create_at) = MONTH(NOW()) AND YEAR(create_at) = YEAR(NOW())");
-         $stmt->execute();
-         return $stmt->fetchAll(PDO::FETCH_OBJ);
-     }
+
+    public function getMonthPost(): ?array
+    {
+        // TODO: Implement getMonthPost() method.
+        $stmt = $this->connection->prepare("SELECT * FROM posts WHERE MONTH(create_at) = MONTH(NOW()) AND YEAR(create_at) = YEAR(NOW())");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 
     public function createPost(Post $post)
     {
         $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO posts (post_id, create_at, content, access_modifier, post_type, user_id)
             VALUES (:postId, NOW(), :content, :accessModifier, :postType, :userId)");
-        $stmt->bindValue(':postId',uniqid());
-        $stmt->bindValue(':content',$post->getContent());
-        $stmt->bindValue(':accessModifier',$post->getAccessModifier());
-        $stmt->bindValue(':postType',$post->getPostType());
-        $stmt->bindValue(':userId',$userId);
+        $stmt->bindValue(':postId', uniqid());
+        $stmt->bindValue(':content', $post->getContent());
+        $stmt->bindValue(':accessModifier', $post->getAccessModifier());
+        $stmt->bindValue(':postType', $post->getPostType());
+        $stmt->bindValue(':userId', $userId);
         $stmt->execute();
     }
 
     public function updatePost(Post $post)
     {
-       $stmt = $this->connection->prepare("UPDATE posts SET content = :content, access_modifier = :accessModifier WHERE post_id = :postId");
-       $stmt->bindValue(':postId', $post->getPostId());
-       $stmt->bindValue(':content', $post->getContent());
-       $stmt->bindValue(':accessModifier', $post->getAccessModifier());
-       $stmt->execute();
+        $stmt = $this->connection->prepare("UPDATE posts SET content = :content, access_modifier = :accessModifier WHERE post_id = :postId");
+        $stmt->bindValue(':postId', $post->getPostId());
+        $stmt->bindValue(':content', $post->getContent());
+        $stmt->bindValue(':accessModifier', $post->getAccessModifier());
+        $stmt->execute();
     }
 
     public function deletePost($postId)

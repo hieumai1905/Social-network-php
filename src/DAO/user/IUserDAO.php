@@ -1,8 +1,11 @@
 <?php
 
 namespace DAO\user;
+
 use models\User;
+
 require_once 'src/models/User.php';
+
 interface IUserDAO
 {
     public function getUserById($id);

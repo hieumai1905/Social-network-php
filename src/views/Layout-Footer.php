@@ -1,4 +1,4 @@
-<div class="right-chat nav-wrap mt-2 right-scroll-bar">
+Î<div class="right-chat nav-wrap mt-2 right-scroll-bar">
     <div class="middle-sidebar-right-content bg-white shadow-xss rounded-xxl">
         <!-- loader wrapper -->
         <div class="preloader-wrap p-3">

@@ -2,7 +2,7 @@
 
 namespace middlewares;
 
-class MiddlewareRegister
+class RegisterMiddleware
 {
 
     private static $middlewares = [];

@@ -7,13 +7,16 @@ use models\Notification;
 use services\IGeneralService;
 use storage\Logger;
 use storage\Mapper;
+
 require_once 'INotificationService.php';
 require_once 'src/storage/Logger.php';
 require_once 'src/storage/Mapper.php';
 require_once 'src/models/Notification.php';
 
-class NotificationService implements INotificationService {
+class NotificationService implements INotificationService
+{
     private $notificationDAO;
+
     public function __construct(INotificationDAO $notificationDAO)
     {
         $this->notificationDAO = $notificationDAO;
@@ -52,13 +55,13 @@ class NotificationService implements INotificationService {
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception('An error connect to database');
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
     }
 
-        public function getNotificationByUserRecipient($user_recipient)
+    public function getNotificationByUserRecipient($user_recipient)
     {
         try {
             $result = $this->notificationDAO->getNotificationByUserRecipient($user_recipient);
@@ -69,14 +72,14 @@ class NotificationService implements INotificationService {
             }
             $notifications = [];
             foreach ($result as $item) {
-                $notification = Mapper::mapStdClassToModel($item,Notification::class);
+                $notification = Mapper::mapStdClassToModel($item, Notification::class);
                 $notifications[] = $notification;
             }
             return $notifications;
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception('An error connect to database');
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -90,7 +93,7 @@ class NotificationService implements INotificationService {
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception('An error connect to database');
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -109,7 +112,7 @@ class NotificationService implements INotificationService {
         } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception('An error connect to database');
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }

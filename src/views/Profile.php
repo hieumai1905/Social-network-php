@@ -1,4 +1,4 @@
-<?php
+Î<?php
 require_once "Layout-Header.php";
 ?>
 <style>
@@ -15,6 +15,7 @@ require_once "Layout-Header.php";
     }
 </style>
 <!-- main content -->
+<div type="hidden" ></div>
 <div id="modalSpinner" class="modalHtd">
     <div id="loadingSrc">
         <div class="loader">
@@ -71,14 +72,17 @@ require_once "Layout-Header.php";
 </div>
 <div id="modalChangeAvt" class="modalHtd">
     <div id="changeAvt">
-        <div id="textInner" class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3">
+        <div id="textInner" class="card w-300 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3" style="width: 300px;">
             <div id="postTitle">
                 <span id="postTitleContent" style="font-weight: bold;">Change Avatar</span>
                 <i id="exitButton" class="btn-round-sm font-xs text-primary feather-x-circle me-2 bg-greylight" onclick="CloseAvtText()" style="cursor: pointer">
                 </i>
             </div>
             <div id="postInfor" style="display: flex; align-items: center; justify-content: center;">
-                <img id="avatarChange" src="/public/images/female-profile.png" class="postAvt">
+                <?php
+                    $avatar ='/public/images/'. $data['user']->getAvatar();
+                    echo "<img id='avatarChange' src='$avatar' class='postAvt' style='width: 150px; height: 150px'>";
+                ?>
             </div>
             <div class="card-body " style="margin: 10px; display: flex; align-items: center; justify-content: center;">
                 <label class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4" style="background: #dcdcdc; border-radius: 10px; padding: 5px;">
@@ -102,9 +106,14 @@ require_once "Layout-Header.php";
             </div>
             <div  style="display: flex; align-items: center; justify-content: center;">
                 <div class="card-body h250 rounded-xxl overflow-hidden m-3" style="position: relative; padding-bottom:50px;">
-                    <img id="coverImg" src="/public/images/u-bg.jpg" alt="image" style="border-radius: 20px; width: 60vw; height: 30vh">
+                    <?php
+                        $coverImage = '/public/images/'.$data['user']->getCoverImage();
+                        echo "<img id='coverImg' src='$coverImage' alt='image' style='border-radius: 20px; width: 60vw; height: 30vh'>";
+                    ?>
                     <figure class="avatar position-absolute w100 z-index-1" style="bottom:-20px; left: 3vw;">
-                        <img style="width:75px; height:100px; border-radius:50px;" id="avatar1" src="/public/images/anhdep.png" alt="image" class="float-right p-1 bg-white rounded-circle w-100" onclick="OpenAvtText()">
+                        <?php
+                            echo "<img style='width:75px; height:100px; border-radius:50px;' id='avatar1' src='$avatar' alt='image' class='float-right p-1 bg-white rounded-circle w-100' onclick='OpenAvtText()'>";
+                        ?>
                     </figure>
                 </div>
             </div>
@@ -128,7 +137,6 @@ require_once "Layout-Header.php";
                     <div class="card w-100 border-0 p-0 bg-white shadow-xss rounded-xxl">
                         <div class="card-body h250 p-0 rounded-xxl overflow-hidden m-3">
                             <?php
-                            $coverImage = '/public/images/'.$data['user']->getCoverImage();
                             echo "<img id='coverImage' src='$coverImage' alt='image' onclick='OpenImgText()' style='width: 60vw; height: 30vh;'>";
                             ?>
                         </div>
@@ -136,7 +144,6 @@ require_once "Layout-Header.php";
                             <a href="#" class="hover">
                                 <figure class="avatar position-absolute w100 z-index-1" style="top:-40px; left: 30px;">
                                     <?php
-                                    $avatar ='/public/images/'. $data['user']->getAvatar();
                                     echo "<img style='width:75px; height:100px; border-radius:50px;' id='avatar' src='$avatar' alt='image' class='float-right p-1 bg-white rounded-circle w-100' onclick='OpenAvtText()'>";
                                     ?>
                                 </figure>
@@ -273,15 +280,23 @@ require_once "Layout-Header.php";
                     <div class="card w-100 shadow-xss rounded-xxl border-0 mb-3">
                     </div>
                 </div>
-                <?php
-                    if ($user->getUserId() == $data['user']->getUserId()) {
-                        echo "<div class='col-xl-8 col-xxl-9 col-lg-8'>";
-                    }
-                    else {
-                        echo "<div style='display: none' class='col-xl-8 col-xxl-9 col-lg-8'>";
-                    }
-                ?>
-                    <div class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3">
+<!--                --><?php
+//                    if ($user->getUserId() == $data['user']->getUserId()) {
+//                        echo "<div class='col-xl-8 col-xxl-9 col-lg-8'>";
+//                    }
+//                    else {
+//                        echo "<div style='display: none' class='col-xl-8 col-xxl-9 col-lg-8'>";
+//                    }
+//                ?>
+                <div class='col-xl-8 col-xxl-9 col-lg-8'>
+                    <?php
+                        if ($user->getUserId() == $data['user']->getUserId()) {
+                            echo "<div class='card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3'>";
+                        }
+                        else {
+                            echo "<div class='card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3' style='display: none'>";
+                        }
+                    ?>
                         <div class="card-padding>
                             <i class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create Post
                     </div>
@@ -328,11 +343,12 @@ require_once "Layout-Header.php";
 
 <!-- main content -->
 <?php
+echo '<div id="userCurrent" type="hidden">'.unserialize($_SESSION['user-login'])->getUserId().'</div>';
 require "Layout-Footer.php";
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="/public/assets/phong/phongProfile.js"></script>
-<!--<script src="/assets/htd/profile.js"></script>-->
+<script src="/public/assets/js/htd/profile.js"></script>
 <script src="/public/js/plugin.js"></script>
 <script src="/public/js/lightbox.js"></script>
 <script src="/public/js/scripts.js"></script>

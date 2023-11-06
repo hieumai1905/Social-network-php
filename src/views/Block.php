@@ -1,4 +1,4 @@
-<?php
+Î<?php
     require_once "Layout-Header.php";
 ?>
     <!-- navigation left -->
