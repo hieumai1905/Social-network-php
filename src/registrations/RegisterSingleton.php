@@ -75,6 +75,7 @@ require_once __DIR__ . '/../services/like/LikeService.php';
 require_once __DIR__ . '/../services/post_interact/PostInteractService.php';
 require_once __DIR__ . '/../services/media/MediaService.php';
 require_once __DIR__ . '/../services/notification/NotificationService.php';
+
 class RegisterSingleton
 {
     private static $container = null;
@@ -140,7 +141,7 @@ class RegisterSingleton
             );
         });
         //---------------------------------------Relation--------------------------------------
-        $container->register('\DAO\relation\IRelationDAO' , function () {
+        $container->register('\DAO\relation\IRelationDAO', function () {
             return new RelationDAO();
         });
 
@@ -165,7 +166,7 @@ class RegisterSingleton
             return new PostDAO();
         });
 
-        $container->register('\services\post\IPostService', function () use ($container){
+        $container->register('\services\post\IPostService', function () use ($container) {
             return new PostService(
                 $container->resolve('\DAO\post\IPostDAO')
             );
@@ -182,12 +183,12 @@ class RegisterSingleton
             return new CommentDAO();
         });
 
-        $container->register('\services\comment\ICommentService', function () use ($container){
+        $container->register('\services\comment\ICommentService', function () use ($container) {
             return new CommentService(
                 $container->resolve('\DAO\comment\ICommentDAO')
             );
         });
-        $container->register('\controllers\CommentController', function () use ($container){
+        $container->register('\controllers\CommentController', function () use ($container) {
             return new CommentController(
                 $container->resolve('\services\comment\ICommentService')
             );
@@ -198,12 +199,12 @@ class RegisterSingleton
             return new CommentReplyDAO();
         });
 
-        $container->register('\services\comment_reply\ICommentReplyService', function () use ($container){
+        $container->register('\services\comment_reply\ICommentReplyService', function () use ($container) {
             return new CommentReplyService(
                 $container->resolve('\DAO\comment_reply\ICommentReplyDAO')
             );
         });
-        $container->register('\controllers\CommentReplyController', function () use ($container){
+        $container->register('\controllers\CommentReplyController', function () use ($container) {
             return new CommentReplyController(
                 $container->resolve('\services\comment_reply\ICommentReplyService')
             );
@@ -214,7 +215,7 @@ class RegisterSingleton
             return new LikeDAO();
         });
 
-        $container->register('\services\like\ILikeService', function () use ($container){
+        $container->register('\services\like\ILikeService', function () use ($container) {
             return new LikeService(
                 $container->resolve('\DAO\like\ILikeDAO')
             );
@@ -230,12 +231,12 @@ class RegisterSingleton
             return new PostInteractDAO();
         });
 
-        $container->register('\services\post_interact\IPostInteractService', function () use ($container){
+        $container->register('\services\post_interact\IPostInteractService', function () use ($container) {
             return new PostInteractService(
                 $container->resolve('\DAO\post_interact\IPostInteractDAO')
             );
         });
-        $container->register('\controllers\PostInteractController', function () use ($container){
+        $container->register('\controllers\PostInteractController', function () use ($container) {
             return new PostInteractController(
                 $container->resolve('\services\post_interact\IPostInteractService')
             );
@@ -246,7 +247,7 @@ class RegisterSingleton
             return new MediaDAO();
         });
 
-        $container->register('\services\media\IMediaService', function () use ($container){
+        $container->register('\services\media\IMediaService', function () use ($container) {
             return new MediaService(
                 $container->resolve('\DAO\media\IMediaDAO')
             );
@@ -270,7 +271,7 @@ class RegisterSingleton
         //----------------------------------------------------------------------------------------
 
         //---------------------------------------Notification--------------------------------------
-        $container->register('\DAO\notification\INotificationDAO' , function () {
+        $container->register('\DAO\notification\INotificationDAO', function () {
             return new NotificationDAO();
         });
 

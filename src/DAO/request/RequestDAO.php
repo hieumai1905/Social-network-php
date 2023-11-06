@@ -11,8 +11,6 @@ require_once 'src/models/Request.php';
 
 class RequestDAO implements IRequestDAO
 {
-
-
     private $connection;
 
     public function __construct()

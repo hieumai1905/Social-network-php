@@ -1,6 +1,7 @@
 <?php
 
 namespace registrations;
+
 use Exception;
 
 class DIContainer

@@ -1,18 +1,23 @@
 <?php
 
 namespace DAO\comment_reply;
+
 use PDO;
 use models\CommentReplie;
 
 require_once 'src/DAO/databases/ConnectDatabase.php';
 require_once 'ICommentReplyDAO.php';
 require_once 'src/models/CommentReplie.php';
+
 class CommentReplyDAO implements ICommentReplyDAO
 {
     private $connection;
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->connection = \DAO\Databases\ConnectDatabase::getConnection();
     }
+
     public function getCommentReplyOfComment($commentId): ?array
     {
         // TODO: Implement getCommentReplyOfComment() method.

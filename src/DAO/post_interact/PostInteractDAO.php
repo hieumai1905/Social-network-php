@@ -8,10 +8,13 @@ use models\PostInteract;
 require_once 'src/DAO/databases/ConnectDatabase.php';
 require_once 'IPostInteractDAO.php';
 require_once 'src/models/PostInteract.php';
+
 class PostInteractDAO implements IPostInteractDAO
 {
     private $connection;
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->connection = \DAO\Databases\ConnectDatabase::getConnection();
     }
 
@@ -35,7 +38,7 @@ class PostInteractDAO implements IPostInteractDAO
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postId);
         $stmt->bindValue(':content', 'Lưu để bóc phốt');
-        $stmt->bindValue(':type','SAVE');
+        $stmt->bindValue(':type', 'SAVE');
         $stmt->execute();
     }
 
@@ -44,8 +47,8 @@ class PostInteractDAO implements IPostInteractDAO
         // TODO: Implement deleteFavoritePost() method.
         $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("DELETE FROM post_interacts WHERE post_id = :postId AND user_id = :userId");
-        $stmt->bindValue(':postId',$postId);
-        $stmt->bindValue(':userId',$userId);
+        $stmt->bindValue(':postId', $postId);
+        $stmt->bindValue(':userId', $userId);
         $stmt->execute();
     }
 
@@ -62,7 +65,7 @@ class PostInteractDAO implements IPostInteractDAO
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postId);
         $stmt->bindValue(':content', 'Nhìn thấy không vui');
-        $stmt->bindValue(':type','HIDDEN');
+        $stmt->bindValue(':type', 'HIDDEN');
         $stmt->execute();
     }
 
@@ -74,7 +77,7 @@ class PostInteractDAO implements IPostInteractDAO
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':post_id', $postInteract->getPostId());
         $stmt->bindValue(':content', $postInteract->getContent());
-        $stmt->bindValue(':type','REPORT');
+        $stmt->bindValue(':type', 'REPORT');
         $stmt->execute();
     }
 

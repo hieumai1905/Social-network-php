@@ -11,28 +11,32 @@ require_once 'ICommentReplyService.php';
 require_once 'src/storage/Logger.php';
 require_once 'src/storage/Mapper.php';
 require_once 'src/models/CommentReplie.php';
+
 class CommentReplyService implements ICommentReplyService
 {
     private $commentReplyDAO;
-    public function __construct(ICommentReplyDAO $commentReplyDAO){
+
+    public function __construct(ICommentReplyDAO $commentReplyDAO)
+    {
         $this->commentReplyDAO = $commentReplyDAO;
     }
+
     function getCommentReplyOfComment($commentId)
     {
         // TODO: Implement getCommentReplyOfComment() method.
         try {
             $result = $this->commentReplyDAO->getCommentReplyOfComment($commentId);
-            Logger::log('Get comment reply of comment: '.$commentId,' successfully');
+            Logger::log('Get comment reply of comment: ' . $commentId, ' successfully');
             $commentReplies = [];
-            foreach ($result as $item){
+            foreach ($result as $item) {
                 $commentReply = Mapper::mapStdClassToModel($item, CommentReplie::class);
                 $commentReplies[] = $commentReply;
             }
             return $commentReplies;
-        } catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -56,10 +60,10 @@ class CommentReplyService implements ICommentReplyService
         try {
             $this->commentReplyDAO->createCommentReply($object);
             Logger::log('Create comment reply successfully');
-        } catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -71,10 +75,10 @@ class CommentReplyService implements ICommentReplyService
         try {
             $this->commentReplyDAO->updateCommentReply($object);
             Logger::log('updated comment reply successfully');
-        } catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -86,10 +90,10 @@ class CommentReplyService implements ICommentReplyService
         try {
             $this->commentReplyDAO->deleteCommentReply($id);
             Logger::log('Delete comment successfully');
-        } catch (\PDOException $e){
+        } catch (\PDOException $e) {
             Logger::log($e->getMessage());
             throw new \Exception("An error connect to database");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Logger::log($e->getMessage());
             throw new \Exception($e->getMessage());
         }

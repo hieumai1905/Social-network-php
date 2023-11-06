@@ -9,7 +9,7 @@ require_once 'src/services/IGeneralService.php';
 
 interface IRequestService extends IGeneralService
 {
-    public function getRequestByEmail($email):?Request;
+    public function getRequestByEmail($email): ?Request;
 
     public function cleanRequestCode();
 
