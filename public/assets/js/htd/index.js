@@ -964,7 +964,7 @@ function HiddenPost(postId) {
             console.log(error, "Loi an post");
         },
         success: function () {
-            ShowLoader
+            ShowLoader();
             GetNewFeed();
         }
     });
@@ -1019,7 +1019,7 @@ function ReportPost(postId) {
             console.log(error, "Loi report post");
         },
         success: function () {
-            ShowLoader
+            ShowLoader();
             GetNewFeed();
         }
     });
