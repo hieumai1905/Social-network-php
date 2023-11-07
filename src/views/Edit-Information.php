@@ -1,4 +1,4 @@
-Î<?php
+<?php
     require_once "Layout-Header.php";
 ?>
 <style>
