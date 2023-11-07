@@ -43,16 +43,7 @@ echo '<div id="userCurrent" type="hidden">'.unserialize($_SESSION['user-login'])
                     <span class="d-none-xs" style="cursor: pointer">Photo/Video</span>
                     <input type="file" name="photo" id="upload-photo" />
                 </label>
-                <label
-                        class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4">
-                    <i class="font-md text-danger feather-video me-2">
-                    </i><span class="d-none-xs">Live Video</span>
-                </label>
-                <label
-                        class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4">
-                    <i class="font-md text-warning feather-camera me-2">
-                    </i><span class="d-none-xs">Feeling/Activity</span>
-                </label>
+
             </div>
             <div id="showImage" class="preview" style="display: flex"></div>
             <button onclick="NewPost()" id="postButton" style="display: block" type="button" class="btn btn-primary">Post</button>

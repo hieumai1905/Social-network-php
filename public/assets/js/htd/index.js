@@ -145,7 +145,7 @@ function CreatePost(post) {
                     class="shadow-sm rounded-circle"/>
             </figure>
             <h4 class="fw-700 text-grey-900 font-xssss mt-1">
-                ${username}
+            <a href="http://localhost:8080/users/${post.userId}">${username}</a>
                 <span
                     class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">
                     ${post.createAt}
