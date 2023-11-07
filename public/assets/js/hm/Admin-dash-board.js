@@ -33,4 +33,34 @@ function loadData() {
 
         }
     });
+    $.ajax({
+        url: 'http://localhost:8080/api/admin/post',
+        type: 'GET',
+        contentType: "application/json",
+        success: function (response) {
+            if(response.status === 200){
+                postsData = response.data;
+                const totalRecords = postsData.length;
+                $("#count-posts").text(totalRecords);
+            }
+        },
+        error: function (error) {
+
+        }
+    });
+    $.ajax({
+        url: 'http://localhost:8080/api/admin/post/month',
+        type: 'GET',
+        contentType: "application/json",
+        success: function (response) {
+            if(response.status === 200){
+                postsData = response.data;
+                const totalRecords = postsData.length;
+                $("#count-posts-per-month").text(totalRecords);
+            }
+        },
+        error: function (error) {
+
+        }
+    });
 }
