@@ -20,7 +20,7 @@
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="m-0">All Users</h5>
+                                <h5 class="m-0">Users new in month</h5>
                             </div>
                             <div class="card-body">
                                 <h6 class="card-title"id="count-new-users">Loading...</h6>
@@ -30,7 +30,7 @@
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="m-0">Users new in month</h5>
+                                <h5 class="m-0">All posts</h5>
                             </div>
                             <div class="card-body">
                                 <h6 class="card-title" id="count-posts">Loading...</h6>
