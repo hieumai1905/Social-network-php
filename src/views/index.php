@@ -1,4 +1,4 @@
-Î<?php
+<?php
 require_once "Layout-Header.php";
 
 echo '<div id="userCurrent" type="hidden">'.unserialize($_SESSION['user-login'])->getUserId().'</div>';
