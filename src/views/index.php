@@ -32,7 +32,7 @@ echo '<div id="userCurrent" type="hidden">'.unserialize($_SESSION['user-login'])
             <div class="card-body p-0 mt-3 position-relative">
                 <textarea id="postContent"
                           name="message"
-                          class="h100 bor-0 w-100 rounded-xxl p-2 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg"
+                          class="h100 bor-0 w-100 rounded-xxl p-2 ps-5 font-xssss text-black-500 fw-500 border-light-md theme-dark-bg"
                           cols="30"
                           rows="10"
                           placeholder="What's on your mind?"></textarea>
@@ -43,16 +43,7 @@ echo '<div id="userCurrent" type="hidden">'.unserialize($_SESSION['user-login'])
                     <span class="d-none-xs" style="cursor: pointer">Photo/Video</span>
                     <input type="file" name="photo" id="upload-photo" />
                 </label>
-                <label
-                        class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4">
-                    <i class="font-md text-danger feather-video me-2">
-                    </i><span class="d-none-xs">Live Video</span>
-                </label>
-                <label
-                        class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4">
-                    <i class="font-md text-warning feather-camera me-2">
-                    </i><span class="d-none-xs">Feeling/Activity</span>
-                </label>
+
             </div>
             <div id="showImage" class="preview" style="display: flex"></div>
             <button onclick="NewPost()" id="postButton" style="display: block" type="button" class="btn btn-primary">Post</button>
