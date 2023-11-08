@@ -16,4 +16,5 @@ interface INotificationService extends IGeneralService
     public function updateNotificationStatus($user_recipient);
 
     public function countNotificationUnSeen($user_recipient);
+    public function deleteNotification($user_id,$user_recipient);
 }

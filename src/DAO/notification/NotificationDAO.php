@@ -57,4 +57,12 @@ class NotificationDAO implements INotificationDAO
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function deleteNotification($user_id, $user_recipient)
+    {
+        $stmt = $this->connection->prepare('DELETE FROM notifications WHERE user_id = :user_id and user_recipient = :user_recipient');
+        $stmt->bindValue('user_id', $user_id);
+        $stmt->bindValue('user_recipient', $user_recipient);
+        $stmt->execute();
+    }
 }

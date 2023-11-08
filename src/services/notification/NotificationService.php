@@ -117,4 +117,18 @@ class NotificationService implements INotificationService
             throw new \Exception($e->getMessage());
         }
     }
+
+    public function deleteNotification($user_id,$user_recipient)
+    {
+        try {
+            $this->notificationDAO->deleteNotification($user_id,$user_recipient);
+            Logger::log("Delete notification successfully");
+        } catch (\PDOException $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception('An error connect to database');
+        } catch (\Exception $e) {
+            Logger::log($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    }
 }
