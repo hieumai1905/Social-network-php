@@ -82,7 +82,7 @@ class UserController
             }
             $relation = [];
             $relationOfUser = [];
-            foreach ($users as $item) {
+            foreach ($result as $item) {
                 $relation[] = $this->relationService->getRelationBetweenUserAndUserTargetExceptFollow($userLogin->getUserId(), $item->getUserId());
                 $relationOfUser[] = $this->relationService->getRelationBetweenUserAndUserTargetExceptFollow($item->getUserId(),$userLogin->getUserId());
             }
