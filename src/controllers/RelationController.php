@@ -185,6 +185,7 @@ class RelationController
         try {
             $user = unserialize($_SESSION['user-login']);
             $this->relationService->blockUser($user->getUserId(), $user_target_id);
+            $this->notificationService->deleteNotification($user->getUserId(),$user_target_id);
             return Response::apiResponse(Status::OK, 'success', null);
         } catch (Exception $e) {
             return Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
@@ -274,6 +275,7 @@ class RelationController
         try {
             $user = unserialize($_SESSION['user-login']);
             $this->relationService->cancelFriendRequest($user->getUserId(), $user_target_id);
+            $this->notificationService->deleteNotification($user->getUserId(),$user_target_id);
             return Response::apiResponse(Status::OK, 'success', null);
         } catch (Exception $e) {
             Response::apiResponse(Status::INTERNAL_SERVER_ERROR, $e->getMessage(), null);
