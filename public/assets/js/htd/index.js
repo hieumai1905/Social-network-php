@@ -607,6 +607,9 @@ function NewCommentReply1(postId, commentId) {
 
 function EditCommentReply1(postId, commentId) {
     var contentInput = document.getElementById("replyCmtInput_" + commentId).value;
+    if (contentInput == ''){
+        return;
+    }
     $.ajax({
         url: 'http://localhost:8080/api/comment',
         method: 'PUT',
@@ -667,7 +670,10 @@ function NewCommentReply2(postId, commentId, commentReplyId) {
 }
 
 function EditCommentReply2(postId, commentId, commentReplyId) {
-    var contentInput = document.getElementById("replyCmt2Input_" + commentReplyId).value;
+    var contentInput = document.getElementById("replyCmt2Input_"+ commentReplyId).value;
+    if (contentInput == ''){
+        return;
+    }
     $.ajax({
         url: 'http://localhost:8080/api/comment/reply',
         method: 'PUT',
