@@ -81,10 +81,12 @@ class UserController
                 $result[] = $item;
             }
             $relation = [];
+            $relationOfUser = [];
             foreach ($users as $item) {
                 $relation[] = $this->relationService->getRelationBetweenUserAndUserTargetExceptFollow($userLogin->getUserId(), $item->getUserId());
+                $relationOfUser[] = $this->relationService->getRelationBetweenUserAndUserTargetExceptFollow($item->getUserId(),$userLogin->getUserId());
             }
-            return Response::view('views/Search', ['users' => $result, 'relation' => $relation]);
+            return Response::view('views/Search', ['users' => $result, 'relation' => $relation,'relationOfUser'=>$relationOfUser]);
         } catch (Exception $e) {
             return Response::view('views/Error', ['error' => $e->getMessage()]);
         }

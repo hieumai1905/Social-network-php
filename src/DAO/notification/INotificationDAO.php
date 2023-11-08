@@ -15,4 +15,5 @@ interface INotificationDAO
     public function updateNotification($user_recipient);
 
     public function getNotificationUnSeen($user_recipient);
+    public function deleteNotification($user_id,$user_recipient);
 }

@@ -21,7 +21,7 @@
                                     $email = $item->getEmail();
                                     $urlProfile = 'http://localhost:8080/users/' . $item->getUserId();
                                     $avatar = '/public/images/'.$item->getAvatar();
-                                    if ($data['relation'][$i] == null or $data['relation'][$i]->getTypeRelation() == 'FRIEND') {
+                                    if (($data['relation'][$i] == null and $data['relationOfUser'][$i] == null) or ($data['relation'][$i] != null and $data['relation'][$i]->getTypeRelation() == 'FRIEND')) {
                                         echo "<div class='col-md-12 col-sm-4 pe-2 ps-2 phong1'>
                             <div class='card d-block border-0 shadow-xss rounded-3 overflow-hidden mb-3 phong2'>
                                 <div class='card-body w-100 ps-3 pe-3 pb-4 phong3'>
@@ -36,12 +36,21 @@
                             </div>
                         </div>";
                                         $i += 1;
-                                    } else {
-                                        if ($data['relation'][$i]->getTypeRelation() == 'BLOCK') {
-                                            $i += 1;
-                                            continue;
+                                    }
+                                    else {
+                                        if ($data['relation'][$i] != null) {
+                                            if ($data['relation'][$i]->getTypeRelation() == 'BLOCK') {
+                                                $i += 1;
+                                                continue;
+                                            }
                                         }
-                                        else if ($data['relation'][$i]->getTypeRelation() == 'WAITING') {
+                                        if ($data['relationOfUser'][$i] != null) {
+                                            if ($data['relationOfUser'][$i]->getTypeRelation() == 'BLOCK') {
+                                                $i += 1;
+                                                continue;
+                                            }
+                                        }
+                                        if ($data['relation'][$i]->getTypeRelation() == 'WAITING') {
                                             echo "<div class='col-md-12 col-sm-4 pe-2 ps-2 phong1'>
                             <div class='card d-block border-0 shadow-xss rounded-3 overflow-hidden mb-3 phong2'>
                                 <div class='card-body w-100 ps-3 pe-3 pb-4 phong3'>
@@ -56,8 +65,9 @@
                             </div>
                         </div>";
                                             $i += 1;
+                                            continue;
                                         }
-                                        else if ($data['relation'][$i]->getTypeRelation() == 'REQUEST') {
+                                        if ($data['relation'][$i]->getTypeRelation() == 'REQUEST') {
                                             echo "<div class='col-md-12 col-sm-4 pe-2 ps-2 phong1'>
                             <div class='card d-block border-0 shadow-xss rounded-3 overflow-hidden mb-3 phong2'>
                                 <div class='card-body w-100 ps-3 pe-3 pb-4 phong3'>
@@ -72,6 +82,7 @@
                             </div>
                         </div>";
                                             $i += 1;
+                                            continue;
                                         }
                                     }
                                 }
