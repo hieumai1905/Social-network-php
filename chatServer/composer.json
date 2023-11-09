@@ -1,0 +1,16 @@
+{
+    "name": "app/chat-server",
+    "autoload": {
+        "psr-4": {
+            "app\\ChatServer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "quynh"
+        }
+    ],
+    "require": {
+        "cboden/ratchet": "^0.4.4"
+    }
+}

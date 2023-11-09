@@ -4,7 +4,10 @@ namespace registrations;
 
 
 use controllers\AdminController;
+use controllers\MessageController;
 use controllers\NotificationController;
+use DAO\conversations\ConversationsDAO;
+use DAO\message\MessageDAO;
 use DAO\notification\NotificationDAO;
 use https\Request;
 
@@ -28,6 +31,8 @@ use controllers\PostInteractController;
 use controllers\LikeController;
 use controllers\MediaController;
 
+use services\conversations\ConversationService;
+use services\message\MessageService;
 use services\notification\NotificationService;
 use services\relation\RelationService;
 use services\request\RequestService;
@@ -52,11 +57,14 @@ require_once __DIR__ . '/../DAO/post_interact/PostInteractDAO.php';
 require_once __DIR__ . '/../DAO/media/MediaDAO.php';
 require_once __DIR__ . '/../DAO/relation/RelationDAO.php';
 require_once __DIR__ . '/../DAO/notification/NotificationDAO.php';
+require_once __DIR__ . '/../DAO/message/MessageDAO.php';
+require_once __DIR__ . '/../DAO/conversations/ConversationsDAO.php';
 
 require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../controllers/AccountController.php';
 require_once __DIR__ . '/../controllers/AdminController.php';
 require_once __DIR__ . '/../controllers/RelationController.php';
+require_once __DIR__ . '/../controllers/MessageController.php';
 require_once __DIR__ . '/../controllers/PostController.php';
 require_once __DIR__ . '/../controllers/CommentController.php';
 require_once __DIR__ . '/../controllers/CommentReplyController.php';
@@ -68,6 +76,8 @@ require_once __DIR__ . '/../controllers/NotificationController.php';
 require_once __DIR__ . '/../services/relation/RelationService.php';
 require_once __DIR__ . '/../services/request/RequestService.php';
 require_once __DIR__ . '/../services/user/UserService.php';
+require_once __DIR__ . '/../services/conversations/ConversationService.php';
+require_once __DIR__ . '/../services/message/MessageService.php';
 require_once __DIR__ . '/../services/post/PostService.php';
 require_once __DIR__ . '/../services/comment/CommentService.php';
 require_once __DIR__ . '/../services/comment_reply/CommentReplyService.php';
@@ -288,7 +298,34 @@ class RegisterSingleton
             );
         });
         //-------------------------------------------------------------------------------------
+  //------------------------------------Message-------------------------------------------------
+        $container->register('\services\message\IMessageService', function () use ($container) {
+            return new MessageService(
+                $container->resolve('\DAO\message\IMessageDAO'),
+            );
+        });
 
+        $container->register('\DAO\conversation\IConversationDAO', function () {
+            return new ConversationsDAO();
+        });
+        $container->register('\DAO\message\IMessageDAO', function () {
+            return new MessageDAO();
+        });
+
+        $container->register('\services\conversation\IConversationService', function () use ($container) {
+            return new ConversationService(
+                $container->resolve('\DAO\conversation\IConversationDAO')
+            );
+        });
+
+        $container->register('\controllers\MessageController', function () use ($container) {
+            return new MessageController(
+                $container->resolve('\services\relation\IRelationService'),
+                $container->resolve('\services\user\IUserService'),
+                $container->resolve('\services\message\IMessageService'),
+                $container->resolve('\services\conversation\IConversationService')
+            );
+        });
     }
 
     public function registerRequest(Request $request): void

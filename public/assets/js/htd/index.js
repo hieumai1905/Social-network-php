@@ -573,6 +573,7 @@ function NewComment(postId) {
             document.getElementById("inputCmt_" + postId).value = "";
         },
         error: function (err) {
+            console.log(err, 'Loi tao cmt');
         }
     });
 }

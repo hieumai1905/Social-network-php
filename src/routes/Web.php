@@ -178,6 +178,13 @@ function registerRoute()
     Route::get('/notification', 'NotificationController@getNotificationOfUser');
     Route::get('/api/notification/countnotificationunseen', 'NotificationController@countNotificationUnSeen');
     //------------------------------------------------------------------------------------------------
+
+    //------------------------------Register route for message-------------------------------------------
+    Route::get('/api/message/friendlist', 'MessageController@getFriendOfUser');
+    Route::post('/api/message/create', 'MessageController@addMessage');
+    Route::get('/message', 'MessageController@showMessageView');
+    //------------------------------------------------------------------------------------------------
+
     Route::registerResource();
     Route::dispatch();
 }
