@@ -281,7 +281,6 @@ include "Layout-Footer.php";
 <script src="public/js/plugin.js"></script>
 <script src="public/js/lightbox.js"></script>
 <script src="public/js/scripts.js"></script>
-<script src="/public/assets/js/htd/contact.js"></script>
 </body>
 
 <!--</html>-->

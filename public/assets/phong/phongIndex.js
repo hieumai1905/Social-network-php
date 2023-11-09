@@ -1,6 +1,6 @@
-$(document).ready(function () {
+window.onload = function () {
     GetFriendRequest();
-});
+}
 function GetUser(id) {
     let data;
     $.ajax({

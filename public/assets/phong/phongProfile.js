@@ -1,10 +1,10 @@
-$(document).ready(function () {
+window.onload = function () {
     CheckFollow();
     CheckFriend();
     CheckBlock();
     CheckRequest();
     CheckWaiting();
-});
+}
 var currentUrl = window.location.href;
 var urlParts = currentUrl.split('/');
 var userId = urlParts[urlParts.length - 1];

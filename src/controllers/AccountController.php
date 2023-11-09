@@ -5,6 +5,7 @@ namespace controllers;
 use Google\Exception;
 use https\Response;
 use https\Status;
+use services\handle\Encryption;
 use services\mail\Mailer;
 use services\request\IRequestService;
 use services\user\IUserService;
@@ -262,7 +263,7 @@ class AccountController
                     $this->requestService->delete($request->getRequestId());
                     $user = $this->userService->getUserByEmail($email);
                     if ($user) {
-                        $user->setPassword($password);
+                        $user->setPassword(Encryption::encrypt($password));
                         $this->userService->update($user);
                         return Response::redirect('/login');
                     }

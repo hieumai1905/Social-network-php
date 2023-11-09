@@ -33,9 +33,28 @@
             <h4 class="font-xsssss text-grey-500 text-uppercase fw-700 ls-3" style="border-bottom: 1px solid #dcdcdc">
                 CONTACTS
             </h4>
-            <ul id="contact" class="list-group list-group-flush">
+            <ul id="friendChat" class="list-group list-group-flush">
                 <!--Message user-->
+                <li>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <img src="diuking" alt="image" style="width:50px; height: 50px;">
 
+                        </div>
+                        <div class="col-lg-9"><h2>diuking
+                            </h2></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <img src="diuking" alt="image" style="width:50px; height: 50px;">
+
+                        </div>
+                        <div class="col-lg-9"><h2>diuking
+                            </h2></div>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -66,7 +85,7 @@
     <a href="default-settings.html" class="nav-content-bttn">
         <img src="images/female-profile.png"
              alt="user"
-             class="w30 shadow-xss" />
+             class="w30 shadow-xss"/>
     </a>
 </div>
 
@@ -75,7 +94,7 @@
         <div class="form-group searchbox mb-0 border-0 p-1">
             <input type="text"
                    class="form-control border-0"
-                   placeholder="Search..." />
+                   placeholder="Search..."/>
             <i class="input-icon">
                 <ion-icon name="search-outline"
                           role="img"
@@ -108,23 +127,23 @@
                 <div class="card w-100 border-0 rounded-3 overflow-hidden bg-gradiant-bottom bg-gradiant-top">
                     <div class="owl-carousel owl-theme dot-style3 story-slider owl-dot-nav nav-none">
                         <div class="item">
-                            <img src="images/story-5.jpg" alt="image" />
+                            <img src="images/story-5.jpg" alt="image"/>
                         </div>
                         <div class="item">
-                            <img src="images/story-6.jpg" alt="image" />
+                            <img src="images/story-6.jpg" alt="image"/>
                         </div>
                         <div class="item">
-                            <img src="images/story-7.jpg" alt="image" />
+                            <img src="images/story-7.jpg" alt="image"/>
                         </div>
                         <div class="item">
-                            <img src="images/story-8.jpg" alt="image" />
+                            <img src="images/story-8.jpg" alt="image"/>
                         </div>
                     </div>
                 </div>
                 <div class="form-group mt-3 mb-0 p-3 position-absolute bottom-0 z-index-1 w-100">
                     <input type="text"
                            class="style2-input w-100 bg-transparent border-light-md p-3 pe-5 font-xssss fw-500 text-white"
-                           value="Write Comments" />
+                           value="Write Comments"/>
                     <span class="feather-send text-white font-md text-white position-absolute"
                           style="bottom: 35px; right: 30px">
                         </span>
@@ -139,7 +158,7 @@
         <div class="modal-popup-header w-100 border-bottom">
             <div class="card p-3 d-block border-0 d-block">
                 <figure class="avatar mb-0 float-left me-2">
-                    <img src="images/user-12.png" alt="image" class="w35 me-1" />
+                    <img src="images/user-12.png" alt="image" class="w35 me-1"/>
                 </figure>
                 <h5 class="fw-700 text-primary font-xssss mt-1 mb-1">
                     Hendrix Stamp
@@ -183,9 +202,13 @@
                 <div class="form-group icon-right-input style1-input mb-0">
                     <input type="text"
                            placeholder="Start typing.."
-                           class="form-control rounded-xl bg-greylight border-0 font-xssss fw-500 ps-3" /><i class="feather-send text-grey-500 font-md"></i>
+                           class="form-control rounded-xl bg-greylight border-0 font-xssss fw-500 ps-3"/><i
+                            class="feather-send text-grey-500 font-md"></i>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<script src="/public/js/quynhtd.js"></script>
