@@ -115,7 +115,7 @@ class UserController
 
     //---------------------------HTTP POST--------------------------------
 
-    // API HTTP POST("/api/change-email/code")
+        // API HTTP POST("/api/change-email/code")
     public function getCodeChangeEmail()
     {
         try {
@@ -129,7 +129,7 @@ class UserController
             if ($userExist) {
                 return Response::apiResponse(Status::BAD_REQUEST, 'Email is exist', null);
             }
-
+            $_SESSION['email'] = $email;
             $code = rand(100000, 999999);
             $request = new Request();
             $request->setRequestCode($code);
@@ -138,7 +138,6 @@ class UserController
             $this->requestService->cleanRequestCode();
             $this->requestService->add($request);
             Mailer::sendEmail($email, 'Change email email!', 'Your code is: ' . $code);
-            $_SESSION['email'] = $email;
             return Response::apiResponse(Status::OK, 'success', null);
         } catch (\Exception $e) {
             return Response::View('views/Error');

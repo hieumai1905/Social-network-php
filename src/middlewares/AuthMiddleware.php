@@ -37,7 +37,8 @@ class AuthMiddleware implements Middleware
             return 200;
         }
         if ($route == '/login' || $route == '/register' || $route == '/account/forgot' || $route == '/api/forgot/confirm' || $route == '/account/forgot/confirm'
-            || $route == '/account/reset-password' || $route == '/api/refresh-code' || $route == '/register/confirm' || $route == '/error' || $route == '/update-password' || $route == '/logout') {
+            || $route == '/account/reset-password' || $route == '/api/refresh-code' || $route == '/register/confirm' || $route == '/error' || $route == '/update-password'
+            || $route == '/logout' || $route=='/api/account/forgot' || $route=='/account/forgot/confirm' || $route=='/account/reset-password' || $route=='/api/refresh-code') {
             return 200;
         } else {
             if (isset($_SESSION['user-login'])) {
