@@ -15,7 +15,7 @@ class ConnectDatabase
     {
         if (!self::$connection) {
             try {
-                self::$connection = new PDO("mysql:host=" . $GLOBALS['HOSTNAME'] . ";dbname=" . $GLOBALS['DATABASENAME'], $GLOBALS['USERNAME'], $GLOBALS['PASSWORD']);
+                self::$connection = new PDO("oci:dbname=".$GLOBALS['tns'].";charset=utf8", $GLOBALS['db_username'], $GLOBALS['db_password']);
                 self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 echo "Connection failed: " . $e->getMessage();
