@@ -28,25 +28,32 @@ class RequestDAO implements IRequestDAO
 
     public function cleanRequestCode()
     {
-        $stmt = $this->connection->prepare("DELETE FROM requests WHERE request_at < (NOW() - INTERVAL 1 MINUTE);");
+        $stmt = $this->connection->prepare("DELETE FROM requests WHERE request_at < (TO_TIMESTAMP(:request_at, 'DD-MON-YY HH:MI:SS AM') - NUMTODSINTERVAL(1, 'MINUTE'))");
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $requestAt = date('d-M-y h:i:s A');
+        $stmt->bindParam(':request_at', $requestAt, PDO::PARAM_STR, 23);
         $stmt->execute();
     }
 
     public function addRequest(Request $request)
     {
-        $stmt = $this->connection->prepare("INSERT INTO requests (email_request, type_request, request_code, request_at) VALUES (:email, :type, :code, NOW())");
+        $stmt = $this->connection->prepare("INSERT INTO requests (request_at,email_request, type_request, request_code) VALUES (:request_at,:email, :type, :code)");
         $stmt->bindValue(':email', $request->getEmailRequest());
         $stmt->bindValue(':type', $request->getTypeRequest());
         $stmt->bindValue(':code', $request->getRequestCode());
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $stmt->bindValue(':request_at',date('d-M-y h:i:s A'));
         $stmt->execute();
     }
 
     public function updateRequest(Request $request)
     {
-        $stmt = $this->connection->prepare("UPDATE requests SET request_code = :code, type_request=:type, request_at = NOW() WHERE request_id = :id");
+        $stmt = $this->connection->prepare("UPDATE requests SET request_code = :code, type_request=:type, request_at = :request_at WHERE request_id = :id");
         $stmt->bindValue(':id', $request->getRequestId());
         $stmt->bindValue(':code', $request->getRequestCode());
         $stmt->bindValue(':type', $request->getTypeRequest());
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $stmt->bindValue(':request_at',date('d-M-y h:i:s A'));
         $stmt->execute();
     }
 

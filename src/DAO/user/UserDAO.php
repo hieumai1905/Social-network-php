@@ -36,7 +36,7 @@ class UserDAO implements IUserDAO
     public function createUser(User $user)
     {
         $stmt = $this->connection->prepare('INSERT INTO users (user_id, full_name, email, password, user_role, status, cover_image, avatar, register_at)
-                                VALUES (:id, :name, :email, :password, :role, :status,:cover,:avatar, NOW())');
+                                VALUES (:id, :name, :email, :password, :role, :status,:cover,:avatar, :register_at)');
         $stmt->bindValue(':id', $user->getUserId());
         $stmt->bindValue(':name', $user->getFullName());
         $stmt->bindValue(':email', $user->getEmail());
@@ -45,6 +45,8 @@ class UserDAO implements IUserDAO
         $stmt->bindValue(':status', $user->getStatus());
         $stmt->bindValue(':cover', $user->getCoverImage());
         $stmt->bindValue(':avatar', $user->getAvatar());
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $stmt->bindValue(':register_at',date('d-M-y h:i:s A'));
         $stmt->execute();
     }
 
@@ -87,8 +89,8 @@ class UserDAO implements IUserDAO
 
     public function getUserByNameOrEmailOrPhone($content)
     {
-        $stmt = $this->connection->prepare('SELECT * FROM users WHERE full_name like :content or email like :content or phone like :content');
-        $stmt->bindValue(':content', '%' . $content . '%');
+        $stmt = $this->connection->prepare('SELECT * FROM users WHERE upper(full_name) like :content or upper(email) like :content or phone like :content');
+        $stmt->bindValue(':content', '%' . mb_strtoupper($content) . '%');
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }

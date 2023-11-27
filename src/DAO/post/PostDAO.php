@@ -88,8 +88,10 @@ class PostDAO implements IPostDAO
     {
         $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO posts (post_id, create_at, content, access_modifier, post_type, user_id)
-            VALUES (:postId, NOW(), :content, :accessModifier, :postType, :userId)");
+            VALUES (:postId, :create_at, :content, :accessModifier, :postType, :userId)");
         $stmt->bindValue(':postId', uniqid());
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $stmt->bindValue(':create_at',date('d-M-y h:i:s A'));
         $stmt->bindValue(':content', $post->getContent());
         $stmt->bindValue(':accessModifier', $post->getAccessModifier());
         $stmt->bindValue(':postType', $post->getPostType());

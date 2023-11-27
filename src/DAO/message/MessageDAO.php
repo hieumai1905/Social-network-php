@@ -56,8 +56,10 @@ class MessageDAO implements IMessageDAO
     {
         // TODO: Implement createCommentForPost() method.
         $stmt = $this->connection->prepare("INSERT INTO messages (message_id ,send_at ,content, is_media, conversation_id, sender_id)
-            VALUES (:id, NOW(), :content, 0, :conversation_id , :sender_id)");
+            VALUES (:id, :send_at, :content, 0, :conversation_id , :sender_id)");
         $stmt->bindValue(':content',$message->getContent());
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $stmt->bindValue(':send_at',date('d-M-y h:i:s A'));
         $stmt->bindValue(':conversation_id',$message->getConversationId());
         $stmt->bindValue(':id',uniqid());
         $stmt->bindValue(':sender_id',$message->getSenderId());

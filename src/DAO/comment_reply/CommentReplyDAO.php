@@ -32,7 +32,9 @@ class CommentReplyDAO implements ICommentReplyDAO
         // TODO: Implement createCommentReply() method.
         $userId = unserialize($_SESSION['user-login'])->getUserId();
         $stmt = $this->connection->prepare("INSERT INTO comment_replies (reply_at, content, user_id, comment_id)
-            VALUES (NOW(), :content, :user_id, :comment_id)");
+            VALUES (:reply_at, :content, :user_id, :comment_id)");
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $stmt->bindValue(':reply_at',date('d-M-y h:i:s A'));
         $stmt->bindValue(':content', $commentReply->getContent());
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':comment_id', $commentReply->getCommentId());

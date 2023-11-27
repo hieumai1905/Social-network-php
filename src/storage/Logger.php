@@ -7,7 +7,7 @@ class Logger
     public static function log($message)
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $timestamp = date('Y-m-d H:i:s');
+        $timestamp = date('d-M-y h:i:s A');
         $fileName = __FILE__;
         $baseName = basename($fileName);
         $lineNumber = __LINE__;

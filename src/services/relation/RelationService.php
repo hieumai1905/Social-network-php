@@ -56,7 +56,7 @@ class RelationService implements IRelationService
         $relation = new Relation();
         $relation->setRelationId(uniqid());
         $relation->setTypeRelation($type_relation);
-        $relation->setChangeAt(date("Y-m-d H:i:s"));
+        $relation->setChangeAt(date('d-M-y h:i:s A'));
         $relation->setUserId($user_id);
         $relation->setUserTargetId($user_target_id);
         return $relation;

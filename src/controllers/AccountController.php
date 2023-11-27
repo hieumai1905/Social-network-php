@@ -162,7 +162,8 @@ class AccountController
                         return Response::view('views/404');
                     }
                     if (isset($request) && $request->getRequestCode() == $code && $request->getTypeRequest() == 'REGISTER') {
-                        $requestValid = $request->getRequestAt() > date('Y-m-d H:i:s', strtotime('-1 minutes'));
+                        date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $requestValid = $request->getRequestAt() > date('d-M-y h:i:s A', strtotime('-1 minutes'));
                         if (!$requestValid) {
                             $error = 'Code expire';
                         } else {
@@ -230,7 +231,8 @@ class AccountController
                 $email = $_POST['email-reset'];
                 $request = $this->requestService->getRequestByEmail($email);
                 if ($request && $request->getRequestCode() == $code && $request->getTypeRequest() == 'FORGOT') {
-                    $validCode = $request->getRequestAt() > date('Y-m-d H:i:s', strtotime('-1 minutes'));
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $validCode = $request->getRequestAt() > date('d-M-y H:i:s a', strtotime('-1 minutes'));
                     if (!$validCode) {
                         return Response::View('views/Forgot', ['error' => 'Code expire']);
                     }
@@ -256,7 +258,7 @@ class AccountController
                 $confirmPassword = $_POST['password-confirm-reset'];
                 if ($password == $confirmPassword) {
                     $request = $this->requestService->getRequestByEmail($email);
-                    $requestValid = $request->getTypeRequest() == 'RESET' && $request->getRequestAt() > date('Y-m-d H:i:s', strtotime('-1 minutes'));
+                    $requestValid = $request->getTypeRequest() == 'RESET' && $request->getRequestAt() > date('d-M-y H:i:s a', strtotime('-1 minutes'));
                     if (!$requestValid) {
                         return Response::View('views/404');
                     }

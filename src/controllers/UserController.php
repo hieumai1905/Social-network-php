@@ -161,7 +161,8 @@ class UserController
                 if ($request->getRequestCode() != $code) {
                     return Response::view('views/Change-Email', ['error' => 'Code is not correct']);
                 }
-                $requestValid = $request->getRequestAt() > date('Y-m-d H:i:s', strtotime('-1 minutes'));
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $requestValid = $request->getRequestAt() > strtotime('-1 minute');
                 if (!$requestValid) {
                     return Response::view('views/Change-Email', ['error' => 'Code is expired']);
                 }

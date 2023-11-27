@@ -34,7 +34,7 @@ class MessageController
         $currUser = unserialize($_SESSION['user-login']);
         $userId = $currUser->getUserId();
         $userName = $currUser->getFullname();
-
+        $avatarFriend = $this->userService->getById($frendId)->getAvatar();
 
         try {
             $conOfUser = $this->conversationService->getByNameAndId($frendName, $userId);
@@ -49,7 +49,7 @@ class MessageController
             if($msg==null){
                 $msg=[];
             }
-            return Response::view('views/Message', ['userId' => $userId, 'mesg' => $msg, 'friendId' => $frendId, 'conver'=> $conOfUser->getConversationId()]);
+            return Response::view('views/Message', ['userId' => $userId, 'mesg' => $msg, 'friendId' => $frendId, 'conver'=> $conOfUser->getConversationId(),'avatarFriend'=>$avatarFriend]);
         } catch (\Exception $e) {
             //throw $th;
             throw new \Exception($e->getMessage());

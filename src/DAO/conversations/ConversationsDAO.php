@@ -30,8 +30,10 @@ class ConversationsDAO implements IConversationsDAO
 
     public function create(Conversation $conversation)
     {
-        $stmt = $this->connection->prepare('INSERT INTO conversations (conversation_id,create_at, name, type, manager_id) VALUES (:id, NOW(), :name, :type, :manager_id)');
+        $stmt = $this->connection->prepare('INSERT INTO conversations (conversation_id,create_at, name, type, manager_id) VALUES (:id, :create_at, :name, :type, :manager_id)');
         $stmt->bindValue(':id', uniqid());
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $stmt->bindValue(':create_at',date('d-M-y h:i:s A'));
         $stmt->bindValue(':name', $conversation->getName());
         $stmt->bindValue(':type', $conversation->getType());
         $stmt->bindValue(':manager_id', $conversation->getManagerId());

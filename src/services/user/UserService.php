@@ -119,7 +119,7 @@ class UserService implements IUserService
             $data = $this->userDAO->getUserByEmail($email);
             if ($data) {
                 Logger::log('Get user by email successfully');
-                if (Encryption::encrypt($password) == $data->password) {
+                if (Encryption::encrypt($password) == $data->PASSWORD) {
                     Logger::log('Login successfully User id: ' . $data->user_id);
                     return Mapper::mapStdClassToModel($data, User::class);
                 }
