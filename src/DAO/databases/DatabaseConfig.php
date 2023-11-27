@@ -1,5 +1,4 @@
 <?php
-$HOSTNAME = "localhost";
-$DATABASENAME = "socialnetwork";
-$USERNAME = "root";
-$PASSWORD = "19052002";
+$tns = "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521)))(CONNECT_DATA=(SID=orcl)))";
+$db_username = 'socialnetwork';
+$db_password = 'abc123';
