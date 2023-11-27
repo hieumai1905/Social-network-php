@@ -162,7 +162,7 @@ class UserController
                     return Response::view('views/Change-Email', ['error' => 'Code is not correct']);
                 }
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
-                $requestValid = $request->getRequestAt() > strtotime('-1 minute');
+                $requestValid = $request->getRequestAt() > strtoupper(date('d-M-y h.i.s A',strtotime('-1 minute')));
                 if (!$requestValid) {
                     return Response::view('views/Change-Email', ['error' => 'Code is expired']);
                 }
