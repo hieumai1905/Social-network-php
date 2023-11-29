@@ -177,7 +177,7 @@ class UserService implements IUserService
         try {
             $data = $this->userDAO->getUserByEmail($email);
             if ($data) {
-                Logger::log('Get user by email successfully User id: ' . $data->user_id);
+                Logger::log('Get user by email successfully User id: ' . $data->USER_ID);
                 return Mapper::mapStdClassToModel($data, User::class);
             }
             Logger::log('Get user by email failed');

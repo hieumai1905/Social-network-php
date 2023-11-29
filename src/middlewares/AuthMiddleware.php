@@ -44,7 +44,7 @@ class AuthMiddleware implements Middleware
             if (isset($_SESSION['user-login'])) {
                 $loginAt = $_SESSION['login-at'];
                 $timeCurrent = time();
-                if ($timeCurrent - $loginAt > 600) {
+                if ($timeCurrent - $loginAt > 60000000000) {
                     unset($_SESSION['user-login']);
                     unset($_SESSION['login-at']);
                     return 401;

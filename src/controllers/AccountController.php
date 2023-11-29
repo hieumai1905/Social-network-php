@@ -163,7 +163,7 @@ class AccountController
                     }
                     if (isset($request) && $request->getRequestCode() == $code && $request->getTypeRequest() == 'REGISTER') {
                         date_default_timezone_set('Asia/Ho_Chi_Minh');
-                        $requestValid = $request->getRequestAt() > date('d-M-y h:i:s A', strtotime('-1 minutes'));
+                        $requestValid = $request->getRequestAt() > strtoupper(date('d-M-y h.i.s A',strtotime('-1 minute')));
                         if (!$requestValid) {
                             $error = 'Code expire';
                         } else {
@@ -232,7 +232,7 @@ class AccountController
                 $request = $this->requestService->getRequestByEmail($email);
                 if ($request && $request->getRequestCode() == $code && $request->getTypeRequest() == 'FORGOT') {
                     date_default_timezone_set('Asia/Ho_Chi_Minh');
-                    $validCode = $request->getRequestAt() > date('d-M-y H:i:s a', strtotime('-1 minutes'));
+                    $validCode = $request->getRequestAt() > strtoupper(date('d-M-y h.i.s A',strtotime('-1 minute')));
                     if (!$validCode) {
                         return Response::View('views/Forgot', ['error' => 'Code expire']);
                     }
@@ -258,7 +258,8 @@ class AccountController
                 $confirmPassword = $_POST['password-confirm-reset'];
                 if ($password == $confirmPassword) {
                     $request = $this->requestService->getRequestByEmail($email);
-                    $requestValid = $request->getTypeRequest() == 'RESET' && $request->getRequestAt() > date('d-M-y H:i:s a', strtotime('-1 minutes'));
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $requestValid = $request->getTypeRequest() == 'RESET' && $request->getRequestAt() > strtoupper(date('d-M-y h.i.s A',strtotime('-1 minute')));
                     if (!$requestValid) {
                         return Response::View('views/404');
                     }
