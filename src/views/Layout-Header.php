@@ -318,10 +318,10 @@
                         </li>
                         <!--Xoa 2 the Badge & stories them live stream vao newfeed-->
                         <li>
-                            <a href="#"
+                            <a href="http://localhost:8080/favorite"
                                class="nav-content-bttn open-font">
-                                <i class="feather-youtube btn-round-md bg-gold-gradiant me-3"></i>
-                                <span>Live Stream</span>
+                                <i class="feather-bookmark btn-round-md bg-gold-gradiant me-3"></i>
+                                <span>Saved</span>
                             </a>
                         </li>
                         <li>

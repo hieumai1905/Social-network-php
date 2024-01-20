@@ -1,78 +1,157 @@
-﻿const currentUserIdPost = localStorage.getItem('userId');
-const currentPostId = '76c3191a-6c19-4db6-b745-86cfc1b30499';
+﻿var currentUrl = window.location.href;
+var urlParts = currentUrl.split('/');
+var postId = urlParts[urlParts.length - 1];
+const currentUserId = $("#userCurrent").text();
+let imageList = [];
+let myFullName = '';
+let myAvatar = '';
 $(document).ready(function () {
-    GetThePosts(currentPostId);
-
+    GetInforUser();
+    GetNewFeed();
+    imageList.length = 0;
 });
 
-function GetThePosts(postId) {
+function GetInforUser() {
     $.ajax({
-        url: 'https://localhost:7131/v2/api/Posts/' + postId,
+        url: 'http://localhost:8080/api/users/' + currentUserId,
         method: 'GET',
-        contentType: 'json',
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (user) {
+            console.log('ok');
+            console.log(user);
+            myFullName = user.data.fullName;
+            myAvatar = 'public/images/' + user.data.avatar;
+            $('#avtPostText').attr('src', myAvatar);
+            $('#postUser').text(myFullName);
+        },
+        error: function(){
+            console.log('faild in user api');
+        }
+    });
+}
+
+function GetNewFeed() {
+    $.ajax({
+        url: 'http://localhost:8080/api/post/' + postId,
+        method: 'GET',
+        contentType: 'application/json',
+        dataType: 'json',
+        error: function (post){
+            console.log("Loi bai viet");
+        },
+        success: function (post) {
+            console.log(post);
+            console.log(myAvatar);
+            var newfeed = '';
+            newfeed += CreatePost(post.data);
+            console.log(newfeed);
+            $('#PostList').html(newfeed);
+            console.log(newfeed);
+        }
+    });
+}
+
+function CreatePost(post) {
+    var postContent = '';
+    var username = '';
+    var avatar = '';
+    var imageUrl = [];
+    var favor = '';
+    $.ajax({
+        url: 'http://localhost:8080/api/users/' + post.userId,
+        method: 'GET',
+        contentType: 'application/json',
         dataType: 'json',
         async: false,
-        xhrFields: {
-            withCredentials: true
+        success: function (user) {
+            console.log(user);
+            username = user.data.fullName;
+            avatar = 'public/images/' + user.data.avatar;
+            console.log(avatar);
+            console.log(username);
         },
-        error: function (reponse) {
-            window.location.href = 'https://localhost:7261/404';
-            return;
+        error: function () {
+            console.log("Loi user khi lay post " + post.userId);
+        }
+    });
+
+    $.ajax({
+        url: 'http://localhost:8080/api/media/post/' + post.postId,
+        method: 'GET',
+        contentType: 'application/json',
+        dataType: 'json',
+        async: false,
+        success: function (image) {
+            for (var i = 0, len = image.data.length; i < len; i++) {
+                console.log(image.data[i].url);
+                imageUrl.push('public/images/' + image.data[i].url);
+            }
         },
-        success: function (reponse) {
-            console.log(reponse);
-            const postCount = reponse.length;
-            let post = '';
-            let username = '';
-            let avatar = '';
-            let imageUrl = [];
-                $.ajax({
-                    url: 'https://localhost:7131/v1/api/Users/' + reponse.userId,
-                    method: 'GET',
-                    contentType: 'json',
-                    dataType: 'json',
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    async: false,
-                    success: function (user) {
-                        username = user.fullName;
-                        avatar = user.avatar;
-                    }
-                });
-                $.ajax({
-                    url: 'https://localhost:7131/vi/api/Image/' + reponse.postId,
-                    method: 'GET',
-                    contentType: 'json',
-                    dataType: 'json',
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    async: false,
-                    success: function (image) {
-                        for (let j = 0, len = image.length; j < len; j++) {
-                            imageUrl.push(image[j].url);
-                        }
-                    }
-                });
-                post += `<div id="post" class="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-3">
+        error: function () {
+            console.log("Loi user khi lay anh ");
+        }
+    });
+
+    $.ajax({
+        url: 'http://localhost:8080/api/favorite/' + post.postId,
+        dataType: 'json',
+        contentType: 'application/json',
+        async: false,
+        success: function(favorite){
+            console.log(favorite);
+            if (favorite.data[0].postId == null){
+                favor = `<div class="card-body p-0 d-flex mt-2" style="cursor: pointer" onclick="SaveThisPost('${post.postId}')" ')">
+                    <i
+                        class="feather-bookmark text-grey-500 me-3 font-lg">
+                    </i>
+                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                        Save this post
+                        <span
+                            class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                            Save to your saved items
+                        </span
+                        >
+                    </h4>
+                </div>`;
+            }
+            else {
+                favor = `<div class="card-body p-0 d-flex mt-2" style="cursor: pointer" onclick="UnsaveThisPost('${post.postId}')"')">
+                    <i
+                        class="feather-x-circle text-grey-500 me-3 font-lg">
+                    </i>
+                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                        Unsave this post
+                        <span
+                            class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                            UnSave from your saved items
+                        </span
+                        >
+                    </h4>
+                </div>`;
+            }
+        },
+        error: function(err) {
+            console.log(err, "lỗi lấy bài ưu thích");
+        }
+    });
+    postContent += `<div id="post" class="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-3">
         <div class="card-body p-0 d-flex">
             <figure class="avatar me-3">
-                <img
+                <img style="cursor: pointer; width: 50px; height: 50px;"
                     src="${avatar}"
                     alt="image"
-                    class="shadow-sm rounded-circle w45"/>
+                    class="shadow-sm rounded-circle"/>
             </figure>
             <h4 class="fw-700 text-grey-900 font-xssss mt-1">
-                ${username}
+            <a href="http://localhost:8080/users/${post.userId}">${username}</a>
                 <span
                     class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">
-                    ${reponse.createAt}
+                    ${post.createAt}
                 </span>
-                <span style="display: none">${reponse.postId}</span>
+                <span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">${post.accessModifier}</span>
             </h4>
-            <a
-                href="#"
+            <a style="cursor: pointer;"
                 class="ms-auto"
                 id="dropdownMenu2"
                 data-bs-toggle="dropdown"
@@ -86,253 +165,599 @@ function GetThePosts(postId) {
                 class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-lg"
                 aria-labelledby="dropdownMenu2">
                 `;
-
-                if (currentUserId == reponse.userId) {
-                    post += `<div class="card-body p-0 d-flex">
-                    <i
-                        class="feather-bookmark text-grey-500 me-3 font-lg">
-                    </i>
-                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4" onclick ="DeleteThisPost('${reponse.postId}','${reponse.userId}')">
-                        Delete Post
-                        <span
-                            class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
-                            Delete this post
-                        </span
-                        >
-                    </h4>
-                </div>
-                <div class="card-body p-0 d-flex mt-2">
-                    <i
-                        class="feather-alert-circle text-grey-500 me-3 font-lg">
-                    </i>
-                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4" onclick ="UpdateThisPost('${reponse.postId}','${reponse.userId}','${reponse.content}')" >Edit Post
-                        <span
-                            class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
-                            Edit Post
-                        </span
-                        >
-                    </h4>
-                </div>`;
-                }
-
-                post += `
-                <div class="card-body p-0 d-flex mt-2">
-                    <i
-                        class="feather-alert-octagon text-grey-500 me-3 font-lg">
-                    </i>
-                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
-                        Hide all from Group
-                        <span
-                            class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
-                            Save to your saved items
-                        </span
-                        >
-                    </h4>
-                </div>
-                <div class="card-body p-0 d-flex mt-2">
-                    <i class="feather-lock text-grey-500 me-3 font-lg"></i>
-                    <h4
-                        class="fw-600 mb-0 text-grey-900 font-xssss mt-0 me-4">
-                        Unfollow Group
-                        <span
-                            class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
-                            Save to your saved items
-                        </span
-                        >
-                    </h4>
-                </div>
+    postContent += favor;
+    postContent += `
+                
             </div>
         </div>
         <div class="card-body p-0 me-lg-5">
-            <p class="fw-500 text-grey-500 lh-26 font-xssss w-100">
-                ${reponse.content}
-                <a href="#" class="fw-600 text-primary ms-2">See more</a>
+            <p class="fw-500 text-black-500 lh-26 w-100" style="font-size: 1.2rem;">
+                ${post.content}
             </p>
         </div>
         <div class="card-body d-block p-0">
             <div class="row ps-2 pe-2">`;
 
-                for (let j = 0, len = imageUrl.length; j < len; j++) {
-                    post += `<div class="col-xs-4 col-sm-4 p-1">
+    for (var j = 0, len = imageUrl.length; j < len; j++) {
+        var url = imageUrl[j].lastIndexOf('.');
+        var value = imageUrl[j].slice(url);
+        if (value == ".mp4") {
+            postContent += `<div class="col-xs-4 col-sm-4 p-2">
+                    <a href="${imageUrl[j]}" data-lightbox="roadtrip">
+                        <video controls with="300px" height="300px">
+                            <source src="${imageUrl[j]}">
+                        </video>
+                    </a></div>`;
+        }
+        else {
+            if (len == 1) {
+                postContent += `<div class="">
                     <a href="${imageUrl[j]}" data-lightbox="roadtrip">
                         <img
                             src="${imageUrl[j]}"
+                            style ="height: 100%"
                             class="rounded-3 w-100"
                             alt="image"/>
                     </a></div>`;
-                }
+            } else {
+                postContent += `<div class="col-xs-4 col-sm-4 p-1">
+                    <a href="${imageUrl[j]}" data-lightbox="roadtrip">
+                        <img
+                            src="${imageUrl[j]}"
+                            style ="height: 100%"
+                            class="rounded-3 w-100"
+                            alt="image"/>
+                    </a></div>`;
+            }
+        }
 
-                post += `</div>
+    }
+
+
+    postContent += `</div>
         </div>
-        <div class="card-body d-flex p-0 mt-3">
-            <a
-                href="#"
-                class="emoji-bttn d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss me-2">
-                <i
-                    class="feather-thumbs-up text-white bg-primary-gradiant me-1 btn-round-xs font-xss">
-                </i>
-                <i
-                    class="feather-heart text-white bg-red-gradiant me-2 btn-round-xs font-xss">
-                </i
-                >${reponse.likeCount} Like
-            </a
-            >
-            <div class="emoji-wrap">
-                <ul class="emojis list-inline mb-0">
-                    <li class="emoji list-inline-item">
-                        <i class="em em---1"></i>
-                    </li>
-                    <li class="emoji list-inline-item">
-                        <i class="em em-angry"></i>
-                    </li>
-                    <li class="emoji list-inline-item">
-                        <i class="em em-anguished"></i>
-                    </li>
-                    <li class="emoji list-inline-item">
-                        <i class="em em-astonished"></i>
-                    </li>
-                    <li class="emoji list-inline-item">
-                        <i class="em em-blush"></i>
-                    </li>
-                    <li class="emoji list-inline-item">
-                        <i class="em em-clap"></i>
-                    </li>
-                    <li class="emoji list-inline-item">
-                        <i class="em em-cry"></i>
-                    </li>
-                    <li class="emoji list-inline-item">
-                        <i class="em em-full_moon_with_face"></i>
-                    </li>
-                </ul>
-            </div>
-            <a
-                href="#"
-                class="d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss">
-                <i
-                    class="feather-message-circle text-dark text-grey-900 btn-round-sm font-lg">
-                </i
-                ><span class="d-none-xss">${reponse.commnetCount} Comment</span>
-            </a
-            >
-            <a
-                href="#"
-                id="dropdownMenu21"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                class="ms-auto d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss">
-                <i
-                    class="feather-share-2 text-grey-900 text-dark btn-round-sm font-lg">
-                </i
-                ><span class="d-none-xs">Share</span>
-            </a
-            >
-            <div
-                class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-lg"
-                aria-labelledby="dropdownMenu21">
-                <h4
-                    class="fw-700 font-xss text-grey-900 d-flex align-items-center">
-                    Share
-                    <i
-                        class="feather-x ms-auto font-xssss btn-round-xs bg-greylight text-grey-900 me-2">
-                    </i>
-                </h4>
-                <div class="card-body p-0 d-flex">
-                    <ul
-                        class="d-flex align-items-center justify-content-between mt-2">
-                        <li class="me-1">
-                            <a href="#" class="btn-round-lg bg-facebook">
-                                <i class="font-xs ti-facebook text-white">
-                                </i
-                                >
+         <div class="card-body mt-3" style="display: flex; justify-content: space-between; border-top: 1px solid #dcdcdc; padding: 10px 0 0;">
+                            <a id="Like_${post.postId}" style="color: black; cursor: pointer;" onclick="LikePost('${post.postId}')">
+                                <i class="feather-thumbs-up">
+                                </i>
+                                <span class="like-button-post">Like</span>
                             </a>
-                        </li>
-                        <li class="me-1">
-                            <a href="#" class="btn-round-lg bg-twiiter">
-                                <i class="font-xs ti-twitter-alt text-white">
-                                </i
-                                >
+                            <a style="cursor: pointer;" onclick="cmtBoxFocus('${post.postId}')">
+                                <i class="feather-message-square"></i>
+                                <span > Comment</span>
                             </a>
-                        </li>
-                        <li class="me-1">
-                            <a href="#" class="btn-round-lg bg-linkedin">
-                                <i class="font-xs ti-linkedin text-white">
-                                </i
-                                >
+                            <a style ="cursor: pointer;">
+                                <i class="feather-share-2">
+                                </i><span >Share</span>
                             </a>
-                        </li>
-                        <li class="me-1">
-                            <a href="#" class="btn-round-lg bg-instagram">
-                                <i class="font-xs ti-instagram text-white">
-                                </i
-                                >
+
+                        </div>
+                    <div class="chat-body" style="padding-top: 10px; border-top: 1px solid #dcdcdc;">
+                                <div id="cmtContent_${post.postId}" class="messages-content">
+
+                                </div>
+                            </div>
+                        <div id="cmtBox_${post.postId}" class="chat-bottom dark-bg shadow-none theme-dark-bg" style="width: 90%; padding: 15px 0;">
+                           <div class="chat-form"  style="border: 5px">
+                                <img src="${myAvatar}" alt="image" style="width: 35px; height: 35px; border-radius: 50px;">
+                                <div style="display:inline-block; width: 80%;"><input  id="inputCmt_${post.postId}" type="text" placeholder="Start typing.." style="color:#000; border: 1px solid #dcdc"></div>
+                                <button id="send_${post.postId}" onclick="NewComment('${post.postId}')" class="bg-current"><i class="ti-arrow-right text-white"></i></button>
+                            </div>
+                        </div>
+                    </div>`;
+    return postContent;
+}
+
+function cmtBoxFocus(id) {
+    document.getElementById("inputCmt_"+id).focus();
+    GetCmtlv1(id);
+}
+
+function GetCmtlv1(postId) {
+    var cmtContent = '';
+    var cmt = '';
+    var username = '';
+    var avatar = '';
+    $.ajax({
+        url: "http://localhost:8080/api/comment/" + postId,
+        method: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function (comment) {
+            for (var i = 0, len = comment.data.length; i < len; i++) {
+                cmt = comment.data[i].content;
+                $.ajax({
+                    url: 'http://localhost:8080/api/users/' + comment.data[i].userId,
+                    method: 'GET',
+                    contentType: 'json',
+                    dataType: 'json',
+                    async: false,
+                    success: function (user) {
+                        console.log(user);
+                        username = user.data.fullName;
+                        avatar = 'public/images/' + user.data.avatar;
+                    },
+                    error: function () {
+                        console.log('Error cho cmt')
+                    }
+                });
+                cmtContent += `
+                    <div id="cmtlv1_${comment.data[i].commentId}" class="message-item" style="display: flex; flex-direction: column;">
+                        <div style="display: flex; flex-direction: row">
+                            <div class="message-user" style="display: inline-block">
+                                <figure class="avatar">
+                                    <img src="${avatar}" alt="image">
+                                </figure>
+                            </div>
+                            <div style="display: inline-block; border-radius: 10px;padding: 5px;background: #f2f2f2;">
+                                <a href="" style="color: #000; font-weight: bold; ">${username}</a>
+                                <div style="font-size: 14px">
+                                    ${cmt}
+                                </div>
+                            </div>
+                            <a style="cursor: pointer;" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss">
+                                </i>
                             </a>
-                        </li>
-                        <li>
-                            <a href="#" class="btn-round-lg bg-pinterest">
-                                <i class="font-xs ti-pinterest text-white">
-                                </i
-                                >
+                            <div class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-lg" aria-labelledby="dropdownMenu2">`;
+                if (comment.data[i].userId == currentUserId) {
+                    cmtContent += `<div class="card-body p-0 d-flex mt-2" style="cursor: pointer;" onclick="Replycmt1Text('${comment.data[i].commentId}', '${cmt}')">
+                                    <i class="feather-edit text-grey-500 me-3 font-lg">
+                                    </i>
+                                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                                        Edit this comment
+                                        <span class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                                            Edit content of your comment
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;" onclick="DeleteCmt('${postId}', '${comment.data[i].commentId}')">
+                                    <i class="feather-trash-2 text-grey-500 me-3 font-lg">
+                                    </i>
+                                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                                        Delete this comment
+                                        <span class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                                            Delete your comment
+                                        </span>
+                                    </h4>
+                                </div>`;
+                }
+                cmtContent += `
+                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;">
+                                    <i class="feather-x-square text-grey-500 me-3 font-lg">
+                                    </i>
+                                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                                        Hidden this comment
+                                        <span class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                                            Remove comment 
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;">
+                                    <i class="feather-lock text-grey-500 me-3 font-lg"></i>
+                                    <h4 id="report-btn" class="fw-600 mb-0 text-grey-900 font-xssss mt-0 me-4">
+                                        Report this comment
+                                        <span class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                                            Report if you see any problem
+                                        </span>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: row; align-items: center;">
+                            <a id="Like_cmt1_${comment.data[i].commentId}" style="color: black; cursor: pointer;" onclick="LikePost('cmt1_${comment.data[i].commentId}')">
+                                <i class="feather-thumbs-up">
+                                </i>
+                                <span class="like-button-post">Like</span>
                             </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body p-0 d-flex">
-                    <ul
-                        class="d-flex align-items-center justify-content-between mt-2">
-                        <li class="me-1">
-                            <a href="#" class="btn-round-lg bg-tumblr">
-                                <i class="font-xs ti-tumblr text-white">
-                                </i
-                                >
-                            </a>
-                        </li>
-                        <li class="me-1">
-                            <a href="#" class="btn-round-lg bg-youtube">
-                                <i class="font-xs ti-youtube text-white">
-                                </i
-                                >
-                            </a>
-                        </li>
-                        <li class="me-1">
-                            <a href="#" class="btn-round-lg bg-flicker">
-                                <i class="font-xs ti-flickr text-white">
-                                </i
-                                >
-                            </a>
-                        </li>
-                        <li class="me-1">
-                            <a href="#" class="btn-round-lg bg-black">
-                                <i class="font-xs ti-vimeo-alt text-white">
-                                </i
-                                >
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="btn-round-lg bg-whatsup">
-                                <i class="font-xs feather-phone text-white">
-                                </i
-                                >
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <h4
-                    class="fw-700 font-xssss mt-4 text-grey-500 d-flex align-items-center mb-3">
-                    Copy Link
-                </h4>
-                <i
-                    class="feather-copy position-absolute right-35 mt-3 font-xs text-grey-500">
-                </i>
-                <input
-                    type="text"
-                    value="https://socia.be/1rGxjoJKVF0"
-                    class="bg-grey text-grey-500 font-xssss border-0 lh-32 p-2 font-xssss fw-600 rounded-3 w-100 theme-dark-bg"/>
-            </div>
-        </div>
-        </div>`;
-            console.log(post);
-            document.getElementById('mainContentPost').innerHTML = post;
+                            <span style="margin-left: 10px; cursor: pointer" onclick="ReplyCmtlv1('${comment.data[i].commentId}')">Reply</span>
+                        </div>
+                        <div id="replyCmt_${comment.data[i].commentId}" class="replyCmtlv1" style="display: none; flex-direction: row; align-items: center; width: 30vw; margin-left: 50px;">
+                            <div style="width: 90%;">
+                                <div class="chat-form" style="border: 5px">
+                                    <img src="${myAvatar}" alt="image" style="width: 35px; height: 35px; border-radius: 50px;">
+                                        <div style="display:inline-block; width: 80%;"><input id="replyCmtInput_${comment.data[i].commentId}" type="text" placeholder="Start typing.." style="color:#000; border: 1px solid #dcdcdc"></div>
+                                        <button id="replyCmtSend_${comment.data[i].commentId}" onclick="NewCommentReply1('${postId}','${comment.data[i].commentId}')" class="bg-current"><i class="ti-arrow-right text-white"></i></button>
+                                        <button id="replyCmtEdit_${comment.data[i].commentId}" onclick="EditCommentReply1('${postId}','${comment.data[i].commentId}')" style="display:none" class="bg-current"><i class="feather-edit text-white"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column;  margin-left: 50px;">
+                            `+ GetCmtlv2(postId, comment.data[i].commentId) +`
+                        </div>
+                    </div>`;
+            }
+            document.getElementById("cmtContent_" + postId).innerHTML = cmtContent;
         }
     });
 }
 
+function GetCmtlv2(postId, commentId) {
+    var cmtContent = '';
+    var cmt = '';
+    var username = '';
+    var avatar = '';
+    $.ajax({
+        url: "http://localhost:8080/api/comment/reply/" + commentId,
+        method: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function (comment) {
+            for (var i = 0, len = comment.data.length; i < len; i++) {
+                cmt = comment.data[i].content;
+                $.ajax({
+                    url: 'http://localhost:8080/api/users/' + comment.data[i].userId,
+                    method: 'GET',
+                    contentType: 'json',
+                    dataType: 'json',
+                    async: false,
+                    success: function (user) {
+                        username = user.data.fullName;
+                        avatar = 'public/images/' + user.data.avatar;
+                    },
+                    error: function () {
+                        console.log("Loi user khi lay cmtreply " + comment.data[i].userId);
+                    }
+                });
+                cmtContent += `
+                    <div id="cmtlv2_${comment.data[i].commentReplyId}" class="message-item" style="display: flex; flex-direction: column;">
+                        <div style="display: flex; flex-direction: row">
+                            <div class="message-user" style="display: inline-block">
+                                <figure class="avatar">
+                                    <img src="${avatar}" alt="image">
+                                </figure>
+                            </div>
+                            <div style="display: inline-block; border-radius: 10px;padding: 5px;background: #f2f2f2;">
+                                <a href="" style="color: #000; font-weight: bold; ">${username}</a>
+                                <div style="font-size: 14px">
+                                    ${cmt}
+                                </div>
+                            </div>
+                            <a style="cursor: pointer;" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss">
+                                </i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-lg" aria-labelledby="dropdownMenu2">`;
+                if (comment.data[i].userId == currentUserId) {
+                    cmtContent += `<div class="card-body p-0 d-flex mt-2" style="cursor: pointer;" onclick="Replycmt2Text('${comment.data[i].commentReplyId}', '${cmt}')">
+                                    <i class="feather-edit text-grey-500 me-3 font-lg">
+                                    </i>
+                                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                                        Edit this comment
+                                        <span class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                                            Edit content of your comment
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;" onclick="DeleteReplyCmt('${postId}', '${comment.data[i].commentReplyId}')">
+                                    <i class="feather-trash-2 text-grey-500 me-3 font-lg">
+                                    </i>
+                                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                                        Delete this comment
+                                        <span class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                                            Delete your comment
+                                        </span>
+                                    </h4>
+                                </div>`;
+                }
+                cmtContent += `
+                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;">
+                                    <i class="feather-x-square text-grey-500 me-3 font-lg">
+                                    </i>
+                                    <h4 class="fw-600 text-grey-900 font-xssss mt-0 me-4">
+                                        Hidden this comment
+                                        <span class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                                            Remove comment 
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div class="card-body p-0 d-flex mt-2" style="cursor: pointer;">
+                                    <i class="feather-lock text-grey-500 me-3 font-lg"></i>
+                                    <h4 id="report-btn" class="fw-600 mb-0 text-grey-900 font-xssss mt-0 me-4">
+                                        Report this comment
+                                        <span class="d-block font-xsssss fw-500 mt-1 lh-3 text-grey-500">
+                                            Report if you see any problem
+                                        </span>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: row; align-items: center;">
+                            <a id="Like_cmt2_${comment.data[i].commentReplyId}" style="color: black; cursor: pointer;" onclick="LikePost('cmt2_${comment.data[i].commentReplyId}')">
+                                <i class="feather-thumbs-up">
+                                </i>
+                                <span class="like-button-post">Like</span>
+                            </a>
+                            <span style="margin-left: 10px; cursor: pointer" onclick="ReplyCmtlv2('${comment.data[i].commentReplyId}')">Reply</span>
+                        </div>
+                        <div id="replyCmt1_${comment.data[i].commentReplyId}" class="replyCmtlv1" style="display: none; flex-direction: row; width: 25vw;  margin-left: 50px;">
+                            <div style="width: 90%;">
+                                <div class="chat-form" style="border: 5px">
+                                    <img src="${myAvatar}" alt="image" style="width: 35px; height: 35px; border-radius: 50px;">
+                                        <div style="display:inline-block; width: 80%;"><input id="replyCmt2Input_${comment.data[i].commentReplyId}" type="text" placeholder="Start typing.." style="color:#000; border: 1px solid #dcdcdc"></div>
+                                        <button id="reply2CmtSend_${comment.data[i].commentReplyId}" onclick="NewCommentReply2('${postId}','${commentId}','${comment.data[i].commentReplyId}')" class="bg-current"><i class="ti-arrow-right text-white"></i></button>
+                                        <button id="reply2CmtEdit_${comment.data[i].commentReplyId}" onclick="EditCommentReply2('${postId}','${commentId}','${comment.data[i].commentReplyId}')" style="display:none" class="bg-current"><i class="feather-edit text-white"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: row; align-items: center; margin-left: 50px;">
+
+                        </div>
+                    </div>`;
+            }
+        },
+        error: function(){
+            console.log('Loi cmtlv 2');
+        }
+    });
+    return cmtContent;
+}
+
+function NewComment(postId) {
+    var contentInput = document.getElementById("inputCmt_" + postId).value;
+    if (contentInput == ''){
+        return;
+    }
+    $.ajax({
+        url: 'http://localhost:8080/api/comment',
+        method: 'POST',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            commentId: 'I dont wanna continue',
+            commentAt: 'now is 2:00 AM, i need go to sleep',
+            content: contentInput,
+            postId: postId,
+            userId: currentUserId
+        }),
+        success: function () {
+            ShowLoader();
+            GetCmtlv1(postId);
+            document.getElementById("inputCmt_" + postId).value = "";
+        },
+        error: function (err) {
+        }
+    });
+}
+
+function NewCommentReply1(postId, commentId) {
+    var contentInput = document.getElementById("replyCmtInput_"+ commentId).value;
+    if (contentInput == ''){
+        return;
+    }
+    $.ajax({
+        url: 'http://localhost:8080/api/comment/reply',
+        method: 'POST',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            commentReplyId: 'nobody know',
+            replyAt: 'iwannacry',
+            content: contentInput,
+            userId: currentUserId,
+            commentId: commentId
+        }),
+        success: function () {
+            ShowLoader();
+            GetCmtlv1(postId);
+            document.getElementById("replyCmtInput_" + commentId).value = "";
+            document.getElementById("replyCmt_" + commentId).style.display = "none";
+        },
+        error: function (err) {
+        }
+    });
+}
+
+function EditCommentReply1(postId, commentId) {
+    var contentInput = document.getElementById("replyCmtInput_" + commentId).value;
+    if (contentInput == ''){
+        return;
+    }
+    $.ajax({
+        url: 'http://localhost:8080/api/comment',
+        method: 'PUT',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            commentId: commentId,
+            commentAt: 'many bug',
+            content: contentInput,
+            postId: 'hu hu',
+            userId: currentUserId
+        }),
+        success: function () {
+            GetCmtlv1(postId);
+            document.getElementById("replyCmtInput_" + commentId).value = "";
+            document.getElementById("replyCmt_" + commentId).style.display = "none";
+
+        },
+        error: function (err) {
+        }
+    });
+}
+
+function Replycmt1Text(id, content) {
+    document.getElementById("replyCmt_" + id).style.display = "flex";
+    document.getElementById("replyCmtInput_" + id).value = content;
+    document.getElementById("replyCmtSend_" + id).style.display = "none";
+    document.getElementById("replyCmtEdit_" + id).style.display = "inline";
+
+}
+
+function NewCommentReply2(postId, commentId, commentReplyId) {
+    var contentInput = document.getElementById("replyCmt2Input_"+ commentReplyId).value;
+    if (contentInput == ''){
+        return;
+    }
+    $.ajax({
+        url: 'http://localhost:8080/api/comment/reply',
+        method: 'POST',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            commentReplyId: 'nobody know',
+            replyAt: 'iwannacry',
+            content: contentInput,
+            userId: currentUserId,
+            commentId: commentId
+        }),
+        success: function () {
+            ShowLoader();
+            GetCmtlv1(postId);
+            document.getElementById("replyCmt2Input_" + commentId).value = "";
+            document.getElementById("replyCmt1_" + commentReplyId).style.display = "none";
+        },
+        error: function (err) {
+        }
+    });
+}
+
+function EditCommentReply2(postId, commentId, commentReplyId) {
+    var contentInput = document.getElementById("replyCmt2Input_"+ commentReplyId).value;
+    if (contentInput == ''){
+        return;
+    }
+    $.ajax({
+        url: 'http://localhost:8080/api/comment/reply',
+        method: 'PUT',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        xhrFields: {
+            withCredentials: true
+        },
+        data: JSON.stringify({
+            commentReplyId: commentReplyId,
+            replyAt: 'iwannacry',
+            content: contentInput,
+            userId: currentUserId,
+            commentId: commentId
+        }),
+        success: function () {
+            GetCmtlv1(postId);
+            document.getElementById("replyCmt2Input_" + commentReplyId).value = "";
+            document.getElementById("replyCmt1_" + commentReplyId).style.display = "none";
+
+        },
+        error: function (err) {
+        }
+    });
+}
+
+function Replycmt2Text(id, content) {
+    document.getElementById("replyCmt1_" + id).style.display = "flex";
+    document.getElementById("replyCmt2Input_" + id).value = content;
+    document.getElementById("reply2CmtSend_" + id).style.display = "none";
+    document.getElementById("reply2CmtEdit_" + id).style.display = "inline";
+
+}
+function DeleteCmt(postId, commentId) {
+    if (confirm('Bạn có chắc muốn xoá bình luận này không?') == false) return;
+    $.ajax({
+        url: 'http://localhost:8080/api/comment/' + commentId,
+        method: 'DELETE',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        success: function () {
+            GetCmtlv1(postId);
+        },
+        error: function (err) {
+            console.log(err, 'Khong xoa duoc nay');
+        }
+    });
+}
+
+function DeleteReplyCmt(postId, commentReplyId) {
+    if (confirm('Bạn có chắc muốn xoá bình luận này không?') == false) return;
+    $.ajax({
+        url: 'http://localhost:8080/api/comment/reply/' + commentReplyId,
+        method: 'DELETE',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        success: function () {
+            GetCmtlv1(postId);
+        },
+        error: function (err) {
+            console.log(err, 'Khong xoa duoc nay');
+        }
+    });
+}
+
+function ReplyCmtlv1(id) {
+    var replyDisplay = document.getElementById("replyCmt_" + id);
+    if (replyDisplay.style.display == "none") {
+        replyDisplay.style.display = "flex";
+        document.getElementById("replyCmtSend_" + id).style.display = "inline";
+        document.getElementById("replyCmtEdit_" + id).style.display = "none";
+    }
+    else {
+        replyDisplay.style.display = "none";
+        document.getElementById("replyCmtInput_"+ id).value = '';
+    }
+}
+function ReplyCmtlv2(id) {
+    var replyDisplay = document.getElementById("replyCmt1_" + id);
+    if (replyDisplay.style.display == "none") {
+        replyDisplay.style.display = "flex";
+        document.getElementById("reply2CmtSend_" + id).style.display = "inline";
+        document.getElementById("reply2CmtEdit_" + id).style.display = "none";
+    }
+    else {
+        replyDisplay.style.display = "none";
+        document.getElementById("replyCmt2Input_"+ id).value = '';
+    }
+}
+function NewPostText() {
+    document.getElementById("modalInput").style.display = "flex";
+    document.getElementById("testText").style.display = "flex";
+}
+function LikePost(Id) {
+    var Like = document.getElementById("Like_" + Id);
+    if (Like.style.color == "black") {
+        Like.style.color = "blue";
+        Like.style.fontWeight = "bold";
+    }
+    else {
+        Like.style.color = "black";
+        Like.style.fontWeight = "normal";
+    }
+}
+
+function ShowLoader() {
+    ClosePostText();
+    document.getElementById("modalSpinner").style.display = "flex";
+    document.getElementById("loadingSrc").style.display = "flex";
+    setTimeout(function () {
+        document.getElementById("loadingSrc").style.display = "none";
+        document.getElementById("modalSpinner").style.display = "none";
+    } ,3000);
+
+}
+function SaveThisPost(postId){
+    $.ajax({
+        url: 'http://localhost:8080/api/favorite/' + postId,
+        method: 'POST',
+        error: function () {
+            console.log("Loi an post");
+        },
+        success: function () {
+            ShowLoader();
+            GetNewFeed();
+        }
+
+    });
+}
+
+function UnsaveThisPost(postId){
+    $.ajax({
+        url: 'http://localhost:8080/api/favorite/' + postId,
+        method: 'DELETE',
+        error: function (error) {
+            console.log(error, "Loi bo luu post");
+        },
+        success: function () {
+            ShowLoader();
+            GetNewFeed();
+        }
+
+    });
+}

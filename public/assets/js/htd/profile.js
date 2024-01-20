@@ -8,6 +8,8 @@ let changeAvt = '';
 var currentUrl = window.location.href;
 var urlParts = currentUrl.split('/');
 var userId = urlParts[urlParts.length - 1];
+let myAvatar = '';
+let myFullName = '';
 $(document).ready(function () {
     GetNewFeed();
     GetInforUser();

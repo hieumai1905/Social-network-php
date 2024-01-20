@@ -47,7 +47,7 @@ function registerRoute()
     Route::get('/users/{id}', 'UserController@getUserById');
 
     Route::get('/api/users/{id}', 'UserController@getUser');
-
+    Route::get('/api/users/post/{id}', 'UserController@getUserByPostId');
     Route::get('/users/{$content}/findusers', 'UserController@findUserByContent');
 
     Route::get('/editinformation', 'UserController@getUserToEditProfile');
@@ -127,6 +127,9 @@ function registerRoute()
     Route::post('/api/post', 'PostController@createPost');
     Route::put('/api/post', 'PostController@updatePost');
     Route::delete('/api/post/{post_id}', 'PostController@deletePost');
+    Route::get('/post/{postId}', function () {
+        return Response::view('views/Post');
+    });
     //------------------------------------------------------------------------------------------------
     //-----------------------------Register route for comment------------------------------------------------
     Route::get('/api/comment/{post_id}', 'CommentController@getCommentByPostId');
